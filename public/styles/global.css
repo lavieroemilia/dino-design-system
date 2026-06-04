@@ -329,19 +329,19 @@
        ========================================================== */
        @media (min-width: 1024px) {
          :root {
-           --font-size-h1: 40px;  --line-height-h1: 48px;
-           --font-size-h2: 32px;  --line-height-h2: 40px;
-           --font-size-h3: 24px;  --line-height-h3: 28px;
-           --font-size-h4: 20px;  --line-height-h4: 24px;
-           --font-size-h5: 18px;  --line-height-h5: 20px;
-           --font-size-h6: 16px;  --line-height-h6: 20px;
+           --font-size-h1: 32px;  --line-height-h1: 40px;
+           --font-size-h2: 24px;  --line-height-h2: 28px;
+           --font-size-h3: 20px;  --line-height-h3: 24px;
+           --font-size-h4: 18px;  --line-height-h4: 20px;
+           --font-size-h5: 16px;  --line-height-h5: 20px;
+           --font-size-h6: 14px;  --line-height-h6: 16px;
 
                  /* Paragraphs — iguales en mobile y desktop (Brand/Mobile > Font > paragraph-*) */
-      --font-size-paragraph-xlg: 24px;  --line-height-paragraph-xlg: 32px;
-      --font-size-paragraph-lg:  20px;  --line-height-paragraph-lg:  28px;
-      --font-size-paragraph-md:  18px;  --line-height-paragraph-md:  24px;
-      --font-size-paragraph-sm:  16px;  --line-height-paragraph-sm:  20px;
-      --font-size-paragraph-xsm: 14px;  --line-height-paragraph-xsm: 20px;
-      --font-size-paragraph-cp:  12px;  --line-height-paragraph-cp:  16px;
+      --font-size-paragraph-xlg: 20px;  --line-height-paragraph-xlg: 24px;
+      --font-size-paragraph-lg:  18px;  --line-height-paragraph-lg:  24px;
+      --font-size-paragraph-md:  16px;  --line-height-paragraph-md:  20px;
+      --font-size-paragraph-sm:  14px;  --line-height-paragraph-sm:  20px;
+      --font-size-paragraph-xsm: 12px;  --line-height-paragraph-xsm: 16px;
+      --font-size-paragraph-cp:  11px;  --line-height-paragraph-cp:  16px;
          }
        }
