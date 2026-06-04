@@ -1,0 +1,85 @@
+:root {
+  /* ==========================================================================
+     1. PALETA DE COLORES DE MARCA (BRAND)
+     ========================================================================== */
+  --green__100:#dcf6d2;
+  --green__200:#b8eda5;
+  --green__300:#95e478;
+  --green__400:#71db4b;
+  --green__default:#4ed21e;
+  --green__600:#3ea818;
+  --green__700:#328613;
+  --green__800:#1f540c;
+  --green__50:#eefbe9;
+  --green__900:#102a06;
+  --purple__50:#eee6fe;
+  --purple__100:#d9c9fd;
+  --purple__200:#b899fb;
+  --purple__300:#9566f9;
+  --purple__400:#7133f7;
+  --purple__default:#4e00f5;
+  --purple__600:#3e00c4;
+  --purple__700:#2f0093;
+  --purple__800:#1f0062;
+  --purple__900:#100031;
+  --red__50:#ffefef;
+  --red__100:#ffdede;
+  --red__200:#ffbdbd;
+  --red__300:#ff9d9d;
+  --red__400:#ff7c7c;
+  --red__default:#ff5b5b;
+  --red__600:#f32222;
+  --red__700:#c60a0a;
+  --red__800:#830707;
+  --red__900:#420303;
+  --grey__50:#f1f1f6;
+  --grey__100:#e3e2ed;
+  --grey__200:#c7c6da;
+  --grey__300:#aaa9c8;
+  --grey__400:#8e8db5;
+  --grey__500:#7270a3;
+  --grey__600:#5b5a82;
+  --grey__700:#444362;
+  --grey__800:#2e2d41;
+  --grey__900:#171621;
+  --foundation__white__100:#ffffff;
+
+  /* ==========================================================================
+     2. CAPA SEMÁNTICA (CORREGIDA SIN BARRAS)
+     ========================================================================== */
+  --Primary__default: var(--green__default);
+  --Primary__600: var(--green__600);
+  --Primary__700: var(--green__700);
+  --Info__default: var(--purple__default);
+  --Info__600: var(--purple__600);
+  --Neutral__white100: var(--foundation__white__100);
+  --Neutral__white80: rgba(255, 255, 255, 0.8);
+  --Neutral__white40: rgba(255, 255, 255, 0.4);
+  --Neutral__grey700: var(--grey__700);
+  --Neutral__grey100: var(--grey__100);
+
+  /* ==========================================================================
+     3. COMPONENTES (VINCULADOS CORRECTAMENTE)
+     ========================================================================== */
+  --Text__actiondefaultlight: var(--Neutral__white100);
+  --Text__actionhoverlight: var(--Neutral__white80);
+  --Text__actiondisabledlight: var(--Neutral__white40);
+  --Text__actiondefaultdark: var(--grey__900);
+  
+  --Surface__buttonprimarydefault: var(--Primary__600);
+  --Surface__buttonprimaryhover: var(--Primary__700);
+  --Surface__buttonsecondarydefault: var(--Info__default);
+  --Surface__buttonsecondaryhover: var(--Info__600);
+  --Surface__buttondisabled: var(--Neutral__grey700);
+  --Surface__buttonwhitedefault: var(--Neutral__white100);
+  --Surface__buttonwhitehover: var(--Neutral__grey100);
+}
+
+/* ==========================================================================
+   4. ESTILOS DE DEGRADADOS Y CLASES COMPLEJAS
+   ========================================================================== */
+.Progress__yellow { background: linear-gradient(180deg, #f6ca2f 13%, #fbeaac 36%, #f6ca2f 67%); }
+.Progress__green { background: linear-gradient(180deg, #3ea818 13%, #95e478 36%, #3ea818 67%); }
+.Progress__red { background: linear-gradient(180deg, #f32222 13%, #ff9d9d 36%, #f32222 67%); }
+.Progress__orange { background: linear-gradient(180deg, #ff8a4f 13%, #ffb895 36%, #ff8a4f 67%); }
+.Progress__purple { background: linear-gradient(180deg, #7133f7 13%, #9566f9 36%, #7133f7 67%); }

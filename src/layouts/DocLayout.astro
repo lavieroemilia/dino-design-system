@@ -1,0 +1,432 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  headings?: MarkdownHeading[];
+}
+
+const { title, description, headings = [] } = Astro.props;
+
+const navItems = [
+  { label: 'Button', href: '/components/button' },
+  { label: 'Progress Bar', href: '/components/progress-bar' },
+  { label: 'Typography', href: '/components/typography' },
+];
+
+const filteredHeadings = headings.filter(h => h.depth <= 3);
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title} — Dino Design System</title>
+  {description && <meta name="description" content={description} />}
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/dino-design-system/styles/global.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      background: var(--grey__900);
+      color: var(--grey__50);
+      min-height: 100vh;
+    }
+
+    /* ── Top bar ── */
+    .topbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      background: rgba(23, 22, 33, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .topbar__logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--green__default);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+
+    .topbar__divider {
+      width: 1px;
+      height: 18px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .topbar__section {
+      font-size: 0.78rem;
+      color: var(--grey__400);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Layout shell ── */
+    .shell {
+      display: grid;
+      grid-template-columns: 220px 1fr 200px;
+      grid-template-rows: 1fr;
+      min-height: 100vh;
+      padding-top: 56px;
+    }
+
+    @media (max-width: 1024px) {
+      .shell { grid-template-columns: 200px 1fr; }
+      .toc { display: none; }
+    }
+
+    @media (max-width: 680px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar { display: none; }
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      padding: 28px 0 28px 16px;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      scrollbar-width: thin;
+      scrollbar-color: var(--grey__700) transparent;
+    }
+
+    .sidebar__group-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey__500);
+      padding: 0 12px;
+      margin-bottom: 6px;
+      margin-top: 20px;
+    }
+
+    .sidebar__group-label:first-child { margin-top: 0; }
+
+    .sidebar__link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 6px 0 0 6px;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--grey__300);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      position: relative;
+    }
+
+    .sidebar__link:hover {
+      background: rgba(255,255,255,0.05);
+      color: var(--grey__50);
+    }
+
+    .sidebar__link[aria-current="page"] {
+      background: rgba(78, 210, 30, 0.1);
+      color: var(--green__300);
+      font-weight: 500;
+    }
+
+    .sidebar__link[aria-current="page"]::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 4px; bottom: 4px;
+      width: 2px;
+      background: var(--green__default);
+      border-radius: 2px 0 0 2px;
+    }
+
+    /* ── Main content ── */
+    .main {
+      padding: 48px 56px 96px;
+      min-width: 0;
+    }
+
+    .main__header {
+      margin-bottom: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .main__eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--green__default);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .main__title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--grey__50);
+      line-height: 1.15;
+    }
+
+    .main__description {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: var(--grey__400);
+      font-weight: 300;
+      max-width: 62ch;
+    }
+
+    /* ── Prose styles for slot content ── */
+    .main :global(h2) {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--grey__100);
+      margin-top: 52px;
+      margin-bottom: 16px;
+      scroll-margin-top: 80px;
+    }
+
+    .main :global(h3) {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--grey__200);
+      margin-top: 32px;
+      margin-bottom: 10px;
+      scroll-margin-top: 80px;
+    }
+
+    .main :global(p) {
+      color: var(--grey__300);
+      margin-bottom: 16px;
+      max-width: 72ch;
+    }
+
+    .main :global(code) {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82em;
+      background: rgba(255,255,255,0.07);
+      color: var(--green__300);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .main :global(pre) {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 20px 24px;
+      overflow-x: auto;
+      margin: 16px 0 24px;
+      color: var(--grey__200);
+      line-height: 1.7;
+    }
+
+    .main :global(pre code) {
+      background: none;
+      padding: 0;
+      color: inherit;
+      font-size: inherit;
+    }
+
+    .main :global(table) {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      margin: 20px 0 28px;
+    }
+
+    .main :global(th) {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey__500);
+      text-align: left;
+      padding: 8px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .main :global(td) {
+      padding: 10px 14px;
+      color: var(--grey__300);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: top;
+    }
+
+    .main :global(tr:last-child td) { border-bottom: none; }
+
+    .main :global(ul),
+    .main :global(ol) {
+      padding-left: 20px;
+      margin-bottom: 16px;
+      color: var(--grey__300);
+    }
+
+    .main :global(li) { margin-bottom: 6px; }
+
+    .main :global(strong) { color: var(--grey__100); font-weight: 500; }
+
+    .main :global(hr) {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 40px 0;
+    }
+
+    /* ── TOC ── */
+    .toc {
+      position: sticky;
+      top: 56px;
+      height: calc(100vh - 56px);
+      overflow-y: auto;
+      padding: 28px 16px 28px 20px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--grey__700) transparent;
+    }
+
+    .toc__label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey__500);
+      margin-bottom: 10px;
+    }
+
+    .toc__list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc__item { margin-bottom: 2px; }
+
+    .toc__link {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--grey__500);
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: color 0.15s, background 0.15s;
+      line-height: 1.4;
+    }
+
+    .toc__link:hover {
+      color: var(--grey__200);
+      background: rgba(255,255,255,0.04);
+    }
+
+    .toc__link.is-active {
+      color: var(--green__300);
+      background: rgba(78, 210, 30, 0.08);
+    }
+
+    .toc__link[data-depth="3"] { padding-left: 18px; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar" role="banner">
+    <a href="/" class="topbar__logo">🦕 Dino</a>
+    <div class="topbar__divider" aria-hidden="true"></div>
+    <span class="topbar__section">Design System</span>
+  </header>
+
+  <div class="shell">
+
+    <nav class="sidebar" aria-label="Componentes">
+      <p class="sidebar__group-label">Componentes</p>
+      {navItems.map(item => (
+        <a
+          href={item.href}
+          class="sidebar__link"
+          aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <main class="main" id="main-content">
+      <header class="main__header">
+        <p class="main__eyebrow">Componente</p>
+        <h1 class="main__title">{title}</h1>
+        {description && <p class="main__description">{description}</p>}
+      </header>
+      <slot />
+    </main>
+
+    <aside class="toc" aria-label="En esta página">
+      {filteredHeadings.length > 0 && (
+        <>
+          <p class="toc__label">En esta página</p>
+          <ul class="toc__list">
+            {filteredHeadings.map(h => (
+              <li class="toc__item">
+                <a
+                  href={`#${h.slug}`}
+                  class="toc__link"
+                  data-depth={String(h.depth)}
+                >
+                  {h.text}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </aside>
+
+  </div>
+
+  <script>
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc__link');
+    if (tocLinks.length) {
+      const headingEls = Array.from(tocLinks).map(link => {
+        const id = link.getAttribute('href')?.slice(1);
+        return id ? document.getElementById(id) : null;
+      }).filter(Boolean) as HTMLElement[];
+
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('is-active'));
+            const active = document.querySelector(`.toc__link[href="#${entry.target.id}"]`);
+            active?.classList.add('is-active');
+            break;
+          }
+        }
+      }, { rootMargin: '-56px 0px -60% 0px', threshold: 0 });
+
+      headingEls.forEach(el => observer.observe(el));
+    }
+  </script>
+
+</body>
+</html>
