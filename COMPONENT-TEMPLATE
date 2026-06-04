@@ -1,0 +1,131 @@
+---
+title: [Component Name]
+description: [Short summary for the page header—one line, Dino context.]
+---
+
+[1–2 sentences: playful, youthful, professional—what this component does for learners in Dino.]
+
+## Interactive preview
+
+{/* Replace with live playground: key props and states */}
+
+**[Interactive preview placeholder]**
+
+## Visual examples
+
+_Use these variant headings in order. Do not add Overview. One intro (above), then preview, then examples._
+
+### Primary
+
+[1–2 short, energetic sentences: main victory or forward action—e.g. check an answer, continue a streak, start a lesson.]
+
+```html
+[Example markup — data-variant="primary"]
+```
+
+### Secondary
+
+[1–2 short, energetic sentences: alternative beside primary with white background and dark text—e.g. skip for now; secondary left, primary right.]
+
+```html
+[Example markup — data-variant="secondary"]
+```
+
+### Tertiary
+
+[1–2 short, energetic sentences: semi-transparent white background (white-20), used on dark surfaces—e.g. overlay actions, in-lesson secondary actions without competing with primary.]
+
+```html
+[Example markup — data-variant="tertiary"]
+```
+
+### Ghost
+
+[1–2 short, energetic sentences: no background, text only—e.g. inline actions, dense UI where any fill would add visual noise.]
+
+```html
+[Example markup — data-variant="ghost"]
+```
+
+### Danger
+
+[1–2 short, energetic sentences: high-stakes loss—e.g. quit lesson, reset progress; confirm hearts, XP, or streak impact.]
+
+```html
+[Example markup — data-variant="danger"]
+```
+
+### Premium
+
+[1–2 short, energetic sentences: Super Dino and upgrades—hearts, streak freeze; purple-to-red gradient, use sparingly, one per context.]
+
+```html
+[Example markup — data-variant="premium"]
+```
+
+### Disabled
+
+[1–2 short, energetic sentences: blocked until ready—e.g. check answer before selection; always explain why.]
+
+```html
+[Example markup — disabled]
+```
+
+## Usage guidelines
+
+### Do
+
+- **[Do 1]** — [Brief, Dino-specific reason.]
+- **[Do 2]** — [Brief, Dino-specific reason.]
+- **[Do 3]** — [Brief, Dino-specific reason.]
+
+### Don't
+
+- **[Don't 1]** — [Brief, Dino-specific reason.]
+- **[Don't 2]** — [Brief, Dino-specific reason.]
+- **[Don't 3]** — [Brief, Dino-specific reason.]
+
+| Do | Don't |
+| --- | --- |
+| [Do summary 1] | [Don't summary 1] |
+| [Do summary 2] | [Don't summary 2] |
+| [Do summary 3] | [Don't summary 3] |
+
+## Properties / API
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `variant` | `'primary' \| 'secondary' \| 'tertiary' \| 'ghost' \| 'danger' \| 'premium'` | `'primary'` | Visual style and emphasis. |
+| `size` | `'sm' \| 'md' \| 'lg' \| 'xl'` | `'xl'` | Height, padding, and type scale. |
+| `disabled` | `boolean` | `false` | Blocks activation until the action is allowed. |
+| `[propName]` | `[type]` | `[default]` | [What it controls.] |
+
+### Variant reference
+
+| Value | Surface token | When to use |
+| --- | --- | --- |
+| `primary` | `surface-button-primary-default` (green-600) | Single main action on the step. |
+| `secondary` | `surface-button-white-default` (white, dark text) | Paired alternative; does not outrank primary. |
+| `tertiary` | `surface-button-transparent-default` (white-20) | Semi-transparent; in-lesson actions on dark surfaces. |
+| `ghost` | `transparent` (no background) | Text-only; inline or dense UI with no fill. |
+| `danger` | `surface-button-error-default` (red-600) | Quit, reset, or other progress or heart loss. |
+| `premium` | gradient `info-default → error-default` | Paid upgrade or Super Dino perk. |
+
+## Accessibility
+
+- [Keyboard—Dino lesson flows]
+- [Screen readers—labels, `aria-busy`, toggles]
+- [Focus and destructive confirmations]
+
+## Related
+
+- **[Related 1]** — [One line, Dino context.]
+- **[Related 2]** — [One line, Dino context.]
+
+---
+
+<!-- Canonical variants: Primary, Secondary, Tertiary, Ghost, Danger, Premium, Disabled -->
+<!-- Tertiary = white-20 transparent background (not purple) -->
+<!-- Ghost = no background, text only -->
+<!-- Purple (Info) is reserved for future use, not a button variant -->
+<!-- Copy to src/content/docs/components/[component-name].mdx -->

@@ -1,0 +1,131 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost' | 'danger' | 'premium';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  disabled?: boolean;
+  label?: string;
+  href?: string;
+}
+
+const {
+  variant = 'primary',
+  size = 'xl',
+  disabled = false,
+  label = 'Button',
+  href,
+} = Astro.props;
+
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['btn', `btn--${variant}`, `btn--${size}`, { 'btn--disabled': disabled }]}
+  href={href}
+  disabled={!href ? disabled : undefined}
+  aria-disabled={disabled ? 'true' : undefined}
+>
+  <slot name="icon-left" />
+  <span class="btn__label">{label}</span>
+  <slot name="icon-right" />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-semibold);
+    text-decoration: none;
+    position: relative;
+    transition: background 0.15s, transform 0.1s;
+    white-space: nowrap;
+    box-shadow: var(--shadow-button);
+  }
+
+  /* Sizes */
+  .btn--xl { height: 56px; padding: 12px 16px; font-size: var(--font-size-paragraph-lg);  line-height: var(--line-height-paragraph-lg); }
+  .btn--lg { height: 48px; padding: 10px 16px; font-size: var(--font-size-paragraph-md);  line-height: var(--line-height-paragraph-md); }
+  .btn--md { height: 40px; padding: 8px  14px; font-size: var(--font-size-paragraph-sm);  line-height: var(--line-height-paragraph-sm); }
+  .btn--sm { height: 38px; padding: 6px  12px; font-size: var(--font-size-paragraph-xsm); line-height: var(--line-height-paragraph-xsm); }
+
+  /* Primary */
+  .btn--primary {
+    background: var(--surface-button-primary-default);
+    color: var(--text-action-light);
+    text-shadow: var(--shadow-text);
+  }
+  .btn--primary:hover:not(.btn--disabled) {
+    background: var(--surface-button-primary-hover);
+  }
+
+  /* Secondary — fondo blanco, texto oscuro */
+  .btn--secondary {
+    background: var(--surface-button-white-default);
+    color: var(--text-action-dark);
+    text-shadow: none;
+  }
+  .btn--secondary:hover:not(.btn--disabled) {
+    background: var(--surface-button-white-hover);
+  }
+
+  /* Tertiary — Info/purple */
+  .btn--tertiary {
+    background:  var(--surface-button-transparent-default);
+    color: var(--text-action-light);
+    text-shadow: var(--shadow-text);
+  }
+  .btn--tertiary:hover:not(.btn--disabled) {
+    background: var(--surface-button-transparent-hover);
+  }
+
+  .btn--ghost {
+  background: transparent;
+  color: var(--text-body-default);
+  box-shadow: none;
+  text-shadow: none;
+  }
+  .btn--ghost:hover:not(.btn--disabled) {
+    background: var(--surface-button-transparent-hover);
+  }
+
+  /* Danger — Error/red */
+  .btn--danger {
+    background: var(--surface-button-error-default);
+    color: var(--text-action-light);
+    text-shadow: var(--shadow-text);
+  }
+  .btn--danger:hover:not(.btn--disabled) {
+    background: var(--surface-button-error-hover);
+  }
+
+  /* Premium — gradiente Info → Error */
+  .btn--premium {
+    background: var(--surface-button-premium-default);
+    color: var(--text-action-light);
+    text-shadow: var(--shadow-text);
+  }
+  .btn--premium:hover:not(.btn--disabled) {
+    background: var(--surface-button-premium-hover);
+  }
+
+  /* Disabled */
+  .btn--disabled,
+  .btn:disabled {
+    background: var(--surface-button-disabled);
+    color: var(--text-action-light-disabled);
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    text-shadow: none;
+  }
+
+  .btn:active:not(.btn--disabled) {
+    transform: translateY(1px);
+    box-shadow: var(--shadow-button-active);
+  }
+</style>

@@ -1,6 +1,12 @@
 ---
 import DocLayout from '../layouts/DocLayout.astro';
+import Button from '../components/Button.astro';
 ---
-<DocLayout title="Bienvenido" description="Dino Design System">
-  <p>Selecciona un componente en el menú izquierdo.</p>
+<DocLayout title="Button" description="Botones del Dino Design System">
+  <Button variant="primary" size="xl" label="Continuar" />
+  <Button variant="secondary" size="xl" label="Omitir" />
+  <Button variant="danger" size="xl" label="Salir" />
+  <Button variant="ghost" size="xl" label="Ver más" />
+  <Button variant="premium" size="xl" label="Super Dino" />
+  <Button variant="primary" size="xl" label="Disabled" disabled />
 </DocLayout>

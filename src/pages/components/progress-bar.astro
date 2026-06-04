@@ -1,0 +1,283 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+import ProgressBar from '../../components/ProgressBar.astro';
+
+const headings = [
+  { depth: 2, slug: 'variantes', text: 'Variantes' },
+  { depth: 3, slug: 'sizes', text: 'Tamaños' },
+  { depth: 3, slug: 'colors', text: 'Colores' },
+  { depth: 3, slug: 'estados', text: 'Estados' },
+  { depth: 2, slug: 'props', text: 'Properties' },
+];
+---
+
+<DocLayout
+  title="Progress Bar"
+  description="Le dice al learner cuánto le falta. Corta, visible, y lo suficientemente satisfactoria para que quiera seguir."
+  headings={headings}
+>
+
+  <!-- PLAYGROUND -->
+  <div class="playground">
+    <div class="playground__canvas" id="preview-canvas">
+      <div style="width: 280px;">
+        <ProgressBar value={50} size="lg" color="yellow" />
+      </div>
+    </div>
+    <div class="playground__controls">
+      <fieldset>
+        <legend>Color</legend>
+        <div class="control-group" id="ctrl-color">
+          {['yellow','green','red','orange','purple'].map(c => (
+            <label>
+              <input type="radio" name="color" value={c} checked={c === 'yellow'} />
+              {c}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Size</legend>
+        <div class="control-group" id="ctrl-size">
+          {['xs','sm','md','lg'].map(s => (
+            <label>
+              <input type="radio" name="size" value={s} checked={s === 'lg'} />
+              {s}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Value — <span id="value-display">50</span>%</legend>
+        <input
+          type="range"
+          id="ctrl-value"
+          min="0" max="100" value="50"
+          class="ctrl-range"
+        />
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- VARIANTES -->
+  <h2 id="variantes">Variantes</h2>
+
+  <h3 id="sizes">Tamaños</h3>
+  <p>Cuatro alturas para cada contexto. Large para lecciones principales, xsmall para espacios ajustados.</p>
+  <div class="variant-row variant-row--col">
+    <div class="size-row">
+      <span class="size-label">lg — 24px</span>
+      <ProgressBar value={60} size="lg" color="yellow" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">md — 20px</span>
+      <ProgressBar value={60} size="md" color="yellow" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">sm — 12px</span>
+      <ProgressBar value={60} size="sm" color="yellow" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">xs — 6px</span>
+      <ProgressBar value={60} size="xs" color="yellow" />
+    </div>
+  </div>
+
+  <h3 id="colors">Colores</h3>
+  <p>Cada color comunica un contexto distinto. Yellow es el default — los demás refuerzan el estado de la lección.</p>
+  <div class="variant-row variant-row--col">
+    {[
+      { color: 'yellow',  label: 'Yellow — lección en curso' },
+      { color: 'green',   label: 'Green — éxito / completado' },
+      { color: 'red',     label: 'Red — error / corazones bajos' },
+      { color: 'orange',  label: 'Orange — advertencia / racha en riesgo' },
+      { color: 'purple',  label: 'Purple — modo especial / desafío' },
+    ].map(({ color, label }) => (
+      <div class="size-row">
+        <span class="size-label">{label}</span>
+        <ProgressBar value={65} size="lg" color={color as any} />
+      </div>
+    ))}
+  </div>
+
+  <h3 id="estados">Estados</h3>
+  <p>De vacía a completa. El 100% debería celebrarse — asegúrate de que la animación lo note.</p>
+  <div class="variant-row variant-row--col">
+    {[0, 25, 50, 75, 100].map(v => (
+      <div class="size-row">
+        <span class="size-label">{v}%</span>
+        <ProgressBar value={v} size="lg" color="yellow" />
+      </div>
+    ))}
+  </div>
+
+  <!-- PROPS -->
+  <h2 id="props">Properties</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Prop</th>
+        <th>Tipo</th>
+        <th>Default</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td><code>number</code></td>
+        <td><code>0</code></td>
+        <td>Porcentaje de completitud. Se limita automáticamente entre 0 y 100.</td>
+      </tr>
+      <tr>
+        <td><code>size</code></td>
+        <td><code>'lg' | 'md' | 'sm' | 'xs'</code></td>
+        <td><code>'lg'</code></td>
+        <td>Altura de la barra: 24px, 20px, 12px, 6px.</td>
+      </tr>
+      <tr>
+        <td><code>color</code></td>
+        <td><code>'yellow' | 'green' | 'red' | 'orange' | 'purple'</code></td>
+        <td><code>'yellow'</code></td>
+        <td>Gradiente del fill. Usa los gradientes de progreso del sistema.</td>
+      </tr>
+      <tr>
+        <td><code>label</code></td>
+        <td><code>string</code></td>
+        <td><code>'Progreso: N%'</code></td>
+        <td>Texto accesible para <code>aria-label</code>. Se genera automáticamente si no se pasa.</td>
+      </tr>
+    </tbody>
+  </table>
+
+</DocLayout>
+
+<style>
+  .variant-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0 32px;
+    padding: 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+  }
+
+  .variant-row--col {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .size-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .size-label {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+    white-space: nowrap;
+  }
+
+  .playground {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px 0 40px;
+  }
+
+  .playground__canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    padding: 32px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .playground__controls {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  fieldset { border: none; padding: 0; margin: 0; }
+
+  legend {
+    font-family: var(--font-family-headings);
+    font-size: 0.68rem;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    margin-bottom: 8px;
+  }
+
+  .control-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .control-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: var(--neutral-300);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .control-group label:has(input:checked) {
+    background: rgba(78,210,30,0.12);
+    color: var(--green-300);
+    border-color: var(--green-600);
+  }
+
+  .control-group input[type="radio"] { display: none; }
+
+  .ctrl-range {
+    width: 100%;
+    accent-color: var(--primary-default);
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('preview-canvas');
+  const valueDisplay = document.getElementById('value-display');
+
+  function update() {
+    const color = document.querySelector('input[name="color"]:checked')?.value || 'yellow';
+    const size  = document.querySelector('input[name="size"]:checked')?.value  || 'lg';
+    const value = Number((document.getElementById('ctrl-value') as HTMLInputElement)?.value || 50);
+
+    if (valueDisplay) valueDisplay.textContent = String(value);
+
+    const bar = canvas?.querySelector('.progress') as HTMLElement;
+    if (!bar) return;
+
+    bar.className = `progress progress--${size} progress--${color}`;
+    bar.setAttribute('aria-valuenow', String(value));
+
+    const fill = bar.querySelector('.progress__fill') as HTMLElement;
+    if (fill) fill.style.width = `${value}%`;
+  }
+
+  document.querySelectorAll('input[name="color"], input[name="size"]')
+    .forEach(el => el.addEventListener('change', update));
+  document.getElementById('ctrl-value')?.addEventListener('input', update);
+</script>

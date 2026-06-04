@@ -1,0 +1,289 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+import Button from '../../components/Button.astro';
+
+const headings = [
+  { depth: 2, slug: 'preview', text: 'Interactive preview' },
+  { depth: 2, slug: 'variantes', text: 'Variantes' },
+  { depth: 3, slug: 'primary', text: 'Primary' },
+  { depth: 3, slug: 'secondary', text: 'Secondary' },
+  { depth: 3, slug: 'tertiary', text: 'Tertiary' },
+  { depth: 3, slug: 'ghost', text: 'Ghost' },
+  { depth: 3, slug: 'danger', text: 'Danger' },
+  { depth: 3, slug: 'premium', text: 'Premium' },
+  { depth: 3, slug: 'disabled', text: 'Disabled' },
+  { depth: 2, slug: 'props', text: 'Properties' },
+];
+---
+
+<DocLayout
+  title="Button"
+  description="El botón principal de Dino. Lleva al learner a la siguiente acción."
+  headings={headings}
+>
+
+  <!-- INTERACTIVE PREVIEW -->
+  <div class="playground">
+    <div class="playground__canvas" id="preview-canvas">
+      <Button variant="primary" size="xl" label="Continuar" />
+    </div>
+    <div class="playground__controls">
+      <fieldset>
+        <legend>Variant</legend>
+        <div class="control-group" id="ctrl-variant">
+          {['primary','secondary','tertiary','ghost','danger','premium'].map(v => (
+            <label>
+              <input type="radio" name="variant" value={v} checked={v === 'primary'} />
+              {v}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Size</legend>
+        <div class="control-group" id="ctrl-size">
+          {['sm','md','lg','xl'].map(s => (
+            <label>
+              <input type="radio" name="size" value={s} checked={s === 'xl'} />
+              {s}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Label</legend>
+        <input class="ctrl-input" type="text" id="ctrl-label" value="Continuar" maxlength="24" />
+      </fieldset>
+      <fieldset>
+        <legend>State</legend>
+        <label class="toggle">
+          <input type="checkbox" id="ctrl-disabled" />
+          Disabled
+        </label>
+      </fieldset>
+    </div>
+  </div>
+
+  <!-- VARIANTES -->
+  <h2 id="variantes">Variantes</h2>
+
+  <h3 id="primary">Primary</h3>
+  <p>La acción principal del paso: verificar respuesta, continuar lección, ganar XP.</p>
+  <div class="variant-row">
+    <Button variant="primary" size="xl" label="Continuar" />
+    <Button variant="primary" size="lg" label="Continuar" />
+    <Button variant="primary" size="md" label="Continuar" />
+    <Button variant="primary" size="sm" label="Continuar" />
+  </div>
+
+  <h3 id="secondary">Secondary</h3>
+  <p>Alternativa visible junto a primary. Fondo blanco, texto oscuro — nunca compite en peso visual.</p>
+  <div class="variant-row">
+    <Button variant="secondary" size="xl" label="Omitir" />
+    <Button variant="secondary" size="lg" label="Omitir" />
+    <Button variant="secondary" size="md" label="Omitir" />
+    <Button variant="secondary" size="sm" label="Omitir" />
+  </div>
+
+  <h3 id="tertiary">Tertiary</h3>
+  <p>Acción de soporte en contextos oscuros. Usa el color Info/purple para destacar sin dominar.</p>
+  <div class="variant-row">
+    <Button variant="tertiary" size="xl" label="Ver pista" />
+    <Button variant="tertiary" size="lg" label="Ver pista" />
+    <Button variant="tertiary" size="md" label="Ver pista" />
+    <Button variant="tertiary" size="sm" label="Ver pista" />
+  </div>
+
+  <h3 id="ghost">Ghost</h3>
+  <p>Acciones inline o secundarias sobre UI densa. Fondo semitransparente, mínimo peso visual.</p>
+  <div class="variant-row">
+    <Button variant="ghost" size="xl" label="Reproducir" />
+    <Button variant="ghost" size="lg" label="Reproducir" />
+    <Button variant="ghost" size="md" label="Reproducir" />
+    <Button variant="ghost" size="sm" label="Reproducir" />
+  </div>
+
+  <h3 id="danger">Danger</h3>
+  <p>Salir de lección, resetear progreso, perder corazones. Siempre pedir confirmación.</p>
+  <div class="variant-row">
+    <Button variant="danger" size="xl" label="Salir" />
+    <Button variant="danger" size="lg" label="Salir" />
+    <Button variant="danger" size="md" label="Salir" />
+    <Button variant="danger" size="sm" label="Salir" />
+  </div>
+
+  <h3 id="premium">Premium</h3>
+  <p>Exclusivo para Super Dino y upgrades. Gradiente Info→Error. Usar uno por contexto.</p>
+  <div class="variant-row">
+    <Button variant="premium" size="xl" label="Super Dino" />
+    <Button variant="premium" size="lg" label="Super Dino" />
+    <Button variant="premium" size="md" label="Super Dino" />
+    <Button variant="premium" size="sm" label="Super Dino" />
+  </div>
+
+  <h3 id="disabled">Disabled</h3>
+  <p>Bloqueado hasta que el learner complete la acción requerida. Siempre explicar el motivo.</p>
+  <div class="variant-row">
+    <Button variant="primary" size="xl" label="Verificar" disabled />
+    <Button variant="secondary" size="xl" label="Verificar" disabled />
+    <Button variant="danger" size="xl" label="Verificar" disabled />
+  </div>
+
+  <!-- PROPS -->
+  <h2 id="props">Properties</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Prop</th>
+        <th>Tipo</th>
+        <th>Default</th>
+        <th>Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>variant</code></td><td><code>'primary' | 'secondary' | 'tertiary' | 'ghost' | 'danger' | 'premium'</code></td><td><code>'primary'</code></td><td>Estilo visual y énfasis.</td></tr>
+      <tr><td><code>size</code></td><td><code>'sm' | 'md' | 'lg' | 'xl'</code></td><td><code>'xl'</code></td><td>Altura, padding y escala tipográfica.</td></tr>
+      <tr><td><code>label</code></td><td><code>string</code></td><td><code>'Button'</code></td><td>Texto del botón.</td></tr>
+      <tr><td><code>disabled</code></td><td><code>boolean</code></td><td><code>false</code></td><td>Bloquea la acción hasta que esté permitida.</td></tr>
+      <tr><td><code>href</code></td><td><code>string</code></td><td>—</td><td>Convierte el botón en enlace <code>&lt;a&gt;</code>.</td></tr>
+    </tbody>
+  </table>
+
+</DocLayout>
+
+<style>
+  .variant-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin: 16px 0 32px;
+    padding: 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+  }
+
+  .playground {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 16px 0 40px;
+  }
+
+  .playground__canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    padding: 32px;
+    background: rgba(255,255,255,0.02);
+  }
+
+  .playground__controls {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  legend {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--grey-500);
+    margin-bottom: 8px;
+  }
+
+  .control-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .control-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: var(--grey-300);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .control-group label:has(input:checked) {
+    background: rgba(78,210,30,0.12);
+    color: var(--green-300);
+    border-color: var(--green-600);
+  }
+
+  .control-group input[type="radio"] { display: none; }
+
+  .ctrl-input {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    padding: 6px 10px;
+    color: var(--grey-100);
+    font-size: 0.875rem;
+    font-family: inherit;
+  }
+
+  .ctrl-input:focus {
+    outline: none;
+    border-color: var(--green-600);
+  }
+
+  .toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--grey-300);
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  const canvas = document.getElementById('preview-canvas');
+
+  function buildClass(variant, size, disabled) {
+    return ['btn', `btn--${variant}`, `btn--${size}`, disabled ? 'btn--disabled' : ''].filter(Boolean).join(' ');
+  }
+
+  function update() {
+    const variant = document.querySelector('input[name="variant"]:checked')?.value || 'primary';
+    const size    = document.querySelector('input[name="size"]:checked')?.value || 'xl';
+    const label   = document.getElementById('ctrl-label')?.value || 'Button';
+    const disabled = document.getElementById('ctrl-disabled')?.checked || false;
+
+    const btn = canvas.querySelector('.btn');
+    if (!btn) return;
+
+    btn.className = buildClass(variant, size, disabled);
+    btn.querySelector('.btn__label').textContent = label;
+    btn.setAttribute('aria-disabled', disabled ? 'true' : 'false');
+  }
+
+  document.querySelectorAll('input[name="variant"], input[name="size"]')
+    .forEach(el => el.addEventListener('change', update));
+  document.getElementById('ctrl-label')?.addEventListener('input', update);
+  document.getElementById('ctrl-disabled')?.addEventListener('change', update);
+</script>

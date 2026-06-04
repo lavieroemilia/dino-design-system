@@ -10,9 +10,9 @@ interface Props {
 const { title, description, headings = [] } = Astro.props;
 
 const navItems = [
-  { label: 'Button', href: '/components/button' },
+  { label: 'Button',       href: '/components/button' },
   { label: 'Progress Bar', href: '/components/progress-bar' },
-  { label: 'Typography', href: '/components/typography' },
+  { label: 'Typography',   href: '/components/typography' },
 ];
 
 const filteredHeadings = headings.filter(h => h.depth <= 3);
@@ -27,28 +27,27 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
   {description && <meta name="description" content={description} />}
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/styles/global.css" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: var(--font-family-body);
       font-size: 15px;
       line-height: 1.65;
-      background: var(--grey__900);
-      color: var(--grey__50);
+      background: var(--surface-page);
+      color: var(--text-body-default);
       min-height: 100vh;
     }
 
-    /* ── Top bar ── */
+    /* ── Topbar ── */
     .topbar {
       position: fixed;
       top: 0; left: 0; right: 0;
       height: 56px;
-      background: rgba(23, 22, 33, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: var(--surface-elevate);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       display: flex;
       align-items: center;
       padding: 0 24px;
@@ -57,44 +56,43 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     }
 
     .topbar__logo {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-family-headings);
       font-weight: 800;
       font-size: 1.1rem;
-      color: var(--green__default);
-      letter-spacing: -0.02em;
+      color: var(--primary-default);
       text-decoration: none;
+      letter-spacing: -0.02em;
     }
 
     .topbar__divider {
       width: 1px;
       height: 18px;
-      background: rgba(255,255,255,0.1);
+      background: var(--border-default);
+      opacity: 0.4;
     }
 
     .topbar__section {
-      font-size: 0.78rem;
-      color: var(--grey__400);
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--text-placeholder);
     }
 
-    /* ── Layout shell ── */
+    /* ── Shell ── */
     .shell {
       display: grid;
       grid-template-columns: 220px 1fr 200px;
-      grid-template-rows: 1fr;
       min-height: 100vh;
       padding-top: 56px;
     }
 
     @media (max-width: 1024px) {
       .shell { grid-template-columns: 200px 1fr; }
-      .toc { display: none; }
+      .toc   { display: none; }
     }
-
     @media (max-width: 680px) {
-      .shell { grid-template-columns: 1fr; }
+      .shell   { grid-template-columns: 1fr; }
       .sidebar { display: none; }
     }
 
@@ -104,49 +102,46 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       top: 56px;
       height: calc(100vh - 56px);
       overflow-y: auto;
-      padding: 28px 0 28px 16px;
-      border-right: 1px solid rgba(255,255,255,0.05);
+      padding: 28px 0 28px 12px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      background: var(--surface-page);
       scrollbar-width: thin;
-      scrollbar-color: var(--grey__700) transparent;
+      scrollbar-color: var(--neutral-700) transparent;
     }
 
     .sidebar__group-label {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.68rem;
+      font-family: var(--font-family-headings);
+      font-size: var(--text-h4-default);
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0;
       text-transform: uppercase;
-      color: var(--grey__500);
+      color: var(--text-placeholder);
       padding: 0 12px;
-      margin-bottom: 6px;
-      margin-top: 20px;
+      margin-bottom: 8px;
     }
-
-    .sidebar__group-label:first-child { margin-top: 0; }
 
     .sidebar__link {
       display: flex;
       align-items: center;
-      gap: 8px;
       padding: 7px 12px;
       border-radius: 6px 0 0 6px;
-      font-size: 0.875rem;
-      font-weight: 400;
-      color: var(--grey__300);
+      font-size: var(--text-body-default);
+      font-weight: 500;
+      color: var(--text-body-default);
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
       position: relative;
     }
 
     .sidebar__link:hover {
-      background: rgba(255,255,255,0.05);
-      color: var(--grey__50);
+      background: var(--surface-hover-dark);
+      color: var(--text-headings);
     }
 
     .sidebar__link[aria-current="page"] {
-      background: rgba(78, 210, 30, 0.1);
-      color: var(--green__300);
-      font-weight: 500;
+      background: var(--primary-900);
+      color: var(--primary-300);
+      font-weight: 600;
     }
 
     .sidebar__link[aria-current="page"]::after {
@@ -154,100 +149,91 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       position: absolute;
       right: 0; top: 4px; bottom: 4px;
       width: 2px;
-      background: var(--green__default);
+      background: var(--primary-default);
       border-radius: 2px 0 0 2px;
     }
 
-    /* ── Main content ── */
+    /* ── Main ── */
     .main {
       padding: 48px 56px 96px;
       min-width: 0;
     }
 
     .main__header {
-      margin-bottom: 40px;
-      padding-bottom: 28px;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-
-    .main__eyebrow {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.72rem;
-      color: var(--green__default);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
+      margin-bottom: 24px;
+      padding-bottom: 12px;
     }
 
     .main__title {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-family-headings);
       font-size: 2.25rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      color: var(--grey__50);
+      color: var(--text-headings);
       line-height: 1.15;
+      text-transform: uppercase;
     }
 
     .main__description {
-      margin-top: 10px;
+      margin-top: 12px;
       font-size: 1rem;
-      color: var(--grey__400);
-      font-weight: 300;
+      color: var(--text-body-default);
       max-width: 62ch;
     }
 
-    /* ── Prose styles for slot content ── */
+    /* ── Prose ── */
     .main :global(h2) {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-family-headings);
       font-size: 1.35rem;
       font-weight: 700;
-      letter-spacing: -0.02em;
-      color: var(--grey__100);
-      margin-top: 52px;
-      margin-bottom: 16px;
+      color: var(--text-headings);
+      margin-top: 64px;
+      margin-bottom: 12px;
       scroll-margin-top: 80px;
     }
 
     .main :global(h3) {
-      font-family: 'Syne', sans-serif;
-      font-size: 1rem;
+      font-family: var(--font-family-headings);
+      font-size: var(--text-h3-default);
       font-weight: 600;
-      color: var(--grey__200);
-      margin-top: 32px;
-      margin-bottom: 10px;
+      color: var(--neutral-white-100);
+      margin-top: 48px;
+      margin-bottom: 0px;
       scroll-margin-top: 80px;
     }
 
     .main :global(p) {
-      color: var(--grey__300);
-      margin-bottom: 16px;
+      color: var(--text-body-default);
+      margin-bottom: 24px;
       max-width: 72ch;
     }
 
     .main :global(code) {
-      font-family: 'DM Mono', monospace;
+      font-family: 'Courier New', monospace;
       font-size: 0.82em;
-      background: rgba(255,255,255,0.07);
-      color: var(--green__300);
+      background: var(--surface-elevate);
+      color: var(--primary-300);
       padding: 2px 6px;
       border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
     .main :global(pre) {
-      font-family: 'DM Mono', monospace;
+      font-family: 'Courier New', monospace;
       font-size: 0.82rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
+      background: var(--surface-elevate);
+      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 10px;
       padding: 20px 24px;
       overflow-x: auto;
       margin: 16px 0 24px;
-      color: var(--grey__200);
+      color: var(--neutral-200);
       line-height: 1.7;
     }
 
     .main :global(pre code) {
       background: none;
+      border: none;
       padding: 0;
       color: inherit;
       font-size: inherit;
@@ -261,12 +247,12 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     }
 
     .main :global(th) {
-      font-family: 'Syne', sans-serif;
+      font-family: var(--font-family-headings);
       font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      letter-spacing: 0;
       text-transform: uppercase;
-      color: var(--grey__500);
+      color: var(--text-placeholder);
       text-align: left;
       padding: 8px 14px;
       border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -274,7 +260,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 
     .main :global(td) {
       padding: 10px 14px;
-      color: var(--grey__300);
+      color: var(--text-body-default);
       border-bottom: 1px solid rgba(255,255,255,0.04);
       vertical-align: top;
     }
@@ -285,12 +271,11 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     .main :global(ol) {
       padding-left: 20px;
       margin-bottom: 16px;
-      color: var(--grey__300);
+      color: var(--text-body-default);
     }
 
-    .main :global(li) { margin-bottom: 6px; }
-
-    .main :global(strong) { color: var(--grey__100); font-weight: 500; }
+    .main :global(li)     { margin-bottom: 6px; }
+    .main :global(strong) { color: var(--text-headings); font-weight: 600; }
 
     .main :global(hr) {
       border: none;
@@ -305,49 +290,58 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       height: calc(100vh - 56px);
       overflow-y: auto;
       padding: 28px 16px 28px 20px;
+      background: var(--surface-page);
       scrollbar-width: thin;
-      scrollbar-color: var(--grey__700) transparent;
+      scrollbar-color: var(--neutral-700) transparent;
     }
 
     .toc__label {
-      font-family: 'Syne', sans-serif;
-      font-size: 0.68rem;
+      font-family: var(--font-family-headings);
+      font-size: var(--text-h4
+      -default);
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0;
       text-transform: uppercase;
-      color: var(--grey__500);
+      color: var(--text-placeholder);
       margin-bottom: 10px;
     }
 
-    .toc__list {
-      list-style: none;
-      padding: 0;
-    }
-
+    .toc__list { list-style: none; padding: 0; }
     .toc__item { margin-bottom: 2px; }
 
     .toc__link {
       display: block;
-      font-size: 0.8rem;
-      color: var(--grey__500);
+      font-size: var(--text-body-default);
+      color: var(--text-placeholder);
       text-decoration: none;
       padding: 4px 8px;
       border-radius: 4px;
       transition: color 0.15s, background 0.15s;
-      line-height: 1.4;
+      line-height: 1.8;
     }
 
     .toc__link:hover {
-      color: var(--grey__200);
-      background: rgba(255,255,255,0.04);
+      color: var(--text-headings);
+      background: var(--surface-hover-dark);
     }
 
     .toc__link.is-active {
-      color: var(--green__300);
-      background: rgba(78, 210, 30, 0.08);
+      color: var(--primary-300);
+      background: var(--primary-900);
     }
 
     .toc__link[data-depth="3"] { padding-left: 18px; }
+
+    /* Headings */
+.main :global(h1) { font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); }
+.main :global(h2) { font-size: var(--font-size-h2); line-height: var(--line-height-h2); font-weight: var(--font-weight-bold); }
+.main :global(h3) { font-size: var(--font-size-h3); line-height: var(--line-height-h3); font-weight: var(--font-weight-semibold); }
+.main :global(h4) { font-size: var(--font-size-h4); line-height: var(--line-height-h4); font-weight: var(--font-weight-semibold); }
+.main :global(h5) { font-size: var(--font-size-h5); line-height: var(--line-height-h5); font-weight: var(--font-weight-medium); }
+.main :global(h6) { font-size: var(--font-size-h6); line-height: var(--line-height-h6); font-weight: var(--font-weight-medium); }
+
+/* Paragraphs */
+.main :global(p)  { font-size: var(--font-size-paragraph-md); line-height: var(--line-height-paragraph-md); }
   </style>
 </head>
 <body>
@@ -375,7 +369,6 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 
     <main class="main" id="main-content">
       <header class="main__header">
-        <p class="main__eyebrow">Componente</p>
         <h1 class="main__title">{title}</h1>
         {description && <p class="main__description">{description}</p>}
       </header>
@@ -389,11 +382,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
           <ul class="toc__list">
             {filteredHeadings.map(h => (
               <li class="toc__item">
-                <a
-                  href={`#${h.slug}`}
-                  class="toc__link"
-                  data-depth={String(h.depth)}
-                >
+                <a href={`#${h.slug}`} class="toc__link" data-depth={String(h.depth)}>
                   {h.text}
                 </a>
               </li>
@@ -408,17 +397,15 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
   <script>
     const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc__link');
     if (tocLinks.length) {
-      const headingEls = Array.from(tocLinks).map(link => {
-        const id = link.getAttribute('href')?.slice(1);
-        return id ? document.getElementById(id) : null;
-      }).filter(Boolean) as HTMLElement[];
+      const headingEls = Array.from(tocLinks)
+        .map(l => document.getElementById(l.getAttribute('href')?.slice(1) ?? ''))
+        .filter(Boolean) as HTMLElement[];
 
       const observer = new IntersectionObserver(entries => {
         for (const entry of entries) {
           if (entry.isIntersecting) {
             tocLinks.forEach(l => l.classList.remove('is-active'));
-            const active = document.querySelector(`.toc__link[href="#${entry.target.id}"]`);
-            active?.classList.add('is-active');
+            document.querySelector(`.toc__link[href="#${entry.target.id}"]`)?.classList.add('is-active');
             break;
           }
         }

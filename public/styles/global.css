@@ -1,85 +1,347 @@
-:root {
-  /* ==========================================================================
-     1. PALETA DE COLORES DE MARCA (BRAND)
-     ========================================================================== */
-  --green__100:#dcf6d2;
-  --green__200:#b8eda5;
-  --green__300:#95e478;
-  --green__400:#71db4b;
-  --green__default:#4ed21e;
-  --green__600:#3ea818;
-  --green__700:#328613;
-  --green__800:#1f540c;
-  --green__50:#eefbe9;
-  --green__900:#102a06;
-  --purple__50:#eee6fe;
-  --purple__100:#d9c9fd;
-  --purple__200:#b899fb;
-  --purple__300:#9566f9;
-  --purple__400:#7133f7;
-  --purple__default:#4e00f5;
-  --purple__600:#3e00c4;
-  --purple__700:#2f0093;
-  --purple__800:#1f0062;
-  --purple__900:#100031;
-  --red__50:#ffefef;
-  --red__100:#ffdede;
-  --red__200:#ffbdbd;
-  --red__300:#ff9d9d;
-  --red__400:#ff7c7c;
-  --red__default:#ff5b5b;
-  --red__600:#f32222;
-  --red__700:#c60a0a;
-  --red__800:#830707;
-  --red__900:#420303;
-  --grey__50:#f1f1f6;
-  --grey__100:#e3e2ed;
-  --grey__200:#c7c6da;
-  --grey__300:#aaa9c8;
-  --grey__400:#8e8db5;
-  --grey__500:#7270a3;
-  --grey__600:#5b5a82;
-  --grey__700:#444362;
-  --grey__800:#2e2d41;
-  --grey__900:#171621;
-  --foundation__white__100:#ffffff;
+/* ============================================================
+   DINO DESIGN SYSTEM — global.css
+   Fuente de verdad: tokens_tokens.json (Figma Variables)
+   Estructura: Brand → Semantic → Components/Dark
+   ============================================================ */
 
-  /* ==========================================================================
-     2. CAPA SEMÁNTICA (CORREGIDA SIN BARRAS)
-     ========================================================================== */
-  --Primary__default: var(--green__default);
-  --Primary__600: var(--green__600);
-  --Primary__700: var(--green__700);
-  --Info__default: var(--purple__default);
-  --Info__600: var(--purple__600);
-  --Neutral__white100: var(--foundation__white__100);
-  --Neutral__white80: rgba(255, 255, 255, 0.8);
-  --Neutral__white40: rgba(255, 255, 255, 0.4);
-  --Neutral__grey700: var(--grey__700);
-  --Neutral__grey100: var(--grey__100);
+   :root {
 
-  /* ==========================================================================
-     3. COMPONENTES (VINCULADOS CORRECTAMENTE)
-     ========================================================================== */
-  --Text__actiondefaultlight: var(--Neutral__white100);
-  --Text__actionhoverlight: var(--Neutral__white80);
-  --Text__actiondisabledlight: var(--Neutral__white40);
-  --Text__actiondefaultdark: var(--grey__900);
-  
-  --Surface__buttonprimarydefault: var(--Primary__600);
-  --Surface__buttonprimaryhover: var(--Primary__700);
-  --Surface__buttonsecondarydefault: var(--Info__default);
-  --Surface__buttonsecondaryhover: var(--Info__600);
-  --Surface__buttondisabled: var(--Neutral__grey700);
-  --Surface__buttonwhitedefault: var(--Neutral__white100);
-  --Surface__buttonwhitehover: var(--Neutral__grey100);
-}
+      /* ==========================================================
+         1. BRAND — primitivos exactos del JSON
+         ========================================================== */
+    
+      /* Green */
+      --green-50: #eefbe9;
+      --green-100: #dcf6d2;
+      --green-200: #b8eda5;
+      --green-300: #95e478;
+      --green-400: #71db4b;
+      --green-default: #4ed21e;
+      --green-600: #3ea818;
+      --green-700: #328613;
+      --green-800: #1f540c;
+      --green-900: #102a06;
+    
+      /* Purple */
+      --purple-50: #eee6fe;
+      --purple-100: #d9c9fd;
+      --purple-200: #b899fb;
+      --purple-300: #9566f9;
+      --purple-400: #7133f7;
+      --purple-default: #4e00f5;
+      --purple-600: #3e00c4;
+      --purple-700: #2f0093;
+      --purple-800: #1f0062;
+      --purple-900: #100031;
+    
+      /* Red */
+      --red-50: #ffefef;
+      --red-100: #ffdede;
+      --red-200: #ffbdbd;
+      --red-300: #ff9d9d;
+      --red-400: #ff7c7c;
+      --red-default: #ff5b5b;
+      --red-600: #f32222;
+      --red-700: #c60a0a;
+      --red-800: #830707;
+      --red-900: #420303;
+    
+      /* Yellow */
+      --yellow-50: #fffaeb;
+      --yellow-100: #fdf4d5;
+      --yellow-200: #fbeaac;
+      --yellow-300: #fadf82;
+      --yellow-400: #f8d559;
+      --yellow-default: #f6ca2f;
+      --yellow-600: #e2b209;
+      --yellow-700: #a98507;
+      --yellow-800: #705905;
+      --yellow-900: #382c02;
+    
+      /* Grey */
+      --grey-50: #f1f1f6;
+      --grey-100: #e3e2ed;
+      --grey-200: #c7c6da;
+      --grey-300: #aaa9c8;
+      --grey-400: #8e8db5;
+      --grey-500: #7270a3;
+      --grey-600: #5b5a82;
+      --grey-700: #444362;
+      --grey-800: #2e2d41;
+      --grey-900: #171621;
+    
+      /* Orange */
+      --orange-50: #fff4ee;
+      --orange-100: #ffe8dc;
+      --orange-200: #ffd0b9;
+      --orange-300: #ffb895;
+      --orange-400: #ffa172;
+      --orange-default: #ff8a4f;
+      --orange-600: #cc6e3f;
+      --orange-700: #99522f;
+      --orange-800: #663720;
+      --orange-900: #663720;
+    
+      /* Pink */
+      --pink-50: #fff5ff;
+      --pink-100: #ffe3f3;
+      --pink-200: #ffc7e6;
+      --pink-300: #ffaada;
+      --pink-400: #ff8ecd;
+      --pink-default: #ff72c1;
+      --pink-600: #cc5b9a;
+      --pink-700: #994474;
+      --pink-800: #662e4d;
+      --pink-900: #331727;
+    
+      /* Blue */
+      --blue-50: #edfdff;
+      --blue-100: #dbf9ff;
+      --blue-200: #b6f4ff;
+      --blue-300: #92eeff;
+      --blue-400: #6de9ff;
+      --blue-default: #49e3ff;
+      --blue-600: #3ab6cc;
+      --blue-700: #2c8899;
+      --blue-800: #216673;
+      --blue-900: #0f2d33;
+    
+      /* Foundation white / black */
+      --white-100: #ffffff;
+      --white-80: #ffffffcc;
+      --white-70: #ffffffb2;
+      --white-60: #ffffff99;
+      --white-40: #ffffff66;
+      --white-30: #ffffff4d;
+      --white-20: #ffffff33;
+      --white-10: #ffffff1a;
+    
+      --black-100: #0d0c12;
+      --black-80: #0d0c12cc;
+      --black-70: #0d0c12b2;
+      --black-60: #0d0c1299;
+      --black-40: #0d0c1266;
+      --black-30: #0d0c124d;
+      --black-20: #0d0c1233;
+      --black-10: #0d0c121a;
+    
+      /* ==========================================================
+         2. SEMANTIC — colección "Semantic" del JSON
+         ========================================================== */
+    
+      /* Primary → green */
+      --primary-50:      var(--green-50);
+      --primary-100:     var(--green-100);
+      --primary-200:     var(--green-200);
+      --primary-300:     var(--green-300);
+      --primary-400:     var(--green-400);
+      --primary-default: var(--green-default);
+      --primary-600:     var(--green-600);
+      --primary-700:     var(--green-700);
+      --primary-800:     var(--green-800);
+      --primary-900:     var(--green-900);
+    
+      /* Info → purple */
+      --info-50:      var(--purple-50);
+      --info-100:     var(--purple-100);
+      --info-200:     var(--purple-200);
+      --info-300:     var(--purple-300);
+      --info-400:     var(--purple-400);
+      --info-default: var(--purple-default);
+      --info-600:     var(--purple-600);
+      --info-700:     var(--purple-700);
+      --info-800:     var(--purple-800);
+      --info-900:     var(--purple-900);
+    
+      /* Error → red */
+      --error-50:      var(--red-50);
+      --error-100:     var(--red-100);
+      --error-200:     var(--red-200);
+      --error-300:     var(--red-300);
+      --error-400:     var(--red-400);
+      --error-default: var(--red-default);
+      --error-600:     var(--red-600);
+      --error-700:     var(--red-700);
+      --error-800:     var(--red-800);
+      --error-900:     var(--red-900);
+    
+      /* Warning → yellow */
+      --warning-50:      var(--yellow-50);
+      --warning-100:     var(--yellow-100);
+      --warning-200:     var(--yellow-200);
+      --warning-300:     var(--yellow-300);
+      --warning-400:     var(--yellow-400);
+      --warning-default: var(--yellow-default);
+      --warning-600:     var(--yellow-600);
+      --warning-700:     var(--yellow-700);
+      --warning-800:     var(--yellow-800);
+      --warning-900:     var(--yellow-900);
+    
+      /* Success → green */
+      --success-50:      var(--green-50);
+      --success-100:     var(--green-100);
+      --success-default: var(--green-default);
+      --success-600:     var(--green-600);
+      --success-700:     var(--green-700);
+      --success-900:     var(--green-900);
+    
+      /* Neutral → grey */
+      --neutral-50:        var(--grey-50);
+      --neutral-100:       var(--grey-100);
+      --neutral-200:       var(--grey-200);
+      --neutral-300:       var(--grey-300);
+      --neutral-400:       var(--grey-400);
+      --neutral-500:       var(--grey-500);
+      --neutral-600:       var(--grey-600);
+      --neutral-700:       var(--grey-700);
+      --neutral-800:       var(--grey-800);
+      --neutral-900:       var(--grey-900);
+      --neutral-white-100: var(--white-100);
+      --neutral-white-80:  var(--white-80);
+      --neutral-white-70:  var(--white-70);
+      --neutral-white-60:  var(--white-60);
+      --neutral-white-40:  var(--white-40);
+      --neutral-white-30:  var(--white-30);
+      --neutral-white-20:  var(--white-20);
+      --neutral-white-10:  var(--white-10);
+      --neutral-black-100: var(--black-100);
+      --neutral-black-80:  var(--black-80);
+      --neutral-black-60:  var(--black-60);
+      --neutral-black-40:  var(--black-40);
+      --neutral-black-30:  var(--black-30);
+      --neutral-black-20:  var(--black-20);
+      --neutral-black-10:  var(--black-10);
+    
+      /* ==========================================================
+         3. COMPONENTS/DARK — modo por defecto del sistema
+         ========================================================== */
+    
+      /* Text */
+      --text-headings:              var(--neutral-white-100);
+      --text-body-default:          var(--neutral-white-70);
+      --text-body-dark:             var(--neutral-900);
+      --text-placeholder:           var(--neutral-500);
+      --text-placeholder-focus:     var(--neutral-600);
+      --text-action-light:          var(--neutral-white-100);
+      --text-action-light-hover:    var(--neutral-white-80);
+      --text-action-light-disabled: var(--neutral-white-40);
+      --text-action-dark:           var(--neutral-900);
+      --text-action-dark-hover:     var(--neutral-black-80);
+      --text-action-dark-disabled:  var(--neutral-black-40);
+      --text-warning:               var(--warning-default);
+      --text-success:               var(--success-default);
+      --text-info:                  var(--info-300);
+      --text-error-dark:            var(--error-default);
+      --text-error-light:           var(--error-700);
+      --text-on-action:             var(--neutral-white-100);
+    
+      /* Icons */
+      --icon-default:               var(--neutral-300);
+      --icon-action-light:          var(--neutral-white-100);
+      --icon-action-light-hover:    var(--neutral-white-80);
+      --icon-action-light-disabled: var(--neutral-white-40);
+      --icon-action-dark:           var(--neutral-800);
+      --icon-warning:               var(--warning-default);
+      --icon-success:               var(--success-default);
+      --icon-error:                 var(--error-default);
+      --icon-info:                  var(--info-300);
+    
+      /* Surface */
+      --surface-page:                       var(--neutral-900);
+      --surface-elevate:                    var(--neutral-800);
+      --surface-default-dark:               var(--neutral-900);
+      --surface-hover-dark:                 var(--neutral-700);
+      --surface-disabled-dark:              var(--neutral-900);
+      --surface-default-light:              var(--neutral-white-100);
+      --surface-hover-light:                var(--neutral-100);
+      --surface-disabled-light:             var(--neutral-200);
+      --surface-success:                    var(--success-900);
+      --surface-error:                      var(--error-900);
+      --surface-info:                       var(--info-900);
+      --surface-button-primary-default:     var(--primary-600);
+      --surface-button-primary-hover:       var(--primary-700);
+      --surface-button-disabled:            var(--neutral-700);
+      --surface-button-white-default:       var(--neutral-white-100);
+      --surface-button-white-hover:         var(--neutral-100);
+      --surface-button-secondary-default:   var(--info-default);
+      --surface-button-secondary-hover:     var(--info-600);
+      --surface-button-transparent-default: var(--neutral-white-20);
+      --surface-button-transparent-hover:   var(--neutral-white-10);
+      --surface-button-error-default:       var(--error-600);
+      --surface-button-error-hover:         var(--error-700);
+      --surface-button-premium-default:     linear-gradient(158deg, var(--info-default) 15%, var(--error-default) 103%);
+      --surface-button-premium-hover:       linear-gradient(158deg, var(--info-600) 15%, var(--error-600) 103%);
+    
+      /* Border */
+      --border-default:        var(--neutral-500);
+      --border-hover:          var(--neutral-200);
+      --border-action-default: var(--primary-600);
+      --border-action-hover:   var(--primary-700);
+      --border-disabled:       var(--neutral-600);
+      --border-error:          var(--error-default);
+      --border-success:        var(--success-default);
+    
+      /* Shadows */
+      --shadow-button:        0px 2px 2px var(--black-20), inset 0px -4px 0px var(--black-30);
+      --shadow-button-active: 0px 1px 1px var(--black-20), inset 0px -2px 0px var(--black-30);
+      --shadow-text:          0px 1.5px 2px var(--black-60);
+    
+      /* Font families */
+      --font-family-body:     'Rubik', sans-serif;
+      --font-family-headings: 'Rubik', sans-serif;
+    
+      /* ==========================================================
+         4. TYPOGRAPHY — Brand/Mobile (base) del JSON
+         ========================================================== */
+    
+      /* Font weights */
+      --font-weight-regular:  400;
+      --font-weight-medium:   500;
+      --font-weight-semibold: 600;
+      --font-weight-bold:     700;
+    
+      /* Headings — Mobile base (Brand/Mobile > Font > h*) */
+      --font-size-h1:   48px;  --line-height-h1:   56px;
+      --font-size-h2:   40px;  --line-height-h2:   48px;
+      --font-size-h3:   32px;  --line-height-h3:   40px;
+      --font-size-h4:   28px;  --line-height-h4:   32px;
+      --font-size-h5:   24px;  --line-height-h5:   28px;
+      --font-size-h6:   20px;  --line-height-h6:   24px;
+    
+      /* Paragraphs — iguales en mobile (Brand/Mobile > Font > paragraph-*) */
+      --font-size-paragraph-xlg: 20px;  --line-height-paragraph-xlg: 24px;
+      --font-size-paragraph-lg:  18px;  --line-height-paragraph-lg:  20px;
+      --font-size-paragraph-md:  16px;  --line-height-paragraph-md:  20px;
+      --font-size-paragraph-sm:  14px;  --line-height-paragraph-sm:  18px;
+      --font-size-paragraph-xsm: 12px;  --line-height-paragraph-xsm: 16px;
+      --font-size-paragraph-cp:  11px;  --line-height-paragraph-cp:  16px;
+    
+      /* Progress gradients */
+      --gradient-yellow: linear-gradient(180deg, #f6ca2f 13%, #fbeaac 36%, #f6ca2f 67%);
+      --gradient-green:  linear-gradient(180deg, #3ea818 13%, #95e478 36%, #3ea818 67%);
+      --gradient-red:    linear-gradient(180deg, #f32222 13%, #ff9d9d 36%, #f32222 67%);
+      --gradient-orange: linear-gradient(180deg, #ff8a4f 13%, #ffb895 36%, #ff8a4f 67%);
+      --gradient-purple: linear-gradient(180deg, #7133f7 13%, #9566f9 36%, #7133f7 67%);
+    }
+    
+    /* ==========================================================
+       Desktop overrides — Brand/Desktop > Font > h*
+       ========================================================== */
+       @media (min-width: 1024px) {
+         :root {
+           --font-size-h1: 40px;  --line-height-h1: 48px;
+           --font-size-h2: 32px;  --line-height-h2: 40px;
+           --font-size-h3: 24px;  --line-height-h3: 28px;
+           --font-size-h4: 20px;  --line-height-h4: 24px;
+           --font-size-h5: 18px;  --line-height-h5: 20px;
+           --font-size-h6: 16px;  --line-height-h6: 20px;
 
-/* ==========================================================================
-   4. ESTILOS DE DEGRADADOS Y CLASES COMPLEJAS
-   ========================================================================== */
-.Progress__yellow { background: linear-gradient(180deg, #f6ca2f 13%, #fbeaac 36%, #f6ca2f 67%); }
-.Progress__green { background: linear-gradient(180deg, #3ea818 13%, #95e478 36%, #3ea818 67%); }
-.Progress__red { background: linear-gradient(180deg, #f32222 13%, #ff9d9d 36%, #f32222 67%); }
-.Progress__orange { background: linear-gradient(180deg, #ff8a4f 13%, #ffb895 36%, #ff8a4f 67%); }
-.Progress__purple { background: linear-gradient(180deg, #7133f7 13%, #9566f9 36%, #7133f7 67%); }
+                 /* Paragraphs — iguales en mobile y desktop (Brand/Mobile > Font > paragraph-*) */
+      --font-size-paragraph-xlg: 24px;  --line-height-paragraph-xlg: 32px;
+      --font-size-paragraph-lg:  20px;  --line-height-paragraph-lg:  28px;
+      --font-size-paragraph-md:  18px;  --line-height-paragraph-md:  24px;
+      --font-size-paragraph-sm:  16px;  --line-height-paragraph-sm:  20px;
+      --font-size-paragraph-xsm: 14px;  --line-height-paragraph-xsm: 20px;
+      --font-size-paragraph-cp:  12px;  --line-height-paragraph-cp:  16px;
+         }
+       }
