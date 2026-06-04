@@ -1,0 +1,42 @@
+# Dino Design System — Cursor Rules
+
+## Contexto del proyecto
+Estás ayudando a construir la documentación del Design System de Dino, una app de aprendizaje de idiomas.
+El proyecto usa Astro + CSS vanilla con tokens de Figma exportados en `global.css`.
+
+## Audiencia
+- Developers internos que implementan componentes
+- Diseñadores que consultan especificaciones
+- Recruiters que evalúan el portfolio
+
+## Tono de escritura
+- Como un amigo dev que explica sin tecnicismos
+- Directo, claro, con personalidad — nunca aburrido
+- Juvenil y con energía, pero profesional
+- Máximo 2 líneas por descripción de componente o variante
+- Usa verbos de acción: "lleva", "bloquea", "celebra", "avisa"
+- Evita: "este componente sirve para...", "se utiliza cuando...", jerga técnica innecesaria
+- Ejemplos de tono correcto:
+  - ✅ "El botón que mueve la lección hacia adelante. Va solo cuando hay una sola acción posible."
+  - ✅ "Para cuando algo sale mal y el learner necesita saberlo ya."
+  - ❌ "Componente utilizado para notificar al usuario de estados de error."
+
+## Reglas de código
+- Siempre usar tokens de `global.css` — nunca colores hardcodeados
+- Estructura de tokens: Brand → Semantic → Components/Dark
+- Variantes de botón: primary, secondary, tertiary (white-20), ghost (transparent), danger, premium
+- El purple/Info NO es una variante de botón — está reservado
+- Cada página de componente va en `src/pages/components/[nombre].astro`
+- Layout: `DocLayout.astro` — no crear layouts alternativos
+- No incluir `<h2>` para el playground interactivo — va directo sin título
+
+## Estructura de cada página de componente
+1. Playground interactivo (sin heading)
+2. `<h2>` Variantes — con subsecciones `<h3>` por cada variante
+3. `<h2>` Properties — tabla de props
+
+## Archivos de referencia
+- Tokens: `tokens_tokens.json`
+- Estilos: `public/styles/global.css`
+- Template: `COMPONENT_TEMPLATE.md`
+- Guía de escritura: `src/content/docs/WRITING_GUIDE.md`
