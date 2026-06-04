@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://tu-usuario.github.io',
-  base: '/dino-design-system',
+  site: 'https://dino-design-system-v2.vercel.app',
 });
