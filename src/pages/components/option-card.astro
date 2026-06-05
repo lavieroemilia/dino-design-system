@@ -1,0 +1,362 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+import OptionCard from '../../components/OptionCard.astro';
+
+const headings = [
+  { depth: 2, slug: 'variants',        text: 'Variants' },
+  { depth: 3, slug: 'status',          text: 'Status' },
+  { depth: 3, slug: 'selected',        text: 'Selected' },
+  { depth: 3, slug: 'badge',           text: 'Badge' },
+  { depth: 2, slug: 'usage',           text: 'Usage' },
+  { depth: 2, slug: 'combinations',    text: 'Combinations' },
+  { depth: 2, slug: 'dos-donts',       text: "Do's & Don'ts" },
+];
+---
+
+<DocLayout
+  title="Option Card"
+  description="The answer the learner picks. Every quiz question lives inside one of these."
+  headings={headings}
+>
+
+  <!-- ═══════════════════════════════════════════════
+       PLAYGROUND
+  ════════════════════════════════════════════════ -->
+  <section class="playground" aria-label="Interactive preview">
+
+    <div class="playground__stage" id="preview-stage">
+      <div class="preview-wrap">
+        <OptionCard label="Paris" status="default" selected={false} />
+      </div>
+    </div>
+
+    <div class="playground__controls" role="group" aria-label="Playground controls">
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Status</legend>
+        <div class="ctrl-group__options">
+          {['default','hover','pressed','error','disabled'].map(s => (
+            <button
+              class:list={['ctrl-btn', { 'is-active': s === 'default' }]}
+              data-prop="status"
+              data-value={s}
+            >{s}</button>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Selected</legend>
+        <div class="ctrl-group__options">
+          <button class="ctrl-btn is-active" data-prop="selected" data-value="false">false</button>
+          <button class="ctrl-btn"           data-prop="selected" data-value="true">true</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Badge</legend>
+        <div class="ctrl-group__options">
+          <button class="ctrl-btn is-active" data-prop="badge" data-value="false">false</button>
+          <button class="ctrl-btn"           data-prop="badge" data-value="true">true</button>
+        </div>
+      </fieldset>
+
+    </div>
+
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       VARIANTS
+  ════════════════════════════════════════════════ -->
+  <h2 id="variants">Variants</h2>
+
+  <h3 id="status">Status</h3>
+  <p>Five states that cover every moment in the selection flow — from resting to wrong answer.</p>
+  <div class="example-row example-row--col">
+    {[
+      { status: 'default',  label: 'Default — resting, waiting for a tap' },
+      { status: 'hover',    label: 'Hover — cursor over the card' },
+      { status: 'pressed',  label: 'Pressed — finger or click held down' },
+      { status: 'error',    label: 'Error — wrong answer confirmed' },
+      { status: 'disabled', label: 'Disabled — option not available this round' },
+    ].map(({ status, label }) => (
+      <div class="size-row">
+        <span class="size-label">{label}</span>
+        <OptionCard label="Paris" status={status as any} />
+      </div>
+    ))}
+  </div>
+
+  <h3 id="selected">Selected</h3>
+  <p>Marks the learner's active choice. The radio indicator fills with the primary green to confirm the tap landed.</p>
+  <div class="example-row example-row--col">
+    <div class="size-row">
+      <span class="size-label">selected=false</span>
+      <OptionCard label="Paris" status="default" selected={false} />
+    </div>
+    <div class="size-row">
+      <span class="size-label">selected=true</span>
+      <OptionCard label="Paris" status="default" selected={true} />
+    </div>
+    <div class="size-row">
+      <span class="size-label">selected + error</span>
+      <OptionCard label="Paris" status="error" selected={true} />
+    </div>
+  </div>
+
+  <h3 id="badge">Badge</h3>
+  <p>The yellow dot flags a new or recommended option — use it once per question at most, never as decoration.</p>
+  <div class="example-row example-row--col">
+    <div class="size-row">
+      <span class="size-label">No badge</span>
+      <OptionCard label="Paris" status="default" badge={false} />
+    </div>
+    <div class="size-row">
+      <span class="size-label">With badge</span>
+      <OptionCard label="Paris" status="default" badge={true} />
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       USAGE
+  ════════════════════════════════════════════════ -->
+  <h2 id="usage">Usage</h2>
+  <p>Lives inside every multiple-choice question screen. Always rendered as a group of 2–4 cards stacked vertically, sharing the same <code>name</code> prop so only one can be selected at a time. The error state fires after the learner submits a wrong answer — never before.</p>
+
+
+  <!-- ═══════════════════════════════════════════════
+       COMBINATIONS
+  ════════════════════════════════════════════════ -->
+  <h2 id="combinations">Combinations</h2>
+  <p>Always followed by a primary <strong>Button</strong> ("Check answer") that becomes active once a card is selected. Pairs with the <strong>Progress Bar</strong> in the lesson header above the question.</p>
+  <div class="example-row example-row--col">
+    <OptionCard label="Paris" status="default" name="demo" value="paris" />
+    <OptionCard label="London" status="default" name="demo" value="london" selected={true} />
+    <OptionCard label="Berlin" status="default" name="demo" value="berlin" />
+    <OptionCard label="Madrid" status="disabled" name="demo" value="madrid" />
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       DO'S & DON'TS
+  ════════════════════════════════════════════════ -->
+  <h2 id="dos-donts">Do's & Don'ts</h2>
+
+  <div class="dos-donts">
+    <div class="dos-donts__col dos-donts__col--do">
+      <p class="dos-donts__label">Do</p>
+      <ul>
+        <li><strong>Group cards with the same <code>name</code></strong> — enforces single selection and correct radio semantics.</li>
+        <li><strong>Show error only after submission</strong> — don't flag wrong answers while the learner is still choosing.</li>
+        <li><strong>Keep labels short</strong> — one line max; the card doesn't wrap text gracefully.</li>
+      </ul>
+    </div>
+    <div class="dos-donts__col dos-donts__col--dont">
+      <p class="dos-donts__label">Don't</p>
+      <ul>
+        <li><strong>Don't use more than one badge per question</strong> — it loses meaning fast and looks broken.</li>
+        <li><strong>Don't mix disabled and error on the same card</strong> — pick one signal at a time.</li>
+        <li><strong>Don't use it outside a quiz context</strong> — for navigation or settings, use a different selection pattern.</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr />
+
+  <p>
+    <strong>Related:</strong>
+    <a href="/components/button">Button</a> —
+    the "Check answer" action that submits the selection.
+    ·
+    <a href="/components/progress-bar">Progress Bar</a> —
+    tracks lesson progress in the header above the question.
+  </p>
+
+</DocLayout>
+
+
+<style>
+  .playground {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  .playground__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 40px 32px;
+    background: var(--surface-page);
+  }
+
+  .preview-wrap { width: 360px; }
+
+  .playground__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ctrl-group { border: none; padding: 0; }
+
+  .ctrl-group__label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    margin-bottom: 8px;
+  }
+
+  .ctrl-group__options { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .ctrl-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: var(--text-body-default);
+    font-family: var(--font-family-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .ctrl-btn:hover     { background: var(--surface-hover-dark); }
+  .ctrl-btn.is-active {
+    background: var(--primary-900);
+    color: var(--primary-300);
+    border-color: var(--primary-700);
+  }
+
+
+  .example-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: var(--surface-elevate);
+    border-radius: 10px;
+    margin: 12px 0 8px;
+  }
+
+  .example-row--col { flex-direction: column; align-items: stretch; gap: 12px; }
+
+  .size-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .size-label {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+    white-space: nowrap;
+  }
+
+  .dos-donts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 16px 0 24px;
+  }
+
+  .dos-donts__col {
+    padding: 16px 20px;
+    border-radius: 10px;
+  }
+
+  .dos-donts__col--do {
+    background: color-mix(in srgb, var(--success-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success-default) 30%, transparent);
+  }
+  .dos-donts__col--dont {
+    background: color-mix(in srgb, var(--error-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--error-default) 30%, transparent);
+  }
+
+  .dos-donts__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .dos-donts__col--do   .dos-donts__label { color: var(--success-default); }
+  .dos-donts__col--dont .dos-donts__label { color: var(--error-default); }
+</style>
+
+
+<script>
+  const stage  = document.getElementById('preview-stage');
+  const codeEl = document.getElementById('preview-code');
+
+  const state: Record<string, string> = {
+    status:   'default',
+    selected: 'false',
+    badge:    'false',
+  };
+
+  function render() {
+    const { status, selected, badge } = state;
+    const card = stage?.querySelector('.option-card') as HTMLElement | null;
+    if (!card) return;
+
+    card.className = [
+      'option-card',
+      `option-card--${status}`,
+      selected === 'true' ? 'option-card--selected' : '',
+    ].filter(Boolean).join(' ');
+
+    const input = card.querySelector('.option-card__input') as HTMLInputElement | null;
+    if (input) {
+      input.checked  = selected === 'true';
+      input.disabled = status === 'disabled';
+    }
+
+    const badgeEl = card.querySelector('.option-card__badge');
+    if (badge === 'true' && !badgeEl) {
+      const b = document.createElement('span');
+      b.className = 'option-card__badge';
+      b.setAttribute('aria-hidden', 'true');
+      card.appendChild(b);
+    } else if (badge === 'false' && badgeEl) {
+      badgeEl.remove();
+    }
+
+    const attrs = [
+      `label="Paris"`,
+      `status="${status}"`,
+      selected === 'true' ? `selected={true}` : '',
+      badge === 'true'    ? `badge={true}`    : '',
+    ].filter(Boolean).join(' ');
+
+    if (codeEl) codeEl.textContent = `<OptionCard ${attrs} />`;
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('.ctrl-btn[data-prop]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prop = btn.dataset.prop!;
+      document.querySelectorAll<HTMLButtonElement>(`.ctrl-btn[data-prop="${prop}"]`)
+        .forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      state[prop] = btn.dataset.value!;
+      render();
+    });
+  });
+</script>

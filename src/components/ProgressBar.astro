@@ -8,7 +8,7 @@ interface Props {
 
 const {
   value = 0,
-  size = 'lg',
+  size  = 'lg',
   color = 'yellow',
   label,
 } = Astro.props;
@@ -37,20 +37,17 @@ const clamped = Math.min(100, Math.max(0, value));
     overflow: hidden;
   }
 
-  /* Sizes */
   .progress--lg { height: 24px; }
   .progress--md { height: 20px; }
   .progress--sm { height: 12px; }
-  .progress--xs { height: 6px;  }
+  .progress--xs { height: 6px; border-radius: 12px; }
 
-  /* Fill */
   .progress__fill {
     height: 100%;
-    border-radius: 20px;
+    border-radius: inherit;
     transition: width 0.4s ease;
   }
 
-  /* Colors — usa gradientes del global.css */
   .progress--yellow .progress__fill { background: var(--gradient-yellow); }
   .progress--green  .progress__fill { background: var(--gradient-green);  }
   .progress--red    .progress__fill { background: var(--gradient-red);    }

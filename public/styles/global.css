@@ -301,12 +301,12 @@
       --font-weight-bold:     700;
     
       /* Headings — Mobile base (Brand/Mobile > Font > h*) */
-      --font-size-h1:   48px;  --line-height-h1:   56px;
-      --font-size-h2:   40px;  --line-height-h2:   48px;
-      --font-size-h3:   32px;  --line-height-h3:   40px;
-      --font-size-h4:   28px;  --line-height-h4:   32px;
-      --font-size-h5:   24px;  --line-height-h5:   28px;
-      --font-size-h6:   20px;  --line-height-h6:   24px;
+      --font-size-h1:   40px;  --line-height-h1:   48px;
+      --font-size-h2:   32px;  --line-height-h2:   40px;
+      --font-size-h3:   28px;  --line-height-h3:   32px;
+      --font-size-h4:   24px;  --line-height-h4:   28px;
+      --font-size-h5:   20px;  --line-height-h5:   24px;
+      --font-size-h6:   16px;  --line-height-h6:   20px;
     
       /* Paragraphs — iguales en mobile (Brand/Mobile > Font > paragraph-*) */
       --font-size-paragraph-xlg: 20px;  --line-height-paragraph-xlg: 24px;
@@ -322,7 +322,69 @@
       --gradient-red:    linear-gradient(180deg, #f32222 13%, #ff9d9d 36%, #f32222 67%);
       --gradient-orange: linear-gradient(180deg, #ff8a4f 13%, #ffb895 36%, #ff8a4f 67%);
       --gradient-purple: linear-gradient(180deg, #7133f7 13%, #9566f9 36%, #7133f7 67%);
-    }
+   
+      /* Scale */
+--scale-0: 0px;
+--scale-25: 1px;
+--scale-50: 2px;
+--scale-100: 4px;
+--scale-150: 6px;
+--scale-200: 8px;
+--scale-250: 10px;
+--scale-300: 12px;
+--scale-400: 16px;
+--scale-500: 20px;
+--scale-600: 24px;
+--scale-700: 28px;
+--scale-800: 32px;
+--scale-850: 36px;
+--scale-900: 40px;
+--scale-1000: 48px;
+--scale-1100: 64px;
+--scale-1200: 96px;
+--scale-1300: 104px;
+--scale-1400: 112px;
+--scale-1500: 120px;
+--scale-1600: 128px;
+--scale-1700: 136px;
+--scale-1800: 144px;
+--scale-1900: 152px;
+--scale-2000: 160px;
+
+/* Spacing */
+--spacing-2: 2px;
+--spacing-4: var(--scale-100);
+--spacing-8: var(--scale-200);
+--spacing-10: var(--scale-250);
+--spacing-12: var(--scale-300);
+--spacing-16: var(--scale-400);
+--spacing-20: var(--scale-500);
+--spacing-24: var(--scale-600);
+--spacing-28: var(--scale-700);
+--spacing-32: var(--scale-800);
+--spacing-36: var(--scale-850);
+--spacing-40: var(--scale-900);
+--spacing-48: var(--scale-1000);
+--spacing-64: var(--scale-1100);
+--spacing-72: var(--scale-1200);
+--spacing-80: var(--scale-1300);
+--spacing-88: var(--scale-1400);
+--spacing-96: var(--scale-1500);
+--spacing-104: var(--scale-1600);
+--spacing-112: var(--scale-1700);
+--spacing-120: var(--scale-1800);
+--spacing-128: var(--scale-1900);
+--spacing-136: var(--scale-2000);
+
+/* Border Radius */
+--radius-none: 0px;
+--radius-xsm: var(--scale-100);
+--radius-sm: var(--scale-150);
+--radius-md: var(--scale-200);
+--radius-lg: var(--scale-250);
+--radius-xlg: var(--scale-300);
+--radius-round: var(--scale-500);
+   }
     
     /* ==========================================================
        Desktop overrides — Brand/Desktop > Font > h*

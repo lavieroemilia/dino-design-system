@@ -9,11 +9,18 @@ interface Props {
 
 const { title, description, headings = [] } = Astro.props;
 
-const navItems = [
-  { label: 'Button',       href: '/components/button' },
-  { label: 'Progress Bar', href: '/components/progress-bar' },
-  { label: 'Typography',   href: '/components/typography' },
-];
+const pages = await Astro.glob('../pages/components/*.astro');
+
+const navItems = pages
+  .map(page => {
+    const slug = page.file.split('/').pop()?.replace('.astro', '') ?? '';
+    const label = slug
+      .split('-')
+      .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(' ');
+    return { label, href: `/components/${slug}` };
+  })
+  .sort((a: { label: string }, b: { label: string }) => a.label.localeCompare(b.label));
 
 const filteredHeadings = headings.filter(h => h.depth <= 3);
 ---
@@ -111,10 +118,9 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 
     .sidebar__group-label {
       font-family: var(--font-family-headings);
-      font-size: var(--font-size-paragraph-cp);
-      font-weight: var(--font-weight-bold);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      font-size: var(--font-size-paragraph-sm);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: none;
       color: var(--text-placeholder);
       padding: 0 var(--spacing-12);
       margin-bottom: var(--spacing-8);
@@ -126,7 +132,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       padding: 7px var(--spacing-12);
       border-radius: var(--radius-sm) 0 0 var(--radius-sm);
       font-size: var(--font-size-paragraph-sm);
-      font-weight: var(--font-weight-medium);
+      font-weight: var(--font-weight-default);
       color: var(--text-body-default);
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
@@ -155,12 +161,14 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 
     /* ── Main ── */
     .main {
-      padding: var(--spacing-48) var(--spacing-64) 96px;
-      min-width: 0;
+  padding: var(--spacing-64);
+  min-width: 0;
+  max-width: 860px;
+  margin: 0 auto;
     }
 
     .main__header {
-      margin-bottom: var(--spacing-24);
+      margin-bottom: var(--spacing-12);
       padding-bottom: var(--spacing-12);
     }
 
@@ -168,9 +176,10 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       font-family: var(--font-family-headings);
       font-size: var(--font-size-h1);
       font-weight: var(--font-weight-bold);
-      letter-spacing: -0.03em;
+      letter-spacing: none;
       color: var(--text-headings);
       line-height: var(--line-height-h1);
+      margin-bottom: var(--spacing-12);
       text-transform: uppercase;
     }
 
@@ -179,6 +188,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       font-size: var(--font-size-paragraph-lg);
       line-height: var(--line-height-paragraph-lg);
       color: var(--text-body-default);
+      padding-bottom: var(--spacing-4);
       max-width: 62ch;
     }
 
@@ -198,7 +208,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       font-size: var(--font-size-h3);
       font-weight: 600;
       color: var(--neutral-white-100);
-      margin-top: var(--spacing-48);
+      margin-top: var(--spacing-40);
       margin-bottom: 0;
       scroll-margin-top: 80px;
     }
@@ -227,7 +237,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       border-radius: var(--radius-xlg);
       padding: var(--spacing-20) var(--spacing-24);
       overflow-x: auto;
-      margin: var(--spacing-16) 0 var(--spacing-24);
+      margin: var(--spacing-16) 0 var(--spacing-48);
       color: var(--neutral-200);
       line-height: 1.7;
     }
@@ -297,11 +307,10 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     }
 
     .toc__label {
-      font-family: var(--font-family-headings);
-      font-size: var(--font-size-paragraph-cp);
+      font-family: var(--font-family-paragraph);
+      font-size: var(--font-size-paragraph-sm);
       font-weight: var(--font-weight-bold);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      letter-spacing: none;
       color: var(--text-placeholder);
       margin-bottom: var(--spacing-10);
     }
@@ -347,15 +356,15 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 <body>
 
   <header class="topbar" role="banner">
-    <a href="/" class="topbar__logo">🦕 Dino</a>
+    <a href="/overview" class="topbar__logo">🦕 Dino</a>
     <div class="topbar__divider" aria-hidden="true"></div>
     <span class="topbar__section">Design System</span>
   </header>
 
   <div class="shell">
 
-    <nav class="sidebar" aria-label="Componentes">
-      <p class="sidebar__group-label">Componentes</p>
+    <nav class="sidebar" aria-label="Components">
+      <p class="sidebar__group-label">Components</p>
       {navItems.map(item => (
         <a
           href={item.href}
@@ -375,10 +384,10 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       <slot />
     </main>
 
-    <aside class="toc" aria-label="En esta página">
+    <aside class="toc" aria-label="On this page">
       {filteredHeadings.length > 0 && (
         <>
-          <p class="toc__label">En esta página</p>
+          <p class="toc__label">On this page</p>
           <ul class="toc__list">
             {filteredHeadings.map(h => (
               <li class="toc__item">

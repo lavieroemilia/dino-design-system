@@ -1,0 +1,174 @@
+---
+interface Props {
+  label?: string;
+  status?: 'default' | 'hover' | 'pressed' | 'disabled' | 'error';
+  selected?: boolean;
+  badge?: boolean;
+  name?: string;
+  value?: string;
+}
+
+const {
+  label = 'Option',
+  status = 'default',
+  selected = false,
+  badge = false,
+  name,
+  value,
+} = Astro.props;
+---
+
+<label
+  class:list={[
+    'option-card',
+    `option-card--${status}`,
+    { 'option-card--selected': selected },
+  ]}
+>
+  <input
+    class="option-card__input"
+    type="radio"
+    name={name}
+    value={value}
+    checked={selected}
+    disabled={status === 'disabled'}
+    aria-invalid={status === 'error' ? 'true' : undefined}
+  />
+
+  <span class="option-card__icon" aria-hidden="true">
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd" d="M16 2.667A13.333 13.333 0 1 0 16 29.334 13.333 13.333 0 0 0 16 2.667ZM16 9.333a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm0 14.934a9.76 9.76 0 0 1-8-4.16c.04-2.667 5.333-4.134 8-4.134 2.653 0 7.96 1.467 8 4.134a9.76 9.76 0 0 1-8 4.16Z" fill="currentColor"/>
+    </svg>
+  </span>
+
+  <span class="option-card__label">{label}</span>
+
+  <span class="option-card__radio" aria-hidden="true"></span>
+
+  {badge && <span class="option-card__badge" aria-hidden="true"></span>}
+</label>
+
+<style>
+  .option-card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 56px;
+    padding: 16px;
+    border-radius: 10px;
+    background: var(--surface-default-light);
+    box-shadow: 0px 2px 2px var(--black-20), inset 0px -8px 0px var(--black-10);
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+    user-select: none;
+  }
+
+  .option-card__input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .option-card__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    color: var(--neutral-700);
+  }
+
+  .option-card__label {
+    flex: 1;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-paragraph-md);
+    color: var(--text-body-dark);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .option-card__radio {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--border-default);
+    background: var(--surface-default-light);
+    transition: border-color 0.15s, background 0.15s;
+  }
+
+  .option-card__badge {
+    position: absolute;
+    top: -5px;
+    right: -4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--yellow-default);
+    border: 2px solid var(--yellow-50);
+    box-shadow: 1px 2px 2px var(--black-60);
+  }
+
+  /* Hover */
+  .option-card--hover,
+  .option-card:hover:not(.option-card--disabled) {
+    background: var(--surface-hover-light);
+  }
+
+  /* Pressed */
+  .option-card--pressed,
+  .option-card:active:not(.option-card--disabled) {
+    box-shadow: 0px 1px 1px var(--black-20), inset 0px -4px 0px var(--black-10);
+    transform: translateY(1px);
+  }
+
+  /* Selected */
+  .option-card--selected .option-card__radio {
+    border-color: var(--border-action-default);
+    background: var(--surface-default-light);
+    box-shadow: inset 0 0 0 4px var(--surface-default-light), inset 0 0 0 10px var(--border-action-default);
+  }
+
+  /* Error */
+  .option-card--error {
+    box-shadow: 0px 2px 2px var(--black-20), inset 0px -8px 0px var(--black-10), inset 0 0 0 2px var(--border-error);
+  }
+
+  .option-card--error .option-card__radio {
+    border-color: var(--border-error);
+  }
+
+  .option-card--error.option-card--selected .option-card__radio {
+    box-shadow: inset 0 0 0 4px var(--surface-default-light), inset 0 0 0 10px var(--error-default);
+    border-color: var(--border-error);
+  }
+
+  /* Disabled */
+  .option-card--disabled {
+    background: var(--surface-disabled-light);
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .option-card--disabled .option-card__label {
+    color: var(--neutral-400);
+  }
+
+  .option-card--disabled .option-card__icon {
+    color: var(--neutral-400);
+  }
+
+  .option-card--disabled .option-card__radio {
+    border-color: var(--neutral-300);
+    background: var(--surface-disabled-light);
+  }
+</style>

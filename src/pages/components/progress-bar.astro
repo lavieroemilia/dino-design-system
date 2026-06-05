@@ -3,95 +3,97 @@ import DocLayout from '../../layouts/DocLayout.astro';
 import ProgressBar from '../../components/ProgressBar.astro';
 
 const headings = [
-  { depth: 2, slug: 'variantes', text: 'Variantes' },
-  { depth: 3, slug: 'sizes', text: 'Tamaños' },
-  { depth: 3, slug: 'colors', text: 'Colores' },
-  { depth: 3, slug: 'estados', text: 'Estados' },
-  { depth: 2, slug: 'props', text: 'Properties' },
+  { depth: 2, slug: 'variants',     text: 'Variants' },
+  { depth: 3, slug: 'size',         text: 'Size' },
+  { depth: 3, slug: 'color',        text: 'Color' },
+  { depth: 3, slug: 'fill-states',  text: 'Fill states' },
+  { depth: 2, slug: 'usage',        text: 'Usage' },
+  { depth: 2, slug: 'combinations', text: 'Combinations' },
+  { depth: 2, slug: 'dos-donts',    text: "Do's & Don'ts" },
 ];
 ---
 
 <DocLayout
   title="Progress Bar"
-  description="Le dice al learner cuánto le falta. Corta, visible, y lo suficientemente satisfactoria para que quiera seguir."
+  description="Shows learners exactly how far they've come — and how close they are to the finish line."
   headings={headings}
 >
 
   <!-- PLAYGROUND -->
-  <div class="playground">
-    <div class="playground__canvas" id="preview-canvas">
-      <div style="width: 280px;">
+  <section class="playground" aria-label="Interactive preview">
+
+    <div class="playground__stage" id="preview-stage">
+      <div class="preview-wrap">
         <ProgressBar value={50} size="lg" color="yellow" />
       </div>
     </div>
-    <div class="playground__controls">
-      <fieldset>
-        <legend>Color</legend>
-        <div class="control-group" id="ctrl-color">
+
+    <div class="playground__controls" role="group" aria-label="Playground controls">
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Color</legend>
+        <div class="ctrl-group__options">
           {['yellow','green','red','orange','purple'].map(c => (
-            <label>
-              <input type="radio" name="color" value={c} checked={c === 'yellow'} />
-              {c}
-            </label>
+            <button
+              class:list={['ctrl-btn', { 'is-active': c === 'yellow' }]}
+              data-prop="color"
+              data-value={c}
+            >{c}</button>
           ))}
         </div>
       </fieldset>
-      <fieldset>
-        <legend>Size</legend>
-        <div class="control-group" id="ctrl-size">
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Size</legend>
+        <div class="ctrl-group__options">
           {['xs','sm','md','lg'].map(s => (
-            <label>
-              <input type="radio" name="size" value={s} checked={s === 'lg'} />
-              {s}
-            </label>
+            <button
+              class:list={['ctrl-btn', { 'is-active': s === 'lg' }]}
+              data-prop="size"
+              data-value={s}
+            >{s}</button>
           ))}
         </div>
       </fieldset>
-      <fieldset>
-        <legend>Value — <span id="value-display">50</span>%</legend>
-        <input
-          type="range"
-          id="ctrl-value"
-          min="0" max="100" value="50"
-          class="ctrl-range"
-        />
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Value — <span id="value-display">50</span>%</legend>
+        <input type="range" id="ctrl-value" min="0" max="100" value="50" class="ctrl-range" aria-label="Progress value" />
       </fieldset>
-    </div>
-  </div>
 
-  <!-- VARIANTES -->
-  <h2 id="variantes">Variantes</h2>
+    </div>
 
-  <h3 id="sizes">Tamaños</h3>
-  <p>Cuatro alturas para cada contexto. Large para lecciones principales, xsmall para espacios ajustados.</p>
-  <div class="variant-row variant-row--col">
-    <div class="size-row">
-      <span class="size-label">lg — 24px</span>
-      <ProgressBar value={60} size="lg" color="yellow" />
-    </div>
-    <div class="size-row">
-      <span class="size-label">md — 20px</span>
-      <ProgressBar value={60} size="md" color="yellow" />
-    </div>
-    <div class="size-row">
-      <span class="size-label">sm — 12px</span>
-      <ProgressBar value={60} size="sm" color="yellow" />
-    </div>
-    <div class="size-row">
-      <span class="size-label">xs — 6px</span>
-      <ProgressBar value={60} size="xs" color="yellow" />
-    </div>
-  </div>
+  </section>
 
-  <h3 id="colors">Colores</h3>
-  <p>Cada color comunica un contexto distinto. Yellow es el default — los demás refuerzan el estado de la lección.</p>
-  <div class="variant-row variant-row--col">
+
+  <!-- VARIANTS -->
+  <h2 id="variants">Variants</h2>
+
+  <h3 id="size">Size</h3>
+  <p>Four heights for every context. Use <code>lg</code> for main lesson flows, <code>xs</code> for tight spaces where the bar plays a supporting role.</p>
+  <div class="example-row example-row--col">
     {[
-      { color: 'yellow',  label: 'Yellow — lección en curso' },
-      { color: 'green',   label: 'Green — éxito / completado' },
-      { color: 'red',     label: 'Red — error / corazones bajos' },
-      { color: 'orange',  label: 'Orange — advertencia / racha en riesgo' },
-      { color: 'purple',  label: 'Purple — modo especial / desafío' },
+      { size: 'lg', label: 'lg — 24px' },
+      { size: 'md', label: 'md — 20px' },
+      { size: 'sm', label: 'sm — 12px' },
+      { size: 'xs', label: 'xs — 6px'  },
+    ].map(({ size, label }) => (
+      <div class="size-row">
+        <span class="size-label">{label}</span>
+        <ProgressBar value={60} size={size as any} color="yellow" />
+      </div>
+    ))}
+  </div>
+
+  <h3 id="color">Color</h3>
+  <p>Each color carries a specific meaning — don't swap them for style. Yellow moves lessons forward; the rest signal a state.</p>
+  <div class="example-row example-row--col">
+    {[
+      { color: 'yellow', label: 'yellow — active lesson' },
+      { color: 'green',  label: 'green — completed / success' },
+      { color: 'red',    label: 'red — error / hearts critical' },
+      { color: 'orange', label: 'orange — streak at risk' },
+      { color: 'purple', label: 'purple — special mode / challenge' },
     ].map(({ color, label }) => (
       <div class="size-row">
         <span class="size-label">{label}</span>
@@ -100,9 +102,9 @@ const headings = [
     ))}
   </div>
 
-  <h3 id="estados">Estados</h3>
-  <p>De vacía a completa. El 100% debería celebrarse — asegúrate de que la animación lo note.</p>
-  <div class="variant-row variant-row--col">
+  <h3 id="fill-states">Fill states</h3>
+  <p>From empty to complete. At 100%, make sure the surrounding UI celebrates — the bar alone isn't enough.</p>
+  <div class="example-row example-row--col">
     {[0, 25, 50, 75, 100].map(v => (
       <div class="size-row">
         <span class="size-label">{v}%</span>
@@ -111,69 +113,148 @@ const headings = [
     ))}
   </div>
 
-  <!-- PROPS -->
-  <h2 id="props">Properties</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Prop</th>
-        <th>Tipo</th>
-        <th>Default</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>value</code></td>
-        <td><code>number</code></td>
-        <td><code>0</code></td>
-        <td>Porcentaje de completitud. Se limita automáticamente entre 0 y 100.</td>
-      </tr>
-      <tr>
-        <td><code>size</code></td>
-        <td><code>'lg' | 'md' | 'sm' | 'xs'</code></td>
-        <td><code>'lg'</code></td>
-        <td>Altura de la barra: 24px, 20px, 12px, 6px.</td>
-      </tr>
-      <tr>
-        <td><code>color</code></td>
-        <td><code>'yellow' | 'green' | 'red' | 'orange' | 'purple'</code></td>
-        <td><code>'yellow'</code></td>
-        <td>Gradiente del fill. Usa los gradientes de progreso del sistema.</td>
-      </tr>
-      <tr>
-        <td><code>label</code></td>
-        <td><code>string</code></td>
-        <td><code>'Progreso: N%'</code></td>
-        <td>Texto accesible para <code>aria-label</code>. Se genera automáticamente si no se pasa.</td>
-      </tr>
-    </tbody>
-  </table>
+
+  <!-- USAGE -->
+  <h2 id="usage">Usage</h2>
+  <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Also appears inside the streak and hearts panels to show remaining capacity at a glance.</p>
+
+
+  <!-- COMBINATIONS -->
+  <h2 id="combinations">Combinations</h2>
+  <p>Pairs with the Hearts indicator (use <code>red</code> when hearts drop below 2) and the Streak counter (use <code>orange</code> when the streak is at risk). In lesson headers, it always sits above the question — never inline with text.</p>
+  <div class="example-row example-row--col">
+    <div class="size-row">
+      <span class="size-label">Lesson header</span>
+      <ProgressBar value={40} size="lg" color="yellow" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">Hearts critical</span>
+      <ProgressBar value={20} size="md" color="red" />
+    </div>
+  </div>
+
+
+  <!-- DO'S & DON'TS -->
+  <h2 id="dos-donts">Do's & Don'ts</h2>
+
+  <div class="dos-donts">
+    <div class="dos-donts__col dos-donts__col--do">
+      <p class="dos-donts__label">Do</p>
+      <ul>
+        <li><strong>Match color to context</strong> — yellow for active, green for done, red when something is at risk.</li>
+        <li><strong>Always pass a meaningful <code>label</code></strong> — screen readers announce it; "Progress: 60%" is better than silence.</li>
+        <li><strong>Use <code>lg</code> as the default</strong> — smaller sizes only when the bar is a secondary indicator.</li>
+      </ul>
+    </div>
+    <div class="dos-donts__col dos-donts__col--dont">
+      <p class="dos-donts__label">Don't</p>
+      <ul>
+        <li><strong>Don't use purple for generic progress</strong> — it signals a special mode; reserve it for challenges and events.</li>
+        <li><strong>Don't show a bar without context</strong> — always pair it with a label or a counter so the user knows what is being measured.</li>
+        <li><strong>Don't animate to 100% silently</strong> — reaching the end deserves a celebration state in the parent screen.</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr />
+
+  <p>
+    <strong>Related:</strong>
+    <a href="/components/button">Button</a> —
+    the primary action that advances the lesson after the bar fills.
+    ·
+    <a href="/components/option-card">Option Card</a> —
+    the answer the learner picks before progress moves forward.
+  </p>
 
 </DocLayout>
 
+
 <style>
-  .variant-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px;
-    margin: 16px 0 32px;
-    padding: 24px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
+  .playground {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 48px;
   }
 
-  .variant-row--col {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
+  .playground__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 40px 32px;
+    background: var(--surface-page);
   }
+
+  .preview-wrap { width: 360px; }
+
+  .playground__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ctrl-group { border: none; padding: 0; }
+
+  .ctrl-group__label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    margin-bottom: 8px;
+  }
+
+  .ctrl-group__options { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .ctrl-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: var(--text-body-default);
+    font-family: var(--font-family-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .ctrl-btn:hover     { background: var(--surface-hover-dark); }
+  .ctrl-btn.is-active {
+    background: var(--primary-900);
+    color: var(--primary-300);
+    border-color: var(--primary-700);
+  }
+
+  .ctrl-range {
+    width: 100%;
+    accent-color: var(--primary-default);
+    margin-top: 4px;
+  }
+
+  .example-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: var(--surface-elevate);
+    border-radius: 10px;
+    margin: 12px 0 8px;
+  }
+
+  .example-row--col { flex-direction: column; align-items: stretch; gap: 16px; }
 
   .size-row {
     display: grid;
-    grid-template-columns: 180px 1fr;
+    grid-template-columns: 200px 1fr;
     align-items: center;
     gap: 16px;
   }
@@ -184,100 +265,74 @@ const headings = [
     white-space: nowrap;
   }
 
-  .playground {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    overflow: hidden;
-    margin: 16px 0 40px;
-  }
-
-  .playground__canvas {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 140px;
-    padding: 32px;
-    background: rgba(255,255,255,0.02);
-  }
-
-  .playground__controls {
-    border-left: 1px solid rgba(255,255,255,0.08);
-    padding: 20px;
+  .dos-donts {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    background: rgba(0,0,0,0.2);
+    margin: 16px 0 24px;
   }
 
-  fieldset { border: none; padding: 0; margin: 0; }
+  .dos-donts__col {
+    padding: 16px 20px;
+    border-radius: 10px;
+  }
 
-  legend {
-    font-family: var(--font-family-headings);
-    font-size: 0.68rem;
-    font-weight: var(--font-weight-bold);
+  .dos-donts__col--do {
+    background: color-mix(in srgb, var(--success-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success-default) 30%, transparent);
+  }
+
+  .dos-donts__col--dont {
+    background: color-mix(in srgb, var(--error-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--error-default) 30%, transparent);
+  }
+
+  .dos-donts__label {
+    font-size: 0.7rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--text-placeholder);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
   }
 
-  .control-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
-
-  .control-group label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 0.8rem;
-    color: var(--neutral-300);
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 6px;
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: background 0.1s, color 0.1s;
-  }
-
-  .control-group label:has(input:checked) {
-    background: rgba(78,210,30,0.12);
-    color: var(--green-300);
-    border-color: var(--green-600);
-  }
-
-  .control-group input[type="radio"] { display: none; }
-
-  .ctrl-range {
-    width: 100%;
-    accent-color: var(--primary-default);
-  }
+  .dos-donts__col--do   .dos-donts__label { color: var(--success-default); }
+  .dos-donts__col--dont .dos-donts__label { color: var(--error-default); }
 </style>
 
+
 <script>
-  const canvas = document.getElementById('preview-canvas');
+  const stage        = document.getElementById('preview-stage');
   const valueDisplay = document.getElementById('value-display');
+  const rangeEl      = document.getElementById('ctrl-value') as HTMLInputElement | null;
 
-  function update() {
-    const color = document.querySelector('input[name="color"]:checked')?.value || 'yellow';
-    const size  = document.querySelector('input[name="size"]:checked')?.value  || 'lg';
-    const value = Number((document.getElementById('ctrl-value') as HTMLInputElement)?.value || 50);
+  const state: Record<string, string> = { color: 'yellow', size: 'lg', value: '50' };
 
-    if (valueDisplay) valueDisplay.textContent = String(value);
+  function render() {
+    const { color, size, value } = state;
+    if (valueDisplay) valueDisplay.textContent = value;
 
-    const bar = canvas?.querySelector('.progress') as HTMLElement;
-    if (!bar) return;
+    const bar  = stage?.querySelector('.progress') as HTMLElement | null;
+    const fill = bar?.querySelector('.progress__fill') as HTMLElement | null;
+    if (!bar || !fill) return;
 
     bar.className = `progress progress--${size} progress--${color}`;
-    bar.setAttribute('aria-valuenow', String(value));
-
-    const fill = bar.querySelector('.progress__fill') as HTMLElement;
-    if (fill) fill.style.width = `${value}%`;
+    bar.setAttribute('aria-valuenow', value);
+    fill.style.width = `${value}%`;
   }
 
-  document.querySelectorAll('input[name="color"], input[name="size"]')
-    .forEach(el => el.addEventListener('change', update));
-  document.getElementById('ctrl-value')?.addEventListener('input', update);
+  document.querySelectorAll<HTMLButtonElement>('.ctrl-btn[data-prop]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const prop = btn.dataset.prop!;
+      document.querySelectorAll<HTMLButtonElement>(`.ctrl-btn[data-prop="${prop}"]`)
+        .forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      state[prop] = btn.dataset.value!;
+      render();
+    });
+  });
+
+  rangeEl?.addEventListener('input', () => {
+    state.value = rangeEl.value;
+    render();
+  });
 </script>
