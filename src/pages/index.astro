@@ -1,12 +1,898 @@
 ---
 import DocLayout from '../layouts/DocLayout.astro';
 import Button from '../components/Button.astro';
+import ProgressBar from '../components/ProgressBar.astro';
+import OptionCard from '../components/OptionCard.astro';
 ---
-<DocLayout title="Button" description="Botones del Dino Design System">
-  <Button variant="primary" size="xl" label="Continuar" />
-  <Button variant="secondary" size="xl" label="Omitir" />
-  <Button variant="danger" size="xl" label="Salir" />
-  <Button variant="ghost" size="xl" label="Ver más" />
-  <Button variant="premium" size="xl" label="Super Dino" />
-  <Button variant="primary" size="xl" label="Disabled" disabled />
+
+<DocLayout title="Overview" description="Dino Design System — la guía de diseño de la app de aprendizaje gamificado de Ucademy.">
+
+  <!-- ── Hero ── -->
+  <section class="overview-hero">
+    <div class="overview-hero__meta">
+      <span class="chip chip--green">v0.1.0</span>
+      <span class="chip chip--muted">Mobile · Dark</span>
+      <span class="chip chip--muted">Rubik · Tokens-driven</span>
+    </div>
+    <p class="overview-hero__intro">
+      Dino es el design system que respalda la app de aprendizaje gamificado de Ucademy —
+      una plataforma mobile-first pensada para que prepararse para la Selectividad sea tan
+      habitual como scrollear TikTok.
+    </p>
+    <p class="overview-hero__intro">
+      Este sitio documenta los tokens, estilos y componentes que conforman la experiencia visual
+      de Dino: cómo se ven las cosas, por qué se ven así, y cómo usarlas de forma consistente.
+    </p>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Contexto ── -->
+  <section class="overview-section" id="contexto">
+    <h2>Contexto del producto</h2>
+    <p>
+      Dino nació en octubre de 2025 como un MVP de Ucademy. La pregunta que lo originó fue
+      simple: <strong>¿puede estudiar volverse tan atrapante como usar TikTok?</strong>
+      El diseño de la app —y de este sistema— parte de esa premisa.
+    </p>
+
+    <div class="overview-cards">
+      <div class="overview-card">
+        <span class="overview-card__icon">📱</span>
+        <strong>Mobile-first</strong>
+        <p>Diseñado exclusivamente para iOS, con patrones de interacción nativos y escala táctil.</p>
+      </div>
+      <div class="overview-card">
+        <span class="overview-card__icon">🎮</span>
+        <strong>Gamificado</strong>
+        <p>Progreso visible, feedback inmediato y ejercicios variados para sostener el hábito de estudio.</p>
+      </div>
+      <div class="overview-card">
+        <span class="overview-card__icon">🌑</span>
+        <strong>Dark por defecto</strong>
+        <p>Interfaz oscura que reduce la fatiga visual en sesiones de estudio nocturnas o prolongadas.</p>
+      </div>
+      <div class="overview-card">
+        <span class="overview-card__icon">♿</span>
+        <strong>Accesible</strong>
+        <p>Roles ARIA, contraste suficiente y estados de foco visibles en todos los componentes.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Principios ── -->
+  <section class="overview-section" id="principios">
+    <h2>Principios de diseño</h2>
+    <p>Tres ideas guían cada decisión visual y de interacción en Dino.</p>
+
+    <div class="overview-principles">
+      <div class="overview-principle">
+        <div class="overview-principle__number">01</div>
+        <h3>El detalle importa</h3>
+        <p>
+          Los botones tienen sombra interna, los estados activos tienen desplazamiento físico,
+          los gradientes de la barra de progreso tienen brillo. Estas decisiones son imperceptibles
+          de forma individual, pero juntas crean una experiencia que se siente cuidada.
+        </p>
+      </div>
+      <div class="overview-principle">
+        <div class="overview-principle__number">02</div>
+        <h3>El feedback es constante</h3>
+        <p>
+          Cada acción del usuario recibe respuesta visual inmediata: hover, pressed, disabled,
+          error y success tienen estilos propios. En una app de aprendizaje, la claridad del
+          estado reduce la fricción y mantiene el flujo.
+        </p>
+      </div>
+      <div class="overview-principle">
+        <div class="overview-principle__number">03</div>
+        <h3>Tokens, no valores mágicos</h3>
+        <p>
+          Ningún color, tamaño o sombra vive hardcodeado en un componente. Todo parte de los
+          tokens definidos en Figma Variables y se propaga a través de CSS custom properties.
+          Cambiar el sistema significa cambiar una sola fuente de verdad.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Arquitectura de tokens ── -->
+  <section class="overview-section" id="tokens">
+    <h2>Arquitectura de tokens</h2>
+    <p>
+      Los tokens siguen tres capas de abstracción. Cada capa tiene una responsabilidad única
+      y solo la última toca los componentes.
+    </p>
+
+    <div class="token-layers">
+      <div class="token-layer token-layer--brand">
+        <div class="token-layer__label">Capa 1 · Brand</div>
+        <div class="token-layer__title">Primitivos</div>
+        <p class="token-layer__desc">Valores concretos: <code>#4ed21e</code>, <code>16px</code>, <code>Rubik</code>. No tienen semántica, solo son los átomos del sistema.</p>
+        <div class="token-layer__examples">
+          <code>--green-default</code>
+          <code>--grey-800</code>
+          <code>--scale-400</code>
+        </div>
+      </div>
+      <div class="token-layer__arrow">→</div>
+      <div class="token-layer token-layer--semantic">
+        <div class="token-layer__label">Capa 2 · Semantic</div>
+        <div class="token-layer__title">Roles</div>
+        <p class="token-layer__desc">Nombres con intención: <em>Primary</em>, <em>Error</em>, <em>Spacing</em>. Referencian primitivos y definen el qué, no el cómo.</p>
+        <div class="token-layer__examples">
+          <code>--primary-600</code>
+          <code>--error-default</code>
+          <code>--spacing-16</code>
+        </div>
+      </div>
+      <div class="token-layer__arrow">→</div>
+      <div class="token-layer token-layer--component">
+        <div class="token-layer__label">Capa 3 · Components</div>
+        <div class="token-layer__title">Contexto</div>
+        <p class="token-layer__desc">Variables que los componentes consumen directamente. El modo oscuro es el default; el claro es una variante.</p>
+        <div class="token-layer__examples">
+          <code>--surface-button-primary-default</code>
+          <code>--text-headings</code>
+          <code>--border-action-default</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Colores ── -->
+  <section class="overview-section" id="colores">
+    <h2>Paleta de color</h2>
+    <p>
+      Dino usa verde como color primario — energía, progreso, éxito. Cada paleta cubre
+      9 pasos más un <em>default</em>, desde fondos sutiles hasta estados de hover.
+    </p>
+
+    <div class="color-section">
+      <h3>Brand</h3>
+      <div class="color-palettes">
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#4ed21e;"></div>
+            <span>Green · Primary</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#eefbe9;" title="#eefbe9"><span>50</span></div>
+            <div class="color-scale__step" style="background:#dcf6d2;" title="#dcf6d2"><span>100</span></div>
+            <div class="color-scale__step" style="background:#b8eda5;" title="#b8eda5"><span>200</span></div>
+            <div class="color-scale__step" style="background:#95e478;" title="#95e478"><span>300</span></div>
+            <div class="color-scale__step" style="background:#71db4b;" title="#71db4b"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#4ed21e;" title="#4ed21e"><span>def</span></div>
+            <div class="color-scale__step" style="background:#3ea818;" title="#3ea818"><span>600</span></div>
+            <div class="color-scale__step" style="background:#328613;" title="#328613"><span>700</span></div>
+            <div class="color-scale__step" style="background:#1f540c;" title="#1f540c"><span>800</span></div>
+            <div class="color-scale__step" style="background:#102a06;" title="#102a06"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#4e00f5;"></div>
+            <span>Purple · Info</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#eee6fe;" title="#eee6fe"><span>50</span></div>
+            <div class="color-scale__step" style="background:#d9c9fd;" title="#d9c9fd"><span>100</span></div>
+            <div class="color-scale__step" style="background:#b899fb;" title="#b899fb"><span>200</span></div>
+            <div class="color-scale__step" style="background:#9566f9;" title="#9566f9"><span>300</span></div>
+            <div class="color-scale__step" style="background:#7133f7;" title="#7133f7"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#4e00f5;" title="#4e00f5"><span>def</span></div>
+            <div class="color-scale__step" style="background:#3e00c4;" title="#3e00c4"><span>600</span></div>
+            <div class="color-scale__step" style="background:#2f0093;" title="#2f0093"><span>700</span></div>
+            <div class="color-scale__step" style="background:#1f0062;" title="#1f0062"><span>800</span></div>
+            <div class="color-scale__step" style="background:#100031;" title="#100031"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#ff5b5b;"></div>
+            <span>Red · Error</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#ffefef;" title="#ffefef"><span>50</span></div>
+            <div class="color-scale__step" style="background:#ffdede;" title="#ffdede"><span>100</span></div>
+            <div class="color-scale__step" style="background:#ffbdbd;" title="#ffbdbd"><span>200</span></div>
+            <div class="color-scale__step" style="background:#ff9d9d;" title="#ff9d9d"><span>300</span></div>
+            <div class="color-scale__step" style="background:#ff7c7c;" title="#ff7c7c"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#ff5b5b;" title="#ff5b5b"><span>def</span></div>
+            <div class="color-scale__step" style="background:#f32222;" title="#f32222"><span>600</span></div>
+            <div class="color-scale__step" style="background:#c60a0a;" title="#c60a0a"><span>700</span></div>
+            <div class="color-scale__step" style="background:#830707;" title="#830707"><span>800</span></div>
+            <div class="color-scale__step" style="background:#420303;" title="#420303"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#f6ca2f;"></div>
+            <span>Yellow · Warning</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#fffaeb;" title="#fffaeb"><span>50</span></div>
+            <div class="color-scale__step" style="background:#fdf4d5;" title="#fdf4d5"><span>100</span></div>
+            <div class="color-scale__step" style="background:#fbeaac;" title="#fbeaac"><span>200</span></div>
+            <div class="color-scale__step" style="background:#fadf82;" title="#fadf82"><span>300</span></div>
+            <div class="color-scale__step" style="background:#f8d559;" title="#f8d559"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#f6ca2f;" title="#f6ca2f"><span>def</span></div>
+            <div class="color-scale__step" style="background:#e2b209;" title="#e2b209"><span>600</span></div>
+            <div class="color-scale__step" style="background:#a98507;" title="#a98507"><span>700</span></div>
+            <div class="color-scale__step" style="background:#705905;" title="#705905"><span>800</span></div>
+            <div class="color-scale__step" style="background:#382c02;" title="#382c02"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#ff8a4f;"></div>
+            <span>Orange</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#fff4ee;" title="#fff4ee"><span>50</span></div>
+            <div class="color-scale__step" style="background:#ffe8dc;" title="#ffe8dc"><span>100</span></div>
+            <div class="color-scale__step" style="background:#ffd0b9;" title="#ffd0b9"><span>200</span></div>
+            <div class="color-scale__step" style="background:#ffb895;" title="#ffb895"><span>300</span></div>
+            <div class="color-scale__step" style="background:#ffa172;" title="#ffa172"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#ff8a4f;" title="#ff8a4f"><span>def</span></div>
+            <div class="color-scale__step" style="background:#cc6e3f;" title="#cc6e3f"><span>600</span></div>
+            <div class="color-scale__step" style="background:#99522f;" title="#99522f"><span>700</span></div>
+            <div class="color-scale__step" style="background:#663720;" title="#663720"><span>800</span></div>
+            <div class="color-scale__step" style="background:#3d1f10;" title="#3d1f10"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#ff72c1;"></div>
+            <span>Pink</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#fff5ff;" title="#fff5ff"><span>50</span></div>
+            <div class="color-scale__step" style="background:#ffe3f3;" title="#ffe3f3"><span>100</span></div>
+            <div class="color-scale__step" style="background:#ffc7e6;" title="#ffc7e6"><span>200</span></div>
+            <div class="color-scale__step" style="background:#ffaada;" title="#ffaada"><span>300</span></div>
+            <div class="color-scale__step" style="background:#ff8ecd;" title="#ff8ecd"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#ff72c1;" title="#ff72c1"><span>def</span></div>
+            <div class="color-scale__step" style="background:#cc5b9a;" title="#cc5b9a"><span>600</span></div>
+            <div class="color-scale__step" style="background:#994474;" title="#994474"><span>700</span></div>
+            <div class="color-scale__step" style="background:#662e4d;" title="#662e4d"><span>800</span></div>
+            <div class="color-scale__step" style="background:#331727;" title="#331727"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#49e3ff;"></div>
+            <span>Blue</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#edfdff;" title="#edfdff"><span>50</span></div>
+            <div class="color-scale__step" style="background:#dbf9ff;" title="#dbf9ff"><span>100</span></div>
+            <div class="color-scale__step" style="background:#b6f4ff;" title="#b6f4ff"><span>200</span></div>
+            <div class="color-scale__step" style="background:#92eeff;" title="#92eeff"><span>300</span></div>
+            <div class="color-scale__step" style="background:#6de9ff;" title="#6de9ff"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#49e3ff;" title="#49e3ff"><span>def</span></div>
+            <div class="color-scale__step" style="background:#3ab6cc;" title="#3ab6cc"><span>600</span></div>
+            <div class="color-scale__step" style="background:#2c8899;" title="#2c8899"><span>700</span></div>
+            <div class="color-scale__step" style="background:#216673;" title="#216673"><span>800</span></div>
+            <div class="color-scale__step" style="background:#0f2d33;" title="#0f2d33"><span>900</span></div>
+          </div>
+        </div>
+
+        <div class="color-palette">
+          <div class="color-palette__header">
+            <div class="color-swatch" style="background:#7270a3;"></div>
+            <span>Grey · Neutral</span>
+          </div>
+          <div class="color-scale">
+            <div class="color-scale__step" style="background:#f1f1f6;" title="#f1f1f6"><span>50</span></div>
+            <div class="color-scale__step" style="background:#e3e2ed;" title="#e3e2ed"><span>100</span></div>
+            <div class="color-scale__step" style="background:#c7c6da;" title="#c7c6da"><span>200</span></div>
+            <div class="color-scale__step" style="background:#aaa9c8;" title="#aaa9c8"><span>300</span></div>
+            <div class="color-scale__step" style="background:#8e8db5;" title="#8e8db5"><span>400</span></div>
+            <div class="color-scale__step color-scale__step--default" style="background:#7270a3;" title="#7270a3"><span>500</span></div>
+            <div class="color-scale__step" style="background:#5b5a82;" title="#5b5a82"><span>600</span></div>
+            <div class="color-scale__step" style="background:#444362;" title="#444362"><span>700</span></div>
+            <div class="color-scale__step" style="background:#2e2d41;" title="#2e2d41"><span>800</span></div>
+            <div class="color-scale__step" style="background:#171621;" title="#171621"><span>900</span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="color-section">
+      <h3>Foundation</h3>
+      <div class="foundation-row">
+        <div class="foundation-swatch" style="background:#ffffff; border: 1px solid rgba(255,255,255,0.1);">
+          <span style="color:#171621;">White</span>
+          <code style="color:#171621;">#ffffff</code>
+        </div>
+        <div class="foundation-swatch foundation-swatch--alphas" style="background: linear-gradient(90deg, #ffffff1a, #ffffff66, #ffffffcc, #ffffff);">
+          <span>White 10–100</span>
+        </div>
+        <div class="foundation-swatch" style="background:#0d0c12;">
+          <span>Black</span>
+          <code>#0d0c12</code>
+        </div>
+        <div class="foundation-swatch foundation-swatch--alphas" style="background: linear-gradient(90deg, #0d0c121a, #0d0c1266, #0d0c12cc, #0d0c12);">
+          <span>Black 10–100</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Tipografía ── -->
+  <section class="overview-section" id="tipografia">
+    <h2>Tipografía</h2>
+    <p>
+      Rubik es la única familia del sistema. Su geometría redondeada equilibra la energía
+      de los colores saturados con legibilidad en pantallas pequeñas.
+    </p>
+
+    <div class="type-table">
+      <div class="type-row type-row--header">
+        <span>Token</span><span>Size · Line-height</span><span>Peso</span><span>Muestra</span>
+      </div>
+      <div class="type-row">
+        <code>h1</code><span>48px · 56px <em>(desktop)</em></span><span>700</span>
+        <span class="type-sample" style="font-size:28px; font-weight:700; line-height:1.2;">Estudia mejor</span>
+      </div>
+      <div class="type-row">
+        <code>h2</code><span>40px · 48px</span><span>700</span>
+        <span class="type-sample" style="font-size:22px; font-weight:700;">Progreso del día</span>
+      </div>
+      <div class="type-row">
+        <code>h3</code><span>32px · 40px</span><span>600</span>
+        <span class="type-sample" style="font-size:18px; font-weight:600;">Preguntas de Física</span>
+      </div>
+      <div class="type-row">
+        <code>paragraph-lg</code><span>18px · 20px</span><span>400</span>
+        <span class="type-sample" style="font-size:16px; font-weight:400;">Selecciona la respuesta correcta</span>
+      </div>
+      <div class="type-row">
+        <code>paragraph-md</code><span>16px · 20px</span><span>400</span>
+        <span class="type-sample" style="font-size:14px; font-weight:400;">La mitocondria es la central eléctrica de la célula</span>
+      </div>
+      <div class="type-row">
+        <code>paragraph-sm</code><span>14px · 18px</span><span>400</span>
+        <span class="type-sample" style="font-size:13px; font-weight:400;">Retroalimentación de respuesta</span>
+      </div>
+      <div class="type-row">
+        <code>paragraph-cp</code><span>11px · 16px</span><span>500</span>
+        <span class="type-sample" style="font-size:11px; font-weight:500; letter-spacing:0.06em; text-transform:uppercase;">Caption · Label</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Componentes ── -->
+  <section class="overview-section" id="componentes">
+    <h2>Componentes</h2>
+    <p>
+      Cada componente vive en un archivo <code>.astro</code>, consume exclusivamente tokens
+      semánticos y documenta sus props, variantes y estados.
+    </p>
+
+    <div class="component-grid">
+
+      <a href="/components/button" class="component-card">
+        <div class="component-card__preview">
+          <Button variant="primary" size="md" label="Continuar" />
+          <Button variant="ghost" size="md" label="Omitir" />
+        </div>
+        <div class="component-card__info">
+          <strong>Button</strong>
+          <span>6 variantes · 4 tamaños · estados disabled</span>
+          <div class="component-card__tags">
+            <span class="tag">primary</span>
+            <span class="tag">secondary</span>
+            <span class="tag">danger</span>
+            <span class="tag">premium</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/components/progress-bar" class="component-card">
+        <div class="component-card__preview component-card__preview--col">
+          <ProgressBar value={72} color="yellow" size="md" />
+          <ProgressBar value={45} color="green" size="sm" />
+        </div>
+        <div class="component-card__info">
+          <strong>Progress Bar</strong>
+          <span>5 colores · 4 tamaños · gradientes</span>
+          <div class="component-card__tags">
+            <span class="tag">yellow</span>
+            <span class="tag">green</span>
+            <span class="tag">purple</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="/components/option-card" class="component-card">
+        <div class="component-card__preview component-card__preview--col">
+          <OptionCard label="Opción A" status="default" />
+          <OptionCard label="Opción B" selected={true} />
+        </div>
+        <div class="component-card__info">
+          <strong>Option Card</strong>
+          <span>5 estados · badge · accesible con radio input</span>
+          <div class="component-card__tags">
+            <span class="tag">default</span>
+            <span class="tag">selected</span>
+            <span class="tag">error</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <hr class="overview-divider" />
+
+  <!-- ── Footer ── -->
+  <section class="overview-footer">
+    <p>
+      Diseñado por <a href="https://www.emilialaviero.com" target="_blank" rel="noopener">Emilia Laviero</a>
+      · Product Designer @ Ucademy · 2025
+    </p>
+  </section>
+
 </DocLayout>
+
+<style>
+
+  /* ── Hero ── */
+  .overview-hero {
+    padding-bottom: var(--spacing-8);
+  }
+
+  .overview-hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-20);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px var(--spacing-10);
+    border-radius: var(--radius-round);
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .chip--green {
+    background: var(--primary-900);
+    color: var(--primary-300);
+    border: 1px solid var(--primary-800);
+  }
+
+  .chip--muted {
+    background: var(--surface-elevate);
+    color: var(--text-placeholder);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .overview-hero__intro {
+    font-size: var(--font-size-paragraph-lg);
+    line-height: 1.7;
+    color: var(--text-body-default);
+    max-width: 68ch;
+    margin-bottom: var(--spacing-16) !important;
+  }
+
+  /* ── Divider ── */
+  .overview-divider {
+    border: none;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin: var(--spacing-48) 0;
+  }
+
+  /* ── Sections ── */
+  .overview-section {}
+
+  /* ── Cards de contexto ── */
+  .overview-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-28);
+  }
+
+  .overview-card {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-xlg);
+    padding: var(--spacing-20);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+  }
+
+  .overview-card__icon {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .overview-card strong {
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .overview-card p {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-body-default);
+    line-height: 1.6;
+    margin: 0 !important;
+  }
+
+  /* ── Principios ── */
+  .overview-principles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--spacing-20);
+    margin-top: var(--spacing-28);
+  }
+
+  .overview-principle {
+    position: relative;
+    padding: var(--spacing-20);
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-xlg);
+  }
+
+  .overview-principle__number {
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    color: var(--primary-600);
+    margin-bottom: var(--spacing-12);
+  }
+
+  .overview-principle h3 {
+    font-size: var(--font-size-paragraph-md) !important;
+    font-weight: var(--font-weight-semibold) !important;
+    color: var(--text-headings) !important;
+    margin-top: 0 !important;
+    margin-bottom: var(--spacing-8) !important;
+  }
+
+  .overview-principle p {
+    font-size: var(--font-size-paragraph-sm) !important;
+    line-height: 1.65 !important;
+    color: var(--text-body-default) !important;
+    margin: 0 !important;
+  }
+
+  /* ── Token layers ── */
+  .token-layers {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: var(--spacing-28);
+    flex-wrap: wrap;
+  }
+
+  .token-layer {
+    flex: 1;
+    min-width: 180px;
+    padding: var(--spacing-20);
+    border-radius: var(--radius-xlg);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .token-layer--brand    { background: color-mix(in srgb, var(--primary-900) 60%, var(--neutral-900)); }
+  .token-layer--semantic { background: color-mix(in srgb, var(--info-900) 60%, var(--neutral-900)); }
+  .token-layer--component { background: var(--surface-elevate); }
+
+  .token-layer__arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-12);
+    color: var(--text-placeholder);
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .token-layer__label {
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .token-layer__title {
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+    margin-bottom: var(--spacing-10);
+  }
+
+  .token-layer__desc {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-body-default);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-16) !important;
+  }
+
+  .token-layer__examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .token-layer__examples code {
+    font-size: 10px;
+    display: block;
+  }
+
+  /* ── Color palettes ── */
+  .color-section { margin-top: var(--spacing-28); }
+
+  .color-section h3 {
+    font-size: var(--font-size-paragraph-sm) !important;
+    font-weight: var(--font-weight-bold) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--text-placeholder) !important;
+    margin-bottom: var(--spacing-16) !important;
+    margin-top: 0 !important;
+  }
+
+  .color-palettes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12);
+  }
+
+  .color-palette__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-10);
+    margin-bottom: var(--spacing-8);
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-body-default);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .color-swatch {
+    width: 20px;
+    height: 20px;
+    border-radius: var(--radius-xsm);
+    flex-shrink: 0;
+  }
+
+  .color-scale {
+    display: flex;
+    gap: 3px;
+    height: 36px;
+  }
+
+  .color-scale__step {
+    flex: 1;
+    border-radius: var(--radius-xsm);
+    position: relative;
+    cursor: default;
+    transition: transform 0.1s;
+  }
+
+  .color-scale__step:hover { transform: scaleY(1.1); z-index: 1; }
+
+  .color-scale__step--default { outline: 2px solid white; outline-offset: 2px; }
+
+  .color-scale__step span {
+    position: absolute;
+    bottom: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: var(--text-placeholder);
+    white-space: nowrap;
+  }
+
+  .color-palette { margin-bottom: var(--spacing-20); }
+
+  .foundation-row {
+    display: flex;
+    gap: var(--spacing-12);
+    flex-wrap: wrap;
+  }
+
+  .foundation-swatch {
+    flex: 1;
+    min-width: 160px;
+    height: 64px;
+    border-radius: var(--radius-xlg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: var(--spacing-8) var(--spacing-12);
+    gap: 2px;
+  }
+
+  .foundation-swatch span {
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--white-70);
+  }
+
+  .foundation-swatch code {
+    font-size: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--white-60);
+  }
+
+  /* ── Typography ── */
+  .type-table {
+    margin-top: var(--spacing-20);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+  }
+
+  .type-row {
+    display: grid;
+    grid-template-columns: 140px 180px 60px 1fr;
+    align-items: center;
+    gap: var(--spacing-16);
+    padding: var(--spacing-12) var(--spacing-20);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .type-row:last-child { border-bottom: none; }
+
+  .type-row--header {
+    background: var(--surface-elevate);
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+  }
+
+  .type-row span em {
+    font-size: 11px;
+    color: var(--text-placeholder);
+    font-style: normal;
+  }
+
+  .type-sample {
+    font-family: var(--font-family-body);
+    color: var(--text-headings);
+  }
+
+  /* ── Components ── */
+  .component-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-28);
+  }
+
+  .component-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+
+  .component-card:hover {
+    border-color: var(--primary-700);
+    transform: translateY(-2px);
+  }
+
+  .component-card__preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-12);
+    padding: var(--spacing-28) var(--spacing-20);
+    background: var(--surface-page);
+    min-height: 100px;
+  }
+
+  .component-card__preview--col {
+    flex-direction: column;
+    gap: var(--spacing-10);
+    align-items: stretch;
+    padding: var(--spacing-20);
+  }
+
+  .component-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+    padding: var(--spacing-16) var(--spacing-20);
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .component-card__info strong {
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .component-card__info > span {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+  }
+
+  .component-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+  }
+
+  .tag {
+    display: inline-flex;
+    padding: 2px var(--spacing-8);
+    background: var(--surface-page);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: var(--radius-round);
+    font-size: 10px;
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  /* ── Footer ── */
+  .overview-footer {
+    padding-bottom: var(--spacing-64);
+    text-align: center;
+  }
+
+  .overview-footer p {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+    margin: 0 !important;
+  }
+
+  .overview-footer a {
+    color: var(--primary-400);
+    text-decoration: none;
+  }
+
+  .overview-footer a:hover {
+    color: var(--primary-300);
+    text-decoration: underline;
+  }
+
+  @media (max-width: 680px) {
+    .token-layers { flex-direction: column; }
+    .token-layer__arrow { transform: rotate(90deg); align-self: center; }
+    .type-row { grid-template-columns: 120px 1fr; }
+    .type-row--header span:nth-child(3),
+    .type-row--header span:nth-child(4),
+    .type-row span:nth-child(3),
+    .type-sample { display: none; }
+  }
+</style>
