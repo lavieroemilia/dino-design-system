@@ -218,7 +218,7 @@
     
       /* Text */
       --text-headings:              var(--neutral-white-100);
-      --text-body-default:          var(--neutral-white-70);
+      --text-body-default:          var(--neutral-200);
       --text-body-dark:             var(--neutral-900);
       --text-placeholder:           var(--neutral-500);
       --text-placeholder-focus:     var(--neutral-600);

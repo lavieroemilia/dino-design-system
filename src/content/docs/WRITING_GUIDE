@@ -2,7 +2,7 @@
 
 ## Project context
 
-Documentation for the Dino Design System — a learning app for students prepping for exams.
+Documentation for the Dino Design System, a learning app for students prepping for exams.
 Stack: **Astro + vanilla CSS** with Figma tokens exported in `global.css`.
 Audience: everyone at Dino (devs, designers, PMs, marketing).
 
@@ -10,7 +10,7 @@ Audience: everyone at Dino (devs, designers, PMs, marketing).
 
 ## ✍️ Voice & tone
 
-Write like a smart friend who ships things — not a textbook, not a corporate manual.
+Write like a smart friend who ships things (not a textbook, not a corporate manual).
 
 - Clear, direct, with personality. Never boring, never stiff.
 - Max 2 lines per description. Lead with action verbs: "moves", "blocks", "celebrates", "warns".

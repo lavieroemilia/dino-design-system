@@ -11,22 +11,29 @@ const { title, description, headings = [] } = Astro.props;
 
 const pages = await Astro.glob('../pages/components/*.astro');
 
-const navItems = pages
+const componentItems = pages
   .map(page => {
     const slug = page.file.split('/').pop()?.replace('.astro', '') ?? '';
     const label = slug
       .split('-')
-      .map((w: string) => w.charAt(0).toUpperCase() + w.slice(1))
+      .map(w => w.charAt(0).toUpperCase() + w.slice(1))
       .join(' ');
     return { label, href: `/components/${slug}` };
   })
-  .sort((a: { label: string }, b: { label: string }) => a.label.localeCompare(b.label));
+  .sort((a, b) => a.label.localeCompare(b.label));
+
+const gettingStarted = [
+  { label: 'Overview',   href: '/overview' },
+  { label: 'Colors',     href: '/tokens/colors' },
+  { label: 'Typography', href: '/tokens/typography' },
+  { label: 'Spacing',    href: '/tokens/spacing' },
+];
 
 const filteredHeadings = headings.filter(h => h.depth <= 3);
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -116,11 +123,14 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       scrollbar-color: var(--neutral-700) transparent;
     }
 
+    .sidebar__group { margin-bottom: var(--spacing-28); }
+
     .sidebar__group-label {
       font-family: var(--font-family-headings);
-      font-size: var(--font-size-paragraph-sm);
-      font-weight: var(--font-weight-semibold);
-      letter-spacing: none;
+      font-size: var(--font-size-paragraph-cp);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--text-placeholder);
       padding: 0 var(--spacing-12);
       margin-bottom: var(--spacing-8);
@@ -132,7 +142,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       padding: 7px var(--spacing-12);
       border-radius: var(--radius-sm) 0 0 var(--radius-sm);
       font-size: var(--font-size-paragraph-sm);
-      font-weight: var(--font-weight-default);
+      font-weight: var(--font-weight-regular);
       color: var(--text-body-default);
       text-decoration: none;
       transition: background 0.15s, color 0.15s;
@@ -161,10 +171,10 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 
     /* ── Main ── */
     .main {
-  padding: var(--spacing-64);
-  min-width: 0;
-  max-width: 860px;
-  margin: 0 auto;
+      padding: var(--spacing-64);
+      min-width: 0;
+      max-width: 860px;
+      margin: 0 auto;
     }
 
     .main__header {
@@ -176,7 +186,6 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       font-family: var(--font-family-headings);
       font-size: var(--font-size-h1);
       font-weight: var(--font-weight-bold);
-      letter-spacing: none;
       color: var(--text-headings);
       line-height: var(--line-height-h1);
       margin-bottom: var(--spacing-12);
@@ -206,7 +215,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     .main :global(h3) {
       font-family: var(--font-family-headings);
       font-size: var(--font-size-h3);
-      font-weight: 600;
+      font-weight: var(--font-weight-semibold);
       color: var(--neutral-white-100);
       margin-top: var(--spacing-40);
       margin-bottom: 0;
@@ -294,6 +303,15 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       margin: var(--spacing-40) 0;
     }
 
+    /* Heading size overrides */
+    .main :global(h1) { font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); }
+    .main :global(h2) { font-size: var(--font-size-h2); line-height: var(--line-height-h2); font-weight: var(--font-weight-bold); }
+    .main :global(h3) { font-size: var(--font-size-h3); line-height: var(--line-height-h3); font-weight: var(--font-weight-semibold); }
+    .main :global(h4) { font-size: var(--font-size-h4); line-height: var(--line-height-h4); font-weight: var(--font-weight-semibold); }
+    .main :global(h5) { font-size: var(--font-size-h5); line-height: var(--line-height-h5); font-weight: var(--font-weight-medium); }
+    .main :global(h6) { font-size: var(--font-size-h6); line-height: var(--line-height-h6); font-weight: var(--font-weight-medium); }
+    .main :global(p)  { font-size: var(--font-size-paragraph-md); line-height: var(--line-height-paragraph-md); }
+
     /* ── TOC ── */
     .toc {
       position: sticky;
@@ -307,10 +325,8 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     }
 
     .toc__label {
-      font-family: var(--font-family-paragraph);
       font-size: var(--font-size-paragraph-sm);
       font-weight: var(--font-weight-bold);
-      letter-spacing: none;
       color: var(--text-placeholder);
       margin-bottom: var(--spacing-10);
     }
@@ -340,17 +356,6 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     }
 
     .toc__link[data-depth="3"] { padding-left: var(--spacing-20); }
-
-    /* Headings */
-.main :global(h1) { font-size: var(--font-size-h1); line-height: var(--line-height-h1); font-weight: var(--font-weight-bold); }
-.main :global(h2) { font-size: var(--font-size-h2); line-height: var(--line-height-h2); font-weight: var(--font-weight-bold); }
-.main :global(h3) { font-size: var(--font-size-h3); line-height: var(--line-height-h3); font-weight: var(--font-weight-semibold); }
-.main :global(h4) { font-size: var(--font-size-h4); line-height: var(--line-height-h4); font-weight: var(--font-weight-semibold); }
-.main :global(h5) { font-size: var(--font-size-h5); line-height: var(--line-height-h5); font-weight: var(--font-weight-medium); }
-.main :global(h6) { font-size: var(--font-size-h6); line-height: var(--line-height-h6); font-weight: var(--font-weight-medium); }
-
-/* Paragraphs */
-.main :global(p)  { font-size: var(--font-size-paragraph-md); line-height: var(--line-height-paragraph-md); }
   </style>
 </head>
 <body>
@@ -363,17 +368,34 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 
   <div class="shell">
 
-    <nav class="sidebar" aria-label="Components">
-      <p class="sidebar__group-label">Components</p>
-      {navItems.map(item => (
-        <a
-          href={item.href}
-          class="sidebar__link"
-          aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
-        >
-          {item.label}
-        </a>
-      ))}
+    <nav class="sidebar" aria-label="Site navigation">
+
+      <div class="sidebar__group">
+        <p class="sidebar__group-label">Getting Started</p>
+        {gettingStarted.map(item => (
+          <a
+            href={item.href}
+            class="sidebar__link"
+            aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      <div class="sidebar__group">
+        <p class="sidebar__group-label">Components</p>
+        {componentItems.map(item => (
+          <a
+            href={item.href}
+            class="sidebar__link"
+            aria-current={Astro.url.pathname === item.href ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))}
+      </div>
+
     </nav>
 
     <main class="main" id="main-content">
@@ -404,11 +426,11 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
   </div>
 
   <script>
-    const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc__link');
+    const tocLinks = document.querySelectorAll('.toc__link');
     if (tocLinks.length) {
       const headingEls = Array.from(tocLinks)
         .map(l => document.getElementById(l.getAttribute('href')?.slice(1) ?? ''))
-        .filter(Boolean) as HTMLElement[];
+        .filter(Boolean);
 
       const observer = new IntersectionObserver(entries => {
         for (const entry of entries) {
@@ -420,7 +442,7 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
         }
       }, { rootMargin: '-56px 0px -60% 0px', threshold: 0 });
 
-      headingEls.forEach(el => observer.observe(el));
+      headingEls.forEach(el => { if (el) observer.observe(el); });
     }
   </script>
 

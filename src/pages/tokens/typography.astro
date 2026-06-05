@@ -1,0 +1,392 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'typeface', text: 'Typeface' },
+  { depth: 2, slug: 'scale',    text: 'Type scale' },
+  { depth: 2, slug: 'weights',  text: 'Weights' },
+];
+
+const typeScale = [
+  {
+    token: 'h1',
+    mobile:  { size: '48px', lh: '56px' },
+    desktop: { size: '64px', lh: '76px' },
+    weight: 700,
+    sample: 'Start your revision',
+  },
+  {
+    token: 'h2',
+    mobile:  { size: '40px', lh: '48px' },
+    desktop: { size: '48px', lh: '56px' },
+    weight: 700,
+    sample: 'Today\'s progress',
+  },
+  {
+    token: 'h3',
+    mobile:  { size: '32px', lh: '40px' },
+    desktop: { size: '40px', lh: '48px' },
+    weight: 600,
+    sample: 'Biology — Unit 3',
+  },
+  {
+    token: 'h4',
+    mobile:  { size: '28px', lh: '32px' },
+    desktop: { size: '32px', lh: '40px' },
+    weight: 600,
+    sample: 'Choose the right answer',
+  },
+  {
+    token: 'h5',
+    mobile:  { size: '24px', lh: '28px' },
+    desktop: { size: '24px', lh: '28px' },
+    weight: 500,
+    sample: 'Question 4 of 10',
+  },
+  {
+    token: 'h6',
+    mobile:  { size: '20px', lh: '24px' },
+    desktop: { size: '20px', lh: '24px' },
+    weight: 500,
+    sample: 'Feedback',
+  },
+  {
+    token: 'paragraph-xlg',
+    mobile:  { size: '20px', lh: '24px' },
+    desktop: { size: '20px', lh: '24px' },
+    weight: 400,
+    sample: 'Great answer! The mitochondria is indeed the powerhouse of the cell.',
+  },
+  {
+    token: 'paragraph-lg',
+    mobile:  { size: '18px', lh: '20px' },
+    desktop: { size: '18px', lh: '20px' },
+    weight: 400,
+    sample: 'Select the option that best describes the cell cycle.',
+  },
+  {
+    token: 'paragraph-md',
+    mobile:  { size: '16px', lh: '20px' },
+    desktop: { size: '16px', lh: '20px' },
+    weight: 400,
+    sample: 'The process by which cells divide and replicate their DNA.',
+  },
+  {
+    token: 'paragraph-sm',
+    mobile:  { size: '14px', lh: '18px' },
+    desktop: { size: '14px', lh: '20px' },
+    weight: 400,
+    sample: 'Tap to reveal the explanation.',
+  },
+  {
+    token: 'paragraph-xsm',
+    mobile:  { size: '12px', lh: '16px' },
+    desktop: { size: '12px', lh: '16px' },
+    weight: 400,
+    sample: 'Last studied 2 days ago',
+  },
+  {
+    token: 'paragraph-cp',
+    mobile:  { size: '11px', lh: '16px' },
+    desktop: { size: '11px', lh: '16px' },
+    weight: 500,
+    sample: 'CAPTION · LABEL',
+  },
+];
+
+const weights = [
+  { label: 'Regular',   value: 400, token: '--font-weight-regular',  sample: 'The quick brown fox jumps over the lazy dog.' },
+  { label: 'Medium',    value: 500, token: '--font-weight-medium',   sample: 'The quick brown fox jumps over the lazy dog.' },
+  { label: 'Semi-bold', value: 600, token: '--font-weight-semibold', sample: 'The quick brown fox jumps over the lazy dog.' },
+  { label: 'Bold',      value: 700, token: '--font-weight-bold',     sample: 'The quick brown fox jumps over the lazy dog.' },
+];
+---
+
+<DocLayout
+  title="Typography"
+  description="One typeface. Four weights. Twelve steps — each wired to responsive tokens."
+  headings={headings}
+>
+
+  <!-- ── Typeface ── -->
+  <h2 id="typeface">Typeface</h2>
+  <p>
+    Dino uses <strong>Rubik</strong> exclusively. Its rounded geometry balances the saturated
+    color palette and stays legible on small screens at all weights.
+    Both <code>--font-family-body</code> and <code>--font-family-headings</code> point to it.
+  </p>
+
+  <div class="typeface-card">
+    <div class="typeface-card__display">Rubik</div>
+    <div class="typeface-card__meta">
+      <div class="typeface-meta-item">
+        <span class="typeface-meta-item__label">Tokens</span>
+        <code>--font-family-body</code>
+        <code>--font-family-headings</code>
+      </div>
+      <div class="typeface-meta-item">
+        <span class="typeface-meta-item__label">Weights used</span>
+        <span>400 · 500 · 600 · 700</span>
+      </div>
+      <div class="typeface-meta-item">
+        <span class="typeface-meta-item__label">Source</span>
+        <span>Google Fonts</span>
+      </div>
+    </div>
+    <div class="typeface-card__alphabet">
+      Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
+    </div>
+    <div class="typeface-card__numerals">
+      0 1 2 3 4 5 6 7 8 9 ! @ # $ % & ( ) — + = ?
+    </div>
+  </div>
+
+  <!-- ── Type scale ── -->
+  <h2 id="scale">Type scale</h2>
+  <p>
+    Twelve steps from display down to caption. Tokens are responsive — mobile and desktop sizes
+    differ for headings only; paragraphs stay the same across breakpoints.
+  </p>
+
+  <div class="scale-table-wrap">
+    <div class="scale-table">
+
+      <div class="scale-row scale-row--header">
+        <span>Token</span>
+        <span>Mobile</span>
+        <span>Desktop</span>
+        <span>Weight</span>
+        <span>Sample</span>
+      </div>
+
+      {typeScale.map(step => (
+        <div class="scale-row">
+          <code class="scale-row__token">{step.token}</code>
+          <span class="scale-row__size">{step.mobile.size} / {step.mobile.lh}</span>
+          <span class="scale-row__size scale-row__size--desktop">
+            {step.desktop.size !== step.mobile.size
+              ? step.desktop.size + ' / ' + step.desktop.lh
+              : '—'}
+          </span>
+          <span class="scale-row__weight">{step.weight}</span>
+          <span
+            class="scale-row__sample"
+            style={`font-size: var(--font-size-${step.token}); line-height: var(--line-height-${step.token}); font-weight: ${step.weight};`}
+          >
+            {step.sample}
+          </span>
+        </div>
+      ))}
+
+    </div>
+  </div>
+
+  <!-- ── Weights ── -->
+  <h2 id="weights">Weights</h2>
+  <p>Four weights, four tokens. Match weight to role — headings lead with bold, body copy stays regular.</p>
+
+  <div class="weights-list">
+    {weights.map(({ label, value, token, sample }) => (
+      <div class="weight-row">
+        <div class="weight-row__meta">
+          <strong class="weight-row__label">{label}</strong>
+          <span class="weight-row__value">{value}</span>
+          <code class="weight-row__token">{token}</code>
+        </div>
+        <span class="weight-row__sample" style={`font-weight: ${value};`}>{sample}</span>
+      </div>
+    ))}
+  </div>
+
+</DocLayout>
+
+<style>
+  /* ── Typeface card ── */
+  .typeface-card {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    padding: var(--spacing-28) var(--spacing-32);
+    margin-top: var(--spacing-20);
+    margin-bottom: var(--spacing-48);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-20);
+  }
+
+  .typeface-card__display {
+    font-family: var(--font-family-headings);
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-headings);
+    letter-spacing: -0.02em;
+  }
+
+  .typeface-card__meta {
+    display: flex;
+    gap: var(--spacing-32);
+    flex-wrap: wrap;
+  }
+
+  .typeface-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .typeface-meta-item__label {
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+  }
+
+  .typeface-meta-item span,
+  .typeface-meta-item code {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-body-default);
+  }
+
+  .typeface-card__alphabet,
+  .typeface-card__numerals {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-md);
+    color: var(--text-body-default);
+    line-height: 1.8;
+    letter-spacing: 0.03em;
+  }
+
+  .typeface-card__numerals {
+    color: var(--text-placeholder);
+  }
+
+  /* ── Scale table ── */
+  .scale-table-wrap {
+    margin-top: var(--spacing-20);
+    margin-bottom: var(--spacing-48);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+  }
+
+  .scale-table {
+    width: 100%;
+  }
+
+  .scale-row {
+    display: grid;
+    grid-template-columns: 140px 90px 90px 60px 1fr;
+    align-items: center;
+    gap: var(--spacing-16);
+    padding: var(--spacing-12) var(--spacing-20);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .scale-row:last-child { border-bottom: none; }
+
+  .scale-row--header {
+    background: var(--surface-elevate);
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    padding: var(--spacing-12) var(--spacing-20);
+  }
+
+  .scale-row__token {
+    font-size: 11px;
+    word-break: break-all;
+  }
+
+  .scale-row__size {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  .scale-row__size--desktop {
+    color: var(--info-300);
+  }
+
+  .scale-row__weight {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  .scale-row__sample {
+    font-family: var(--font-family-body);
+    color: var(--text-headings);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 720px) {
+    .scale-row {
+      grid-template-columns: 130px 80px 1fr;
+    }
+    .scale-row__size--desktop,
+    .scale-row__weight { display: none; }
+  }
+
+  /* ── Weights ── */
+  .weights-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+    margin-top: var(--spacing-20);
+  }
+
+  .weight-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    align-items: center;
+    gap: var(--spacing-24);
+    padding: var(--spacing-20) var(--spacing-24);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .weight-row:last-child { border-bottom: none; }
+
+  .weight-row__meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .weight-row__label {
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .weight-row__value {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  .weight-row__token {
+    font-size: 10px;
+    margin-top: var(--spacing-4);
+    display: block;
+  }
+
+  .weight-row__sample {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-md);
+    color: var(--text-headings);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 600px) {
+    .weight-row { grid-template-columns: 1fr; }
+  }
+</style>

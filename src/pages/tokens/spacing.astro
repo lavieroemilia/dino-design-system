@@ -1,0 +1,382 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'scale',         text: 'Base scale' },
+  { depth: 2, slug: 'semantic',      text: 'Semantic spacing' },
+  { depth: 2, slug: 'border-radius', text: 'Border radius' },
+  { depth: 2, slug: 'border-width',  text: 'Border width' },
+];
+
+const baseScale = [
+  { step: '0',    value: '0px',  token: '--scale-0' },
+  { step: '25',   value: '1px',  token: '--scale-25' },
+  { step: '50',   value: '2px',  token: '--scale-50' },
+  { step: '100',  value: '4px',  token: '--scale-100' },
+  { step: '150',  value: '6px',  token: '--scale-150' },
+  { step: '200',  value: '8px',  token: '--scale-200' },
+  { step: '250',  value: '10px', token: '--scale-250' },
+  { step: '300',  value: '12px', token: '--scale-300' },
+  { step: '400',  value: '16px', token: '--scale-400' },
+  { step: '500',  value: '20px', token: '--scale-500' },
+  { step: '600',  value: '24px', token: '--scale-600' },
+  { step: '700',  value: '28px', token: '--scale-700' },
+  { step: '800',  value: '32px', token: '--scale-800' },
+  { step: '850',  value: '36px', token: '--scale-850' },
+  { step: '900',  value: '40px', token: '--scale-900' },
+  { step: '1000', value: '48px', token: '--scale-1000' },
+  { step: '1100', value: '64px', token: '--scale-1100' },
+];
+
+const semanticSpacing = [
+  { token: '--spacing-2',  value: '2px',  scale: '--scale-50' },
+  { token: '--spacing-4',  value: '4px',  scale: '--scale-100' },
+  { token: '--spacing-8',  value: '8px',  scale: '--scale-200' },
+  { token: '--spacing-10', value: '10px', scale: '--scale-250' },
+  { token: '--spacing-12', value: '12px', scale: '--scale-300' },
+  { token: '--spacing-16', value: '16px', scale: '--scale-400' },
+  { token: '--spacing-20', value: '20px', scale: '--scale-500' },
+  { token: '--spacing-24', value: '24px', scale: '--scale-600' },
+  { token: '--spacing-28', value: '28px', scale: '--scale-700' },
+  { token: '--spacing-32', value: '32px', scale: '--scale-800' },
+  { token: '--spacing-36', value: '36px', scale: '--scale-850' },
+  { token: '--spacing-40', value: '40px', scale: '--scale-900' },
+  { token: '--spacing-48', value: '48px', scale: '--scale-1000' },
+  { token: '--spacing-64', value: '64px', scale: '--scale-1100' },
+];
+
+const radii = [
+  { token: '--radius-none', value: '0px',  label: 'none',  scale: '--scale-0' },
+  { token: '--radius-xsm',  value: '4px',  label: 'xsm',   scale: '--scale-100' },
+  { token: '--radius-sm',   value: '6px',  label: 'sm',    scale: '--scale-150' },
+  { token: '--radius-md',   value: '8px',  label: 'md',    scale: '--scale-200' },
+  { token: '--radius-lg',   value: '10px', label: 'lg',    scale: '--scale-250' },
+  { token: '--radius-xlg',  value: '12px', label: 'xlg',   scale: '--scale-300' },
+  { token: '--radius-round','value': '20px',label: 'round', scale: '--scale-500' },
+];
+
+const borderWidths = [
+  { token: '--border-width-none', label: 'none', value: '0px',  cssVar: 'none' },
+  { token: '--border-width-sm',   label: 'sm',   value: '1px',  cssVar: 'sm' },
+  { token: '--border-width-md',   label: 'md',   value: '2px',  cssVar: 'md' },
+  { token: '--border-width-lg',   label: 'lg',   value: '4px',  cssVar: 'lg' },
+];
+---
+
+<DocLayout
+  title="Spacing"
+  description="A base-4 scale for space, a named set for semantic use, and tokens for radius and border width."
+  headings={headings}
+>
+
+  <!-- ── Base scale ── -->
+  <h2 id="scale">Base scale</h2>
+  <p>
+    Everything starts from a set of raw scale tokens. These exist only to be referenced by
+    semantic tokens — never used directly in components.
+    Steps are named by their value × 25 for easy mental math.
+  </p>
+
+  <div class="scale-bars">
+    {baseScale.map(({ step, value, token }) => (
+      <div class="scale-bar-row">
+        <code class="scale-bar-row__token">{token}</code>
+        <span class="scale-bar-row__value">{value}</span>
+        <div class="scale-bar-row__track">
+          {value !== '0px' && (
+            <div
+              class="scale-bar-row__fill"
+              style={`width: var(${token})`}
+            ></div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- ── Semantic spacing ── -->
+  <h2 id="semantic">Semantic spacing</h2>
+  <p>
+    Named by pixel value for readability. These are what you reach for when building layouts —
+    paddings, gaps, margins. Each maps to a scale step.
+  </p>
+
+  <div class="spacing-table-wrap">
+    <div class="spacing-table">
+      <div class="spacing-row spacing-row--header">
+        <span>Token</span>
+        <span>Value</span>
+        <span>Scale ref</span>
+        <span>Visual</span>
+      </div>
+      {semanticSpacing.map(({ token, value, scale }) => (
+        <div class="spacing-row">
+          <code class="spacing-row__token">{token}</code>
+          <span class="spacing-row__value">{value}</span>
+          <code class="spacing-row__scale">{scale}</code>
+          <div class="spacing-row__visual">
+            <div class="spacing-dot" style={`width: ${value}; height: ${value}`}></div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- ── Border radius ── -->
+  <h2 id="border-radius">Border radius</h2>
+  <p>Seven steps from sharp to fully round. Use <code>--radius-xlg</code> for cards and panels, <code>--radius-round</code> for chips and pills.</p>
+
+  <div class="radius-row">
+    {radii.map(({ token, value, label }) => (
+      <div class="radius-card">
+        <div
+          class="radius-card__preview"
+          style={`border-radius: var(${token})`}
+        ></div>
+        <div class="radius-card__info">
+          <span class="radius-card__label">{label}</span>
+          <span class="radius-card__value">{value}</span>
+          <code class="radius-card__token">{token}</code>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- ── Border width ── -->
+  <h2 id="border-width">Border width</h2>
+  <p>Four widths for every context — from invisible to thick emphasis.</p>
+
+  <div class="bw-row">
+    {borderWidths.map(({ label, value, token }) => (
+      <div class="bw-card">
+        <div
+          class="bw-card__preview"
+          style={`border: ${value} solid var(--border-default)`}
+        ></div>
+        <div class="bw-card__info">
+          <span class="bw-card__label">{label}</span>
+          <span class="bw-card__value">{value}</span>
+          <code class="bw-card__token">{token}</code>
+        </div>
+      </div>
+    ))}
+  </div>
+
+</DocLayout>
+
+<style>
+  /* ── Scale bars ── */
+  .scale-bars {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-20);
+    margin-bottom: var(--spacing-48);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+    padding: var(--spacing-16) var(--spacing-20);
+    background: var(--surface-elevate);
+  }
+
+  .scale-bar-row {
+    display: grid;
+    grid-template-columns: 140px 48px 1fr;
+    align-items: center;
+    gap: var(--spacing-16);
+    min-height: 28px;
+  }
+
+  .scale-bar-row__token {
+    font-size: 10px;
+    white-space: nowrap;
+    color: var(--primary-300);
+  }
+
+  .scale-bar-row__value {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+    text-align: right;
+  }
+
+  .scale-bar-row__track {
+    display: flex;
+    align-items: center;
+    height: 20px;
+  }
+
+  .scale-bar-row__fill {
+    height: 8px;
+    min-width: 2px;
+    max-width: 100%;
+    background: var(--primary-700);
+    border-radius: var(--radius-round);
+    transition: width 0.2s;
+  }
+
+  /* ── Semantic spacing table ── */
+  .spacing-table-wrap {
+    margin-top: var(--spacing-20);
+    margin-bottom: var(--spacing-48);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+  }
+
+  .spacing-row {
+    display: grid;
+    grid-template-columns: 160px 60px 140px 1fr;
+    align-items: center;
+    gap: var(--spacing-16);
+    padding: var(--spacing-10) var(--spacing-20);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .spacing-row:last-child { border-bottom: none; }
+
+  .spacing-row--header {
+    background: var(--surface-elevate);
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+  }
+
+  .spacing-row__token {
+    font-size: var(--font-size-paragraph-cp);
+    word-break: break-all;
+  }
+
+  .spacing-row__value {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  .spacing-row__scale {
+    font-size: 10px;
+    color: var(--text-placeholder);
+    opacity: 0.6;
+  }
+
+  .spacing-row__visual {
+    display: flex;
+    align-items: center;
+  }
+
+  .spacing-dot {
+    background: var(--primary-700);
+    border-radius: var(--radius-xsm);
+    min-width: 2px;
+    min-height: 2px;
+    max-width: 64px;
+    max-height: 64px;
+  }
+
+  @media (max-width: 600px) {
+    .spacing-row { grid-template-columns: 140px 50px 1fr; }
+    .spacing-row__scale { display: none; }
+  }
+
+  /* ── Border radius ── */
+  .radius-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-12);
+    margin-top: var(--spacing-20);
+    margin-bottom: var(--spacing-48);
+  }
+
+  .radius-card {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    padding: var(--spacing-16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12);
+    min-width: 110px;
+  }
+
+  .radius-card__preview {
+    width: 56px;
+    height: 56px;
+    background: var(--primary-800);
+    border: 1px solid var(--primary-600);
+  }
+
+  .radius-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .radius-card__label {
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .radius-card__value {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  .radius-card__token {
+    font-size: 10px;
+    display: block;
+    margin-top: var(--spacing-4);
+  }
+
+  /* ── Border width ── */
+  .bw-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-12);
+    margin-top: var(--spacing-20);
+  }
+
+  .bw-card {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    padding: var(--spacing-16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-12);
+    min-width: 120px;
+  }
+
+  .bw-card__preview {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+  }
+
+  .bw-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .bw-card__label {
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .bw-card__value {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+    font-family: monospace;
+  }
+
+  .bw-card__token {
+    font-size: 10px;
+    display: block;
+    margin-top: var(--spacing-4);
+  }
+</style>

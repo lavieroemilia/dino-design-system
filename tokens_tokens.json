@@ -1522,7 +1522,7 @@
         "$value": "{Neutral.white-100}"
       },
       "body-default": {
-        "$value": "{Neutral.white-70}"
+        "$value": "{Neutral.200}"
       },
       "body-dark": {
         "$value": "{Neutral.900}"

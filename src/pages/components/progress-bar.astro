@@ -86,14 +86,14 @@ const headings = [
   </div>
 
   <h3 id="color">Color</h3>
-  <p>Each color carries a specific meaning — don't swap them for style. Yellow moves lessons forward; the rest signal a state.</p>
+  <p>Five colors with no fixed meaning — pick one per subject or context to add visual variety across the app. The choice is yours.</p>
   <div class="example-row example-row--col">
     {[
-      { color: 'yellow', label: 'yellow — active lesson' },
-      { color: 'green',  label: 'green — completed / success' },
-      { color: 'red',    label: 'red — error / hearts critical' },
-      { color: 'orange', label: 'orange — streak at risk' },
-      { color: 'purple', label: 'purple — special mode / challenge' },
+      { color: 'yellow', label: 'yellow' },
+      { color: 'green',  label: 'green'  },
+      { color: 'red',    label: 'red'    },
+      { color: 'orange', label: 'orange' },
+      { color: 'purple', label: 'purple' },
     ].map(({ color, label }) => (
       <div class="size-row">
         <span class="size-label">{label}</span>
@@ -116,20 +116,24 @@ const headings = [
 
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
-  <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Also appears inside the streak and hearts panels to show remaining capacity at a glance.</p>
+  <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Assign one color per subject so learners can tell courses apart at a glance — consistency within a subject matters more than which color you pick.</p>
 
 
   <!-- COMBINATIONS -->
   <h2 id="combinations">Combinations</h2>
-  <p>Pairs with the Hearts indicator (use <code>red</code> when hearts drop below 2) and the Streak counter (use <code>orange</code> when the streak is at risk). In lesson headers, it always sits above the question — never inline with text.</p>
+  <p>Always sits above the question, never inline with text. Pair it with a label or counter so the user knows what is being measured.</p>
   <div class="example-row example-row--col">
     <div class="size-row">
-      <span class="size-label">Lesson header</span>
+      <span class="size-label">Biology</span>
       <ProgressBar value={40} size="lg" color="yellow" />
     </div>
     <div class="size-row">
-      <span class="size-label">Hearts critical</span>
-      <ProgressBar value={20} size="md" color="red" />
+      <span class="size-label">History</span>
+      <ProgressBar value={65} size="lg" color="purple" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">Maths</span>
+      <ProgressBar value={80} size="lg" color="green" />
     </div>
   </div>
 
@@ -141,7 +145,7 @@ const headings = [
     <div class="dos-donts__col dos-donts__col--do">
       <p class="dos-donts__label">Do</p>
       <ul>
-        <li><strong>Match color to context</strong> — yellow for active, green for done, red when something is at risk.</li>
+        <li><strong>Pick one color per subject and stick to it</strong> — consistency is what makes the color useful.</li>
         <li><strong>Always pass a meaningful <code>label</code></strong> — screen readers announce it; "Progress: 60%" is better than silence.</li>
         <li><strong>Use <code>lg</code> as the default</strong> — smaller sizes only when the bar is a secondary indicator.</li>
       </ul>
@@ -149,7 +153,7 @@ const headings = [
     <div class="dos-donts__col dos-donts__col--dont">
       <p class="dos-donts__label">Don't</p>
       <ul>
-        <li><strong>Don't use purple for generic progress</strong> — it signals a special mode; reserve it for challenges and events.</li>
+        <li><strong>Don't change a subject's color mid-session</strong> — it breaks the visual pattern learners rely on.</li>
         <li><strong>Don't show a bar without context</strong> — always pair it with a label or a counter so the user knows what is being measured.</li>
         <li><strong>Don't animate to 100% silently</strong> — reaching the end deserves a celebration state in the parent screen.</li>
       </ul>

@@ -1,0 +1,273 @@
+---
+import DocLayout from '../layouts/DocLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'principles', text: 'Principles' },
+  { depth: 2, slug: 'architecture', text: 'Architecture' },
+];
+---
+
+<DocLayout
+  title="Overview"
+  description="A system-wide reference for tokens, components, and the rules that tie Dino together."
+  headings={headings}
+>
+
+  <!-- ── Hero ── -->
+  <div class="hero-chips">
+    <span class="chip chip--green">v0.1.0</span>
+    <span class="chip">Dark mode</span>
+    <span class="chip">Astro + CSS</span>
+    <span class="chip">Rubik</span>
+  </div>
+
+  <!-- ── Principles ── -->
+  <h2 id="principles">Principles</h2>
+  <p>Four beliefs that drive every decision in the system — from token naming to shadow depth.</p>
+
+  <div class="principles-grid">
+
+    <div class="principle-card">
+      <div class="principle-card__eyebrow">01</div>
+      <h3 class="principle-card__title">Details matter</h3>
+      <p class="principle-card__body">
+        Shadows, pressed states, gradient fills — each one imperceptible on its own.
+        Together they make the product feel crafted, not assembled.
+      </p>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-card__eyebrow">02</div>
+      <h3 class="principle-card__title">Feedback is constant</h3>
+      <p class="principle-card__body">
+        Every action gets a visual reaction. Hover, pressed, disabled, error, success —
+        all distinct. In a learning app, clarity keeps the flow.
+      </p>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-card__eyebrow">03</div>
+      <h3 class="principle-card__title">One source of truth</h3>
+      <p class="principle-card__body">
+        No hardcoded values — ever. Every color, size, and shadow flows from tokens.
+        Change the token, change everything at once.
+      </p>
+    </div>
+
+    <div class="principle-card">
+      <div class="principle-card__eyebrow">04</div>
+      <h3 class="principle-card__title">Dark by default</h3>
+      <p class="principle-card__body">
+        Reduces eye strain in late-night study sessions and gives the app
+        the visual energy of a game — not a textbook.
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ── Architecture ── -->
+  <h2 id="architecture">Architecture</h2>
+  <p>
+    Tokens follow three layers of abstraction. Each layer has one job.
+    Components only ever consume the third.
+  </p>
+
+  <div class="arch">
+
+    <div class="arch__layer arch__layer--brand">
+      <div class="arch__badge">Brand</div>
+      <strong class="arch__name">Primitives</strong>
+      <p class="arch__desc">
+        Raw values with no context. <code>#4ed21e</code>, <code>16px</code>, <code>Rubik</code>.
+        They exist only to be referenced — never used directly in components.
+      </p>
+      <div class="arch__examples">
+        <code>--green-default</code>
+        <code>--grey-800</code>
+        <code>--scale-400</code>
+      </div>
+    </div>
+
+    <div class="arch__arrow" aria-hidden="true">→</div>
+
+    <div class="arch__layer arch__layer--semantic">
+      <div class="arch__badge">Semantic</div>
+      <strong class="arch__name">Roles</strong>
+      <p class="arch__desc">
+        Names with intent. <em>Primary</em>, <em>Error</em>, <em>Spacing</em>.
+        They say what a value is <em>for</em>, not what it looks like.
+      </p>
+      <div class="arch__examples">
+        <code>--primary-600</code>
+        <code>--error-default</code>
+        <code>--spacing-16</code>
+      </div>
+    </div>
+
+    <div class="arch__arrow" aria-hidden="true">→</div>
+
+    <div class="arch__layer arch__layer--component">
+      <div class="arch__badge">Component</div>
+      <strong class="arch__name">Context</strong>
+      <p class="arch__desc">
+        What components consume. Named by surface and state.
+        Dark mode is the default; light is a theme override.
+      </p>
+      <div class="arch__examples">
+        <code>--surface-button-primary-default</code>
+        <code>--text-headings</code>
+        <code>--border-action-default</code>
+      </div>
+    </div>
+
+  </div>
+
+</DocLayout>
+
+<style>
+  /* ── Hero chips ── */
+  .hero-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-8);
+    margin-bottom: var(--spacing-48);
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-4) var(--spacing-10);
+    border-radius: var(--radius-round);
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    background: var(--surface-elevate);
+    color: var(--text-placeholder);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .chip--green {
+    background: var(--primary-900);
+    color: var(--primary-300);
+    border-color: var(--primary-800);
+  }
+
+  /* ── Principles ── */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-24);
+    margin-bottom: var(--spacing-64);
+  }
+
+  @media (max-width: 600px) {
+    .principles-grid { grid-template-columns: 1fr; }
+  }
+
+  .principle-card {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    padding: var(--spacing-24);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-10);
+  }
+
+  .principle-card__eyebrow {
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.1em;
+    color: var(--primary-600);
+  }
+
+  .principle-card__title {
+    font-family: var(--font-family-headings);
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+    margin: 0;
+  }
+
+  .principle-card__body {
+    font-size: var(--font-size-paragraph-sm);
+    line-height: 1.65;
+    color: var(--text-body-default);
+    margin: 0;
+  }
+
+  /* ── Architecture ── */
+  .arch {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-top: var(--spacing-24);
+    flex-wrap: wrap;
+  }
+
+  .arch__layer {
+    flex: 1;
+    min-width: 180px;
+    padding: var(--spacing-20) var(--spacing-20) var(--spacing-24);
+    border-radius: var(--radius-xlg);
+    border: 1px solid rgba(255,255,255,0.07);
+    background: var(--surface-elevate);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-10);
+  }
+
+  .arch__arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-12);
+    color: var(--text-placeholder);
+    font-size: var(--font-size-paragraph-lg);
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 680px) {
+    .arch { flex-direction: column; }
+    .arch__arrow { transform: rotate(90deg); align-self: center; padding: var(--spacing-4) 0; }
+  }
+
+  .arch__badge {
+    display: inline-flex;
+    align-self: flex-start;
+    padding: 2px var(--spacing-8);
+    border-radius: var(--radius-round);
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.07);
+    color: var(--text-placeholder);
+  }
+
+  .arch__name {
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .arch__desc {
+    font-size: var(--font-size-paragraph-sm);
+    line-height: 1.65;
+    color: var(--text-body-default);
+    margin: 0;
+  }
+
+  .arch__examples {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+  }
+
+  .arch__examples code {
+    font-size: 10px;
+    display: block;
+  }
+</style>

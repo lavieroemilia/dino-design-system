@@ -1,0 +1,522 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+
+const headings = [
+  { depth: 2, slug: 'brand',    text: 'Brand palettes' },
+  { depth: 2, slug: 'semantic', text: 'Semantic roles' },
+  { depth: 2, slug: 'component-tokens', text: 'Component tokens' },
+];
+
+const brandPalettes = [
+  {
+    name: 'Green',
+    role: 'Primary · Success',
+    prefix: 'green',
+    steps: [
+      { label: '50',  token: 'green-50' },
+      { label: '100', token: 'green-100' },
+      { label: '200', token: 'green-200' },
+      { label: '300', token: 'green-300' },
+      { label: '400', token: 'green-400' },
+      { label: 'def', token: 'green-default', isDefault: true },
+      { label: '600', token: 'green-600' },
+      { label: '700', token: 'green-700' },
+      { label: '800', token: 'green-800' },
+      { label: '900', token: 'green-900' },
+    ],
+  },
+  {
+    name: 'Purple',
+    role: 'Info',
+    prefix: 'purple',
+    steps: [
+      { label: '50',  token: 'purple-50' },
+      { label: '100', token: 'purple-100' },
+      { label: '200', token: 'purple-200' },
+      { label: '300', token: 'purple-300' },
+      { label: '400', token: 'purple-400' },
+      { label: 'def', token: 'purple-default', isDefault: true },
+      { label: '600', token: 'purple-600' },
+      { label: '700', token: 'purple-700' },
+      { label: '800', token: 'purple-800' },
+      { label: '900', token: 'purple-900' },
+    ],
+  },
+  {
+    name: 'Red',
+    role: 'Error',
+    prefix: 'red',
+    steps: [
+      { label: '50',  token: 'red-50' },
+      { label: '100', token: 'red-100' },
+      { label: '200', token: 'red-200' },
+      { label: '300', token: 'red-300' },
+      { label: '400', token: 'red-400' },
+      { label: 'def', token: 'red-default', isDefault: true },
+      { label: '600', token: 'red-600' },
+      { label: '700', token: 'red-700' },
+      { label: '800', token: 'red-800' },
+      { label: '900', token: 'red-900' },
+    ],
+  },
+  {
+    name: 'Yellow',
+    role: 'Warning',
+    prefix: 'yellow',
+    steps: [
+      { label: '50',  token: 'yellow-50' },
+      { label: '100', token: 'yellow-100' },
+      { label: '200', token: 'yellow-200' },
+      { label: '300', token: 'yellow-300' },
+      { label: '400', token: 'yellow-400' },
+      { label: 'def', token: 'yellow-default', isDefault: true },
+      { label: '600', token: 'yellow-600' },
+      { label: '700', token: 'yellow-700' },
+      { label: '800', token: 'yellow-800' },
+      { label: '900', token: 'yellow-900' },
+    ],
+  },
+  {
+    name: 'Orange',
+    role: '—',
+    prefix: 'orange',
+    steps: [
+      { label: '50',  token: 'orange-50' },
+      { label: '100', token: 'orange-100' },
+      { label: '200', token: 'orange-200' },
+      { label: '300', token: 'orange-300' },
+      { label: '400', token: 'orange-400' },
+      { label: 'def', token: 'orange-default', isDefault: true },
+      { label: '600', token: 'orange-600' },
+      { label: '700', token: 'orange-700' },
+      { label: '800', token: 'orange-800' },
+      { label: '900', token: 'orange-900' },
+    ],
+  },
+  {
+    name: 'Pink',
+    role: '—',
+    prefix: 'pink',
+    steps: [
+      { label: '50',  token: 'pink-50' },
+      { label: '100', token: 'pink-100' },
+      { label: '200', token: 'pink-200' },
+      { label: '300', token: 'pink-300' },
+      { label: '400', token: 'pink-400' },
+      { label: 'def', token: 'pink-default', isDefault: true },
+      { label: '600', token: 'pink-600' },
+      { label: '700', token: 'pink-700' },
+      { label: '800', token: 'pink-800' },
+      { label: '900', token: 'pink-900' },
+    ],
+  },
+  {
+    name: 'Blue',
+    role: '—',
+    prefix: 'blue',
+    steps: [
+      { label: '50',  token: 'blue-50' },
+      { label: '100', token: 'blue-100' },
+      { label: '200', token: 'blue-200' },
+      { label: '300', token: 'blue-300' },
+      { label: '400', token: 'blue-400' },
+      { label: 'def', token: 'blue-default', isDefault: true },
+      { label: '600', token: 'blue-600' },
+      { label: '700', token: 'blue-700' },
+      { label: '800', token: 'blue-800' },
+      { label: '900', token: 'blue-900' },
+    ],
+  },
+  {
+    name: 'Grey',
+    role: 'Neutral',
+    prefix: 'grey',
+    steps: [
+      { label: '50',  token: 'grey-50' },
+      { label: '100', token: 'grey-100' },
+      { label: '200', token: 'grey-200' },
+      { label: '300', token: 'grey-300' },
+      { label: '400', token: 'grey-400' },
+      { label: '500', token: 'grey-500', isDefault: true },
+      { label: '600', token: 'grey-600' },
+      { label: '700', token: 'grey-700' },
+      { label: '800', token: 'grey-800' },
+      { label: '900', token: 'grey-900' },
+    ],
+  },
+];
+
+const semanticRoles = [
+  { role: 'Primary',  maps: 'Green',  token: 'primary' },
+  { role: 'Error',    maps: 'Red',    token: 'error' },
+  { role: 'Success',  maps: 'Green',  token: 'success' },
+  { role: 'Warning',  maps: 'Yellow', token: 'warning' },
+  { role: 'Info',     maps: 'Purple', token: 'info' },
+  { role: 'Neutral',  maps: 'Grey',   token: 'neutral' },
+];
+
+const componentTokenGroups = [
+  {
+    group: 'Text',
+    tokens: [
+      { token: '--text-headings',              desc: 'Page and section headings' },
+      { token: '--text-body-default',          desc: 'Body copy, descriptions' },
+      { token: '--text-placeholder',           desc: 'Empty states, muted labels' },
+      { token: '--text-action-light',          desc: 'Text on dark/colored buttons' },
+      { token: '--text-action-dark',           desc: 'Text on light buttons' },
+      { token: '--text-error-dark',            desc: 'Inline error messages' },
+      { token: '--text-success',               desc: 'Positive feedback' },
+    ],
+  },
+  {
+    group: 'Surface',
+    tokens: [
+      { token: '--surface-page',                       desc: 'App background' },
+      { token: '--surface-elevate',                    desc: 'Cards, panels, topbar' },
+      { token: '--surface-button-primary-default',     desc: 'Primary button resting' },
+      { token: '--surface-button-primary-hover',       desc: 'Primary button hover' },
+      { token: '--surface-button-disabled',            desc: 'Any disabled button' },
+      { token: '--surface-button-error-default',       desc: 'Danger button resting' },
+      { token: '--surface-button-premium-default',     desc: 'Premium gradient button' },
+    ],
+  },
+  {
+    group: 'Border',
+    tokens: [
+      { token: '--border-default',        desc: 'Default dividers and outlines' },
+      { token: '--border-action-default', desc: 'Selected / focused state' },
+      { token: '--border-error',          desc: 'Error state outline' },
+      { token: '--border-success',        desc: 'Success state outline' },
+      { token: '--border-disabled',       desc: 'Disabled state outline' },
+    ],
+  },
+];
+---
+
+<DocLayout
+  title="Colors"
+  description="Eight brand palettes, semantic roles, and the component tokens that wire them to the UI."
+  headings={headings}
+>
+
+  <!-- ── Brand palettes ── -->
+  <h2 id="brand">Brand palettes</h2>
+  <p>
+    Every color in Dino comes from one of these eight palettes. Each has ten steps — lighter values
+    are used for backgrounds and tints; darker ones for text, borders, and pressed states.
+    The step marked with a ring is the palette's <em>default</em>.
+  </p>
+
+  <div class="palettes">
+    {brandPalettes.map(palette => (
+      <div class="palette">
+        <div class="palette__header">
+          <div class="palette__dot" style={`background: var(--${palette.prefix}-default, var(--${palette.prefix}-500))`}></div>
+          <span class="palette__name">{palette.name}</span>
+          {palette.role !== '—' && <span class="palette__role">{palette.role}</span>}
+        </div>
+        <div class="palette__scale">
+          {palette.steps.map(step => (
+            <div
+              class:list={['swatch', { 'swatch--default': step.isDefault }]}
+              style={`background: var(--${step.token})`}
+              title={`var(--${step.token})`}
+            >
+              <span class="swatch__label">{step.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- Foundation -->
+  <h3 id="foundation">Foundation</h3>
+  <p>Black and white with alpha variants. Used for overlays, disabled states, and text on colored surfaces.</p>
+
+  <div class="foundation-row">
+    <div class="foundation-card">
+      <div class="foundation-preview">
+        {['white-10','white-20','white-30','white-40','white-60','white-70','white-80','100'].map(s => (
+          <div class="foundation-step" style={`background: var(--white-${s})`}></div>
+        ))}
+      </div>
+      <span class="foundation-label">White · 10 → 100</span>
+      <code class="foundation-token">--white-[opacity]</code>
+    </div>
+    <div class="foundation-card">
+      <div class="foundation-preview">
+        {['black-10','black-20','black-30','black-40','black-60','black-70','black-80','100'].map(s => (
+          <div class="foundation-step" style={`background: var(--black-${s})`}></div>
+        ))}
+      </div>
+      <span class="foundation-label">Black · 10 → 100</span>
+      <code class="foundation-token">--black-[opacity]</code>
+    </div>
+  </div>
+
+  <!-- ── Semantic roles ── -->
+  <h2 id="semantic">Semantic roles</h2>
+  <p>
+    The semantic layer maps intent to brand palettes. Swap the palette, and every role updates automatically.
+    Components reference semantic tokens — never brand tokens directly.
+  </p>
+
+  <div class="semantic-grid">
+    {semanticRoles.map(({ role, maps, token }) => (
+      <div class="semantic-card">
+        <div class="semantic-card__swatches">
+          <div class="semantic-card__swatch semantic-card__swatch--light"  style={`background: var(--${token}-100, var(--${token}-50))`}></div>
+          <div class="semantic-card__swatch semantic-card__swatch--mid"    style={`background: var(--${token}-default, var(--${token}-500))`}></div>
+          <div class="semantic-card__swatch semantic-card__swatch--dark"   style={`background: var(--${token}-800, var(--${token}-900))`}></div>
+        </div>
+        <div class="semantic-card__info">
+          <strong class="semantic-card__role">{role}</strong>
+          <span class="semantic-card__maps">→ {maps}</span>
+          <code class="semantic-card__token">--{token}-[step]</code>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- ── Component tokens ── -->
+  <h2 id="component-tokens">Component tokens</h2>
+  <p>
+    The third layer. These are what components consume — named by surface, role, and state.
+    Never reference brand or semantic tokens inside a component.
+  </p>
+
+  {componentTokenGroups.map(({ group, tokens }) => (
+    <div class="token-group">
+      <h3 class="token-group__label">{group}</h3>
+      <div class="token-table">
+        {tokens.map(({ token, desc }) => (
+          <div class="token-row">
+            <div class="token-row__preview" style={`background: var(${token})`}></div>
+            <code class="token-row__name">{token}</code>
+            <span class="token-row__desc">{desc}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  ))}
+
+</DocLayout>
+
+<style>
+  /* ── Palettes ── */
+  .palettes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-24);
+    margin-bottom: var(--spacing-48);
+  }
+
+  .palette__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-10);
+    margin-bottom: var(--spacing-8);
+  }
+
+  .palette__dot {
+    width: 18px;
+    height: 18px;
+    border-radius: var(--radius-xsm);
+    flex-shrink: 0;
+  }
+
+  .palette__name {
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .palette__role {
+    font-size: var(--font-size-paragraph-cp);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-placeholder);
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-round);
+    padding: 1px var(--spacing-8);
+    letter-spacing: 0.04em;
+  }
+
+  .palette__scale {
+    display: flex;
+    gap: 3px;
+    height: 40px;
+  }
+
+  .swatch {
+    flex: 1;
+    border-radius: var(--radius-xsm);
+    position: relative;
+    cursor: default;
+    transition: transform 0.1s;
+  }
+
+  .swatch:hover { transform: scaleY(1.1); z-index: 1; }
+
+  .swatch--default {
+    outline: 2px solid var(--neutral-white-100);
+    outline-offset: 2px;
+    z-index: 1;
+  }
+
+  .swatch__label {
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 9px;
+    color: var(--text-placeholder);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  /* ── Foundation ── */
+  .foundation-row {
+    display: flex;
+    gap: var(--spacing-16);
+    flex-wrap: wrap;
+    margin-top: var(--spacing-20);
+    margin-bottom: var(--spacing-48);
+  }
+
+  .foundation-card {
+    flex: 1;
+    min-width: 240px;
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    padding: var(--spacing-16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-10);
+  }
+
+  .foundation-preview {
+    display: flex;
+    gap: 2px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .foundation-step { flex: 1; }
+
+  .foundation-label {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-body-default);
+    font-weight: var(--font-weight-medium);
+  }
+
+  .foundation-token {
+    font-size: var(--font-size-paragraph-cp);
+  }
+
+  /* ── Semantic ── */
+  .semantic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-12);
+    margin-top: var(--spacing-24);
+    margin-bottom: var(--spacing-48);
+  }
+
+  .semantic-card {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+  }
+
+  .semantic-card__swatches {
+    display: flex;
+    height: 48px;
+  }
+
+  .semantic-card__swatch { flex: 1; }
+
+  .semantic-card__info {
+    padding: var(--spacing-12) var(--spacing-16);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+  }
+
+  .semantic-card__role {
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+  }
+
+  .semantic-card__maps {
+    font-size: var(--font-size-paragraph-cp);
+    color: var(--text-placeholder);
+  }
+
+  .semantic-card__token {
+    font-size: var(--font-size-paragraph-cp);
+    margin-top: var(--spacing-4);
+    display: block;
+  }
+
+  /* ── Component token groups ── */
+  .token-group {
+    margin-bottom: var(--spacing-32);
+  }
+
+  .token-group__label {
+    font-size: var(--font-size-paragraph-cp) !important;
+    font-weight: var(--font-weight-bold) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    color: var(--text-placeholder) !important;
+    margin-top: var(--spacing-32) !important;
+    margin-bottom: var(--spacing-12) !important;
+  }
+
+  .token-table {
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+  }
+
+  .token-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 1fr;
+    align-items: center;
+    gap: var(--spacing-16);
+    padding: var(--spacing-10) var(--spacing-16);
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .token-row:last-child { border-bottom: none; }
+
+  .token-row__preview {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(255,255,255,0.1);
+    flex-shrink: 0;
+  }
+
+  .token-row__name {
+    font-size: var(--font-size-paragraph-cp);
+    display: block;
+  }
+
+  .token-row__desc {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+  }
+
+  @media (max-width: 600px) {
+    .token-row { grid-template-columns: 24px 1fr; }
+    .token-row__desc { display: none; }
+  }
+</style>
