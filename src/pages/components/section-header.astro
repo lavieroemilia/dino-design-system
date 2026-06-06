@@ -70,7 +70,7 @@ const headings = [
   <h2 id="variants">Variants</h2>
 
   <h3 id="status">Status</h3>
-  <p>Four states that cover the full interaction lifecycle. Default rests at the top of the map. Hover and pressed are managed by the app — you only need to pass <code>disabled</code> when the section is locked.</p>
+  <p>Four states for the full interaction lifecycle. Default rests at the top of the map. Hover and pressed are handled by the app. You only need to pass <code>disabled</code> when the section is locked.</p>
 
   <div class="example-row example-row--col">
     {[
@@ -95,15 +95,15 @@ const headings = [
        USAGE
   ════════════════════════════════════════════════ -->
   <h2 id="usage">Usage</h2>
-  <p>Floats at the top of the Camino screen, anchored above the learning path nodes. It always reflects the student's current position: the subject they're actively studying right now. Update it every time the student moves to a new section.</p>
-  <p>The entire card navigates to the subject detail view. The book icon navigates to the theory content directly. If your screen only has one destination, pass the same handler to both <code>onPress</code> and <code>onBookPress</code>.</p>
+  <p>Put it at the top of the Camino screen, above the path nodes. It always shows the section the student is in right now. Update it every time they move forward.</p>
+  <p>Tapping the card opens the subject detail view. Tapping the book icon goes straight to the theory content. If both land on the same screen, pass the same handler to <code>onPress</code> and <code>onBookPress</code>.</p>
 
 
   <!-- ═══════════════════════════════════════════════
        COMBINATIONS
   ════════════════════════════════════════════════ -->
   <h2 id="combinations">Combinations</h2>
-  <p>Always appears above the path nodes, never embedded between them. Pair it with a <strong>Progress Bar</strong> when you want to show fossil or lesson progress alongside the current section.</p>
+  <p>Place it above the path nodes, never between them. Pair it with a <strong>Progress Bar</strong> when you want to show the student's fossil count or lesson progress alongside their current section.</p>
 
   <div class="example-row example-row--col">
     <div class="combo-stack">
@@ -211,7 +211,7 @@ const headings = [
     justify-content: center;
     min-height: 140px;
     padding: 40px 32px;
-    background: var(--surface-page);
+    background: var(--neutral-100);
   }
 
   .preview-wrap { width: 360px; }
