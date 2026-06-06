@@ -1,14 +1,12 @@
 ---
 import DocLayout from '../../layouts/DocLayout.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
-import ProgressBar from '../../components/ProgressBar.astro';
 
 const headings = [
-  { depth: 2, slug: 'variants',     text: 'Variants' },
-  { depth: 3, slug: 'status',       text: 'Status' },
-  { depth: 2, slug: 'usage',        text: 'Usage' },
-  { depth: 2, slug: 'combinations', text: 'Combinations' },
-  { depth: 2, slug: 'dos-donts',    text: "Do's & Don'ts" },
+  { depth: 2, slug: 'variants',  text: 'Variants' },
+  { depth: 3, slug: 'status',    text: 'Status' },
+  { depth: 2, slug: 'usage',     text: 'Usage' },
+  { depth: 2, slug: 'dos-donts', text: "Do's & Don'ts" },
 ];
 ---
 
@@ -95,36 +93,8 @@ const headings = [
        USAGE
   ════════════════════════════════════════════════ -->
   <h2 id="usage">Usage</h2>
-  <p>Put it at the top of the Camino screen, above the path nodes. It always shows the section the student is in right now. Update it every time they move forward.</p>
+  <p>Put it at the top of the Home screen, above the path nodes. It always shows the section the student is in right now. Update it every time they move forward.</p>
   <p>Tapping the card opens the subject detail view. Tapping the book icon goes straight to the theory content. If both land on the same screen, pass the same handler to <code>onPress</code> and <code>onBookPress</code>.</p>
-
-
-  <!-- ═══════════════════════════════════════════════
-       COMBINATIONS
-  ════════════════════════════════════════════════ -->
-  <h2 id="combinations">Combinations</h2>
-  <p>Place it above the path nodes, never between them. Pair it with a <strong>Progress Bar</strong> when you want to show the student's fossil count or lesson progress alongside their current section.</p>
-
-  <div class="example-row example-row--col">
-    <div class="combo-stack">
-      <ProgressBar value={55} size="lg" color="yellow" count="165 / 300" showIcon={true} />
-      <SectionHeader
-        theme="Tema 2, bloque 3"
-        sectionTitle="El sistema nervioso"
-      />
-    </div>
-  </div>
-
-  <div class="example-row example-row--col" style="margin-top: 8px;">
-    <div class="size-row">
-      <span class="size-label">Locked section</span>
-      <SectionHeader
-        theme="Tema 3, bloque 1"
-        sectionTitle="Genética y herencia"
-        status="disabled"
-      />
-    </div>
-  </div>
 
 
   <!-- ═══════════════════════════════════════════════
@@ -145,7 +115,7 @@ const headings = [
       <p class="dos-donts__label">Don't</p>
       <ul>
         <li><strong>Don't embed it between path nodes.</strong> It floats above the map. Positioning it inside the path breaks the visual hierarchy.</li>
-        <li><strong>Don't use it outside the Camino screen.</strong> This component is purpose-built for the learning map. For other contexts, use a different card pattern.</li>
+        <li><strong>Don't use it outside the Home screen.</strong> This component is purpose-built for the learning map. For other contexts, use a different card pattern.</li>
         <li><strong>Don't truncate the title silently.</strong> Keep section titles short enough to fit in one line. The card clips overflow but shows nothing when text is cut.</li>
       </ul>
     </div>
@@ -165,6 +135,11 @@ const headings = [
 
 <script>
   const card = document.querySelector('#preview-card') as HTMLElement | null;
+  let lockedStatus = 'default';
+
+  function setClass(status: string) {
+    if (card) card.className = 'section-header section-header--' + status;
+  }
 
   // ── Status controls ──────────────────────────────────────────
   document.querySelectorAll<HTMLButtonElement>('[data-prop="status"]').forEach(btn => {
@@ -173,12 +148,32 @@ const headings = [
         .querySelectorAll('.ctrl-btn')
         .forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-
-      if (card) {
-        card.className = 'section-header section-header--' + btn.dataset.value;
-      }
+      lockedStatus = btn.dataset.value ?? 'default';
+      setClass(lockedStatus);
     });
   });
+
+  // ── Interactive hover / press on the preview card ────────────
+  if (card) {
+    card.addEventListener('mouseenter', () => {
+      if (lockedStatus === 'default') setClass('hover');
+    });
+    card.addEventListener('mouseleave', () => {
+      if (lockedStatus === 'default') setClass('default');
+    });
+    card.addEventListener('mousedown', () => {
+      if (lockedStatus === 'default') setClass('pressed');
+    });
+    card.addEventListener('mouseup', () => {
+      if (lockedStatus === 'default') setClass('hover');
+    });
+    card.addEventListener('touchstart', () => {
+      if (lockedStatus === 'default') setClass('pressed');
+    }, { passive: true });
+    card.addEventListener('touchend', () => {
+      if (lockedStatus === 'default') setClass('default');
+    });
+  }
 
   // ── Text inputs ──────────────────────────────────────────────
   const themeInput = document.querySelector<HTMLInputElement>('#ctrl-theme');
@@ -211,7 +206,7 @@ const headings = [
     justify-content: center;
     min-height: 140px;
     padding: 40px 32px;
-    background: var(--neutral-100);
+    background: var(--surface-elevate);
   }
 
   .preview-wrap { width: 360px; }
@@ -299,16 +294,6 @@ const headings = [
     font-size: var(--font-size-paragraph-sm);
     color: var(--text-placeholder);
     white-space: nowrap;
-  }
-
-  /* Combinations stack */
-  .combo-stack {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-8);
-    max-width: 400px;
-    align-self: center;
-    width: 100%;
   }
 
   /* ── Do's & Don'ts ────────────────────────────────────────── */
