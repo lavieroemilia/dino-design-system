@@ -81,7 +81,7 @@ const headings = [
   <h2 id="variants">Variants</h2>
 
   <h3 id="primary">Primary</h3>
-  <p>Carries the most visual weight on the screen. Use it for the one action that matters most: confirm, submit, continue.</p>
+  <p>Green fill. The one dominant action per screen. Used for confirm, submit, continue.</p>
   <div class="example-row">
     <Button variant="primary" size="xl" label="Continue" />
     <Button variant="primary" size="lg" label="Continue" />
@@ -90,7 +90,7 @@ const headings = [
   </div>
 
   <h3 id="secondary">Secondary</h3>
-  <p>Steps back without disappearing. Pairs with primary for two-option flows where neither action should be ignored.</p>
+  <p>White with border. Alternative action with visual weight of its own. Use when both actions carry equal importance, or when no Primary is present.</p>
   <div class="example-row">
     <Button variant="secondary" size="xl" label="Cancel" />
     <Button variant="secondary" size="lg" label="Cancel" />
@@ -99,7 +99,7 @@ const headings = [
   </div>
 
   <h3 id="tertiary">Tertiary</h3>
-  <p>Stays in the background. Good for optional or contextual actions that support the main flow without competing with it.</p>
+  <p>Transparent, no border. Always paired with Primary or Danger as the receding action. Never use as a standalone CTA.</p>
   <div class="example-row">
     <Button variant="tertiary" size="xl" label="See details" />
     <Button variant="tertiary" size="lg" label="See details" />
@@ -108,7 +108,7 @@ const headings = [
   </div>
 
   <h3 id="ghost">Ghost</h3>
-  <p>Transparent and unobtrusive. Fits inside cards, tables, or dense layouts where a visible background would add too much noise.</p>
+  <p>No background, no border. Inline actions inside dense layouts (tables, cards). Not for two-action flows.</p>
   <div class="example-row">
     <Button variant="ghost" size="xl" label="Edit" />
     <Button variant="ghost" size="lg" label="Edit" />
@@ -117,7 +117,7 @@ const headings = [
   </div>
 
   <h3 id="danger">Danger</h3>
-  <p>Signals a destructive or irreversible action. Always pair it with a confirmation step. Never let it fire on a single tap.</p>
+  <p>Red fill. Destructive or irreversible actions. Always paired with a confirmation step, never fired on a single tap.</p>
   <div class="example-row">
     <Button variant="danger" size="xl" label="Exit" />
     <Button variant="danger" size="lg" label="Exit" />
@@ -126,7 +126,7 @@ const headings = [
   </div>
 
   <h3 id="premium">Premium</h3>
-  <p>Marks an upgrade or exclusive access point. Earns its impact by being rare. Use it once per screen, never as a default CTA.</p>
+  <p>Gradient fill. Upgrade or exclusive access CTA. Use once per screen, never as a default action.</p>
   <div class="example-row">
     <Button variant="premium" size="xl" label="Get Premium" />
     <Button variant="premium" size="lg" label="Get Premium" />
@@ -146,8 +146,8 @@ const headings = [
 
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
-  <p>Buttons close a decision. They belong at the end of a form, a modal, a confirmation dialog, an onboarding step, or a paywall: anywhere the user needs to make something happen.</p>
-  <p>One primary button per view. If two actions compete for the same visual weight, one of them should step down to secondary or ghost. The primary button answers "what do I do next?" There should be one answer at a time.</p>
+  <p>One <strong>Primary</strong> per screen, maximum. It answers "what do I do next?" and everything else must recede around it. When two actions appear together, the second is almost always <strong>Tertiary</strong> (it disappears visually so Primary wins). Use <strong>Secondary</strong> only when both actions truly carry equal weight and neither should fade.</p>
+  <p><strong>Ghost</strong> is not a two-action variant. It lives inside cards, tables, and dense layouts as an inline action — never next to Primary in a decision flow. <strong>Premium</strong> replaces Primary on upgrade screens; treat it the same way (one per screen, paired with Ghost for "maybe later"). <strong>Danger</strong> always goes with a Tertiary cancel alongside it, and always requires a confirmation step before it fires.</p>
   <p>When the outcome is navigation rather than an action, pass the <code>href</code> prop. The component renders an <code>&lt;a&gt;</code> tag automatically.</p>
 
 
@@ -157,37 +157,37 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Primary + Secondary:</strong> the standard two-option pair. Primary confirms, secondary cancels or goes back. Keep them in the same row with matching sizes.
+        <strong>Primary + Tertiary:</strong> the standard two-action flow. Primary leads, Tertiary recedes. Use for confirm/cancel, continue/go back, or any pair where one action should dominate.
       </div>
       <div class="combo__example">
         <Button variant="tertiary" size="xl" label="Cancel" />
-        <Button variant="primary"   size="xl" label="Confirm" />
+        <Button variant="primary"  size="xl" label="Confirm" />
       </div>
     </div>
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Primary + Ghost:</strong> when the alternative action is low priority. Ghost stays quiet while primary leads.
+        <strong>Danger + Tertiary:</strong> destructive confirmation dialogs. Danger on the right drives the action; Tertiary cancel on the left stays out of the way.
       </div>
       <div class="combo__example">
-        <Button variant="ghost"   size="xl" label="Maybe later" />
-        <Button variant="primary" size="xl" label="Start lesson" />
+        <Button variant="tertiary" size="xl" label="Keep going" />
+        <Button variant="danger"   size="xl" label="Quit lesson" />
       </div>
     </div>
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Danger + Secondary:</strong> for destructive confirmation dialogs. Danger on the right, secondary cancel on the left.
+        <strong>Primary + Secondary:</strong> only when both actions carry equivalent weight and neither should recede. Use sparingly; most flows need one clear winner.
       </div>
       <div class="combo__example">
-        <Button variant="secondary" size="xl" label="Keep going" />
-        <Button variant="danger"    size="xl" label="Quit lesson" />
+        <Button variant="secondary" size="xl" label="Save draft" />
+        <Button variant="primary"   size="xl" label="Publish" />
       </div>
     </div>
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Premium + Ghost:</strong> on upgrade screens. Premium drives the CTA; ghost handles "maybe later" without giving it real weight.
+        <strong>Premium + Ghost:</strong> upgrade screens. Premium drives the CTA; Ghost handles "maybe later" without giving it real weight.
       </div>
       <div class="combo__example">
         <Button variant="ghost"   size="xl" label="Maybe later" />
@@ -212,6 +212,7 @@ const headings = [
       <p class="dos-donts__label">Do</p>
       <ul>
         <li><strong>Use one primary button per screen.</strong> It anchors the user's next move.</li>
+        <li><strong>Pair Primary or Danger with Tertiary by default.</strong> Tertiary recedes so the dominant action wins.</li>
         <li><strong>Write labels as verb + noun:</strong> "Start test", "Save progress", "Unlock module".</li>
         <li><strong>Match size to density:</strong> <code>xl</code> for full-page CTAs, <code>sm</code>/<code>md</code> for inline actions inside cards.</li>
         <li><strong>Use <code>href</code> for navigation</strong> when the result is a destination, not a triggered action.</li>
@@ -221,10 +222,11 @@ const headings = [
       <p class="dos-donts__label">Don't</p>
       <ul>
         <li><strong>Don't place two primary buttons on the same screen.</strong> One of them needs to step down.</li>
+        <li><strong>Don't use Tertiary as a standalone CTA.</strong> It has no visual weight on its own and will be missed.</li>
+        <li><strong>Don't use Ghost in two-action flows.</strong> It belongs inside dense layouts, not alongside Primary.</li>
         <li><strong>Don't use vague labels.</strong> "Click here", "Submit", or "OK" say nothing about what happens next.</li>
         <li><strong>Don't trigger <code>danger</code> without a confirmation step.</strong> Destructive actions need a checkpoint.</li>
         <li><strong>Don't repeat <code>premium</code> across multiple elements.</strong> Its impact depends on scarcity.</li>
-        <li><strong>Don't disable without explaining why.</strong> A silent dead end breaks the flow.</li>
       </ul>
     </div>
   </div>
