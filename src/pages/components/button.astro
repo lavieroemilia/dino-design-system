@@ -99,7 +99,7 @@ const headings = [
   </div>
 
   <h3 id="tertiary">Tertiary</h3>
-  <p>Transparent, no border. Always paired with Primary or Danger as the receding action. Never use as a standalone CTA.</p>
+  <p>Transparent, no border. Recedes alongside Primary or Danger in two-action flows. Also works standalone for discreet optional actions where engagement is welcome but not required: "See details", "Learn more", "View history".</p>
   <div class="example-row">
     <Button variant="tertiary" size="xl" label="See details" />
     <Button variant="tertiary" size="lg" label="See details" />
@@ -222,7 +222,7 @@ const headings = [
       <p class="dos-donts__label">Don't</p>
       <ul>
         <li><strong>Don't place two primary buttons on the same screen.</strong> One of them needs to step down.</li>
-        <li><strong>Don't use Tertiary as a standalone CTA.</strong> It has no visual weight on its own and will be missed.</li>
+        <li><strong>Don't use Tertiary as the main CTA when action is required.</strong> Its low visual weight works for optional actions, not for decisions the user must make.</li>
         <li><strong>Don't use Ghost in two-action flows.</strong> It belongs inside dense layouts, not alongside Primary.</li>
         <li><strong>Don't use vague labels.</strong> "Click here", "Submit", or "OK" say nothing about what happens next.</li>
         <li><strong>Don't trigger <code>danger</code> without a confirmation step.</strong> Destructive actions need a checkpoint.</li>
