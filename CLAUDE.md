@@ -101,6 +101,11 @@ The entry point to the docs. A **system reference**, not a product pitch.
 
 - Write in **English**. Always.
 - Direct, clear, a little personality. Not corporate, not academic.
+- Write for your teammates: designers, developers, and marketers who build with this system every day. Use a direct, warm, slightly informal tone. Address the reader as "you". Write like you're explaining something to a colleague, not documenting for a committee.
+  - ❌ "Used for confirm, submit, continue."
+  - ❌ "Alternative action with visual weight of its own."
+  - ✅ "Use this when you need one dominant action on screen. Think: continue a lesson, confirm an answer, unlock the next level."
+  - ✅ "Use it when both actions carry equal weight, or when there's no primary action to lead."
 - Lead with action verbs: "moves", "blocks", "warns", "celebrates", "unlocks".
 - Max 2 lines per card or variant description.
 - No jargon. If nobody's going to read it, don't write it.
