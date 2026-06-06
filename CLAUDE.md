@@ -123,6 +123,8 @@ Every page follows this exact order — no exceptions:
 4. `<h2>` Combinations
 5. `<h2>` Do's & Don'ts
 
+All example content in Variants, Combinations, and Do's & Don'ts must reflect the app's context. Labels, button text, and copy should feel like they belong in a gamified learning app: progress, streaks, lessons, badges, scores, exercises. Never use generic placeholder copy like "Click here", "Submit", "Item 1", or "Dashboard".
+
 ---
 
 ## HTML & accessibility
