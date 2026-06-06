@@ -15,7 +15,7 @@ const headings = [
 
 <DocLayout
   title="Option Card"
-  description="The answer the learner picks. Every quiz question lives inside one of these."
+  description="The answer the student picks. Every quiz question lives inside one of these."
   headings={headings}
 >
 
@@ -73,14 +73,14 @@ const headings = [
   <h2 id="variants">Variants</h2>
 
   <h3 id="status">Status</h3>
-  <p>Five states that cover every moment in the selection flow — from resting to wrong answer.</p>
+  <p>Five states that cover every moment in the selection flow: from resting to wrong answer.</p>
   <div class="example-row example-row--col">
     {[
-      { status: 'default',  label: 'Default — resting, waiting for a tap' },
-      { status: 'hover',    label: 'Hover — cursor over the card' },
-      { status: 'pressed',  label: 'Pressed — finger or click held down' },
-      { status: 'error',    label: 'Error — wrong answer confirmed' },
-      { status: 'disabled', label: 'Disabled — option not available this round' },
+      { status: 'default',  label: 'Default' },
+      { status: 'hover',    label: 'Hover' },
+      { status: 'pressed',  label: 'Pressed' },
+      { status: 'error',    label: 'Error' },
+      { status: 'disabled', label: 'Disabled' },
     ].map(({ status, label }) => (
       <div class="size-row">
         <span class="size-label">{label}</span>
@@ -90,7 +90,7 @@ const headings = [
   </div>
 
   <h3 id="selected">Selected</h3>
-  <p>Marks the learner's active choice. The radio indicator fills with the primary green to confirm the tap landed.</p>
+  <p>Marks the student's active choice. The radio indicator fills with the primary green to confirm the tap landed.</p>
   <div class="example-row example-row--col">
     <div class="size-row">
       <span class="size-label">selected=false</span>
@@ -107,7 +107,7 @@ const headings = [
   </div>
 
   <h3 id="badge">Badge</h3>
-  <p>The yellow dot flags a new or recommended option — use it once per question at most, never as decoration.</p>
+  <p>The yellow dot flags a new or recommended option. Use it once per question at most, never as decoration.</p>
   <div class="example-row example-row--col">
     <div class="size-row">
       <span class="size-label">No badge</span>
@@ -124,7 +124,7 @@ const headings = [
        USAGE
   ════════════════════════════════════════════════ -->
   <h2 id="usage">Usage</h2>
-  <p>Lives inside every multiple-choice question screen. Always rendered as a group of 2–4 cards stacked vertically, sharing the same <code>name</code> prop so only one can be selected at a time. The error state fires after the learner submits a wrong answer — never before.</p>
+  <p>Lives inside every multiple-choice question screen. Always rendered as a group of 2–4 cards stacked vertically, sharing the same <code>name</code> prop so only one can be selected at a time. The error state fires after the student submits a wrong answer, never before.</p>
 
 
   <!-- ═══════════════════════════════════════════════
@@ -133,10 +133,12 @@ const headings = [
   <h2 id="combinations">Combinations</h2>
   <p>Always followed by a primary <strong>Button</strong> ("Check answer") that becomes active once a card is selected. Pairs with the <strong>Progress Bar</strong> in the lesson header above the question.</p>
   <div class="example-row example-row--col">
-    <OptionCard label="Paris" status="default" name="demo" value="paris" />
-    <OptionCard label="London" status="default" name="demo" value="london" selected={true} />
-    <OptionCard label="Berlin" status="default" name="demo" value="berlin" />
-    <OptionCard label="Madrid" status="disabled" name="demo" value="madrid" />
+    <div class="cards-wrap">
+      <OptionCard label="Paris" status="default" name="demo" value="paris" />
+      <OptionCard label="London" status="default" name="demo" value="london" selected={true} />
+      <OptionCard label="Berlin" status="default" name="demo" value="berlin" />
+      <OptionCard label="Madrid" status="disabled" name="demo" value="madrid" />
+    </div>
   </div>
 
 
@@ -149,17 +151,17 @@ const headings = [
     <div class="dos-donts__col dos-donts__col--do">
       <p class="dos-donts__label">Do</p>
       <ul>
-        <li><strong>Group cards with the same <code>name</code></strong> — enforces single selection and correct radio semantics.</li>
-        <li><strong>Show error only after submission</strong> — don't flag wrong answers while the learner is still choosing.</li>
-        <li><strong>Keep labels short</strong> — one line max; the card doesn't wrap text gracefully.</li>
+        <li><strong>Group cards with the same <code>name</code>.</strong> This enforces single selection and correct radio semantics.</li>
+        <li><strong>Show error only after submission.</strong> Don't flag wrong answers while the student is still choosing.</li>
+        <li><strong>Keep labels short.</strong> One line max; the card doesn't wrap text gracefully.</li>
       </ul>
     </div>
     <div class="dos-donts__col dos-donts__col--dont">
       <p class="dos-donts__label">Don't</p>
       <ul>
-        <li><strong>Don't use more than one badge per question</strong> — it loses meaning fast and looks broken.</li>
-        <li><strong>Don't mix disabled and error on the same card</strong> — pick one signal at a time.</li>
-        <li><strong>Don't use it outside a quiz context</strong> — for navigation or settings, use a different selection pattern.</li>
+        <li><strong>Don't use more than one badge per question.</strong> It loses meaning fast and looks broken.</li>
+        <li><strong>Don't mix disabled and error on the same card.</strong> Pick one signal at a time.</li>
+        <li><strong>Don't use it outside a quiz context.</strong> For navigation or settings, use a different selection pattern.</li>
       </ul>
     </div>
   </div>
@@ -168,11 +170,9 @@ const headings = [
 
   <p>
     <strong>Related:</strong>
-    <a href="/components/button">Button</a> —
-    the "Check answer" action that submits the selection.
+    <a href="/components/button">Button</a> (the "Check answer" action that submits the selection)
     ·
-    <a href="/components/progress-bar">Progress Bar</a> —
-    tracks lesson progress in the header above the question.
+    <a href="/components/progress-bar">Progress Bar</a> (tracks lesson progress in the header above the question)
   </p>
 
 </DocLayout>
@@ -254,6 +254,15 @@ const headings = [
   }
 
   .example-row--col { flex-direction: column; align-items: stretch; gap: 12px; }
+
+  .cards-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 400px;
+    align-self: center;
+    width: 100%;
+  }
 
   .size-row {
     display: grid;

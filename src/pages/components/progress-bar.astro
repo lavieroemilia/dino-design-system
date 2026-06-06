@@ -122,7 +122,7 @@ const headings = [
 
   <h3 id="label">Label</h3>
   <p>
-    Pass a <code>count</code> string to overlay fossil progress on the bar — e.g. <code>"50 / 300"</code>.
+    Pass a <code>count</code> string to overlay fossil progress on the bar, e.g. <code>"50 / 300"</code>.
     Only renders on <code>lg</code> and <code>md</code>; ignored on <code>sm</code> and <code>xs</code>.
   </p>
   <div class="example-row example-row--col">
@@ -143,7 +143,7 @@ const headings = [
   <h3 id="icon">Icon</h3>
   <p>
     Add <code>showIcon</code> to display the fossil (Caracola) icon alongside the count.
-    Both props are independent — you can show the icon without a count, or combine them.
+    Both props are independent: you can show the icon without a count, or combine them.
     Only renders on <code>lg</code> and <code>md</code>.
   </p>
   <div class="example-row example-row--col">
@@ -179,7 +179,7 @@ const headings = [
 
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
-  <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Assign one color per subject so learners can tell courses apart at a glance — consistency within a subject matters more than which color you pick.</p>
+  <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Assign one color per subject so users can tell courses apart at a glance. Consistency within a subject matters more than which color you pick.</p>
   <p>Use <code>count</code> and <code>showIcon</code> to display how many fossils the student has collected and how many remain until the next level. Both are optional and independent.</p>
 
 
@@ -213,17 +213,17 @@ const headings = [
     <div class="dos-donts__col dos-donts__col--do">
       <p class="dos-donts__label">Do</p>
       <ul>
-        <li><strong>Pick one color per subject and stick to it</strong> — consistency is what makes the color useful.</li>
-        <li><strong>Use <code>count</code> + <code>showIcon</code> together</strong> — the fossil icon gives context to the number at a glance.</li>
-        <li><strong>Use <code>lg</code> as the default</strong> — smaller sizes only when the bar is a secondary indicator.</li>
+        <li><strong>Pick one color per subject and stick to it.</strong> Consistency is what makes the color useful.</li>
+        <li><strong>Use <code>count</code> + <code>showIcon</code> together.</strong> The fossil icon gives context to the number at a glance.</li>
+        <li><strong>Use <code>lg</code> as the default.</strong> Smaller sizes only when the bar is a secondary indicator.</li>
       </ul>
     </div>
     <div class="dos-donts__col dos-donts__col--dont">
       <p class="dos-donts__label">Don't</p>
       <ul>
-        <li><strong>Don't use <code>count</code> on <code>sm</code> or <code>xs</code></strong> — the text won't fit and will be silently ignored.</li>
-        <li><strong>Don't change a subject's color mid-session</strong> — it breaks the visual pattern learners rely on.</li>
-        <li><strong>Don't animate to 100% silently</strong> — reaching the end deserves a celebration state in the parent screen.</li>
+        <li><strong>Don't use <code>count</code> on <code>sm</code> or <code>xs</code>.</strong> The text won't fit and will be silently ignored.</li>
+        <li><strong>Don't change a subject's color mid-session.</strong> It breaks the visual pattern students rely on.</li>
+        <li><strong>Don't animate to 100% silently.</strong> Reaching the end deserves a celebration state in the parent screen.</li>
       </ul>
     </div>
   </div>
@@ -232,11 +232,9 @@ const headings = [
 
   <p>
     <strong>Related:</strong>
-    <a href="/components/button">Button</a> —
-    the primary action that advances the lesson after the bar fills.
+    <a href="/components/button">Button</a> (the primary action that advances the lesson after the bar fills)
     ·
-    <a href="/components/option-card">Option Card</a> —
-    the answer the learner picks before progress moves forward.
+    <a href="/components/option-card">Option Card</a> (the answer the student picks before progress moves forward)
   </p>
 
 </DocLayout>
@@ -419,7 +417,7 @@ const headings = [
         if (!iconEl) {
           iconEl = document.createElement('img');
           iconEl.className = 'progress__icon';
-          iconEl.src = '/fossil.png';
+          iconEl.src = '/fossil.svg';
           iconEl.alt = 'fossil';
           iconEl.setAttribute('aria-hidden', 'true');
           labelEl.appendChild(iconEl);

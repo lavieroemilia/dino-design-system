@@ -117,7 +117,7 @@ const headings = [
   </div>
 
   <h3 id="danger">Danger</h3>
-  <p>Signals a destructive or irreversible action. Always pair it with a confirmation step — never let it fire on a single tap.</p>
+  <p>Signals a destructive or irreversible action. Always pair it with a confirmation step. Never let it fire on a single tap.</p>
   <div class="example-row">
     <Button variant="danger" size="xl" label="Exit" />
     <Button variant="danger" size="lg" label="Exit" />
@@ -126,7 +126,7 @@ const headings = [
   </div>
 
   <h3 id="premium">Premium</h3>
-  <p>Marks an upgrade or exclusive access point. Earns its impact by being rare — use it once per screen, never as a default CTA.</p>
+  <p>Marks an upgrade or exclusive access point. Earns its impact by being rare. Use it once per screen, never as a default CTA.</p>
   <div class="example-row">
     <Button variant="premium" size="xl" label="Get Premium" />
     <Button variant="premium" size="lg" label="Get Premium" />
@@ -145,8 +145,8 @@ const headings = [
 
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
-  <p>Buttons close a decision. They belong at the end of a form, a modal, a confirmation dialog, an onboarding step, or a paywall — anywhere the user needs to make something happen.</p>
-  <p>One primary button per view. If two actions compete for the same visual weight, one of them should step down to secondary or ghost. The primary button answers "what do I do next?" — there should be one answer at a time.</p>
+  <p>Buttons close a decision. They belong at the end of a form, a modal, a confirmation dialog, an onboarding step, or a paywall: anywhere the user needs to make something happen.</p>
+  <p>One primary button per view. If two actions compete for the same visual weight, one of them should step down to secondary or ghost. The primary button answers "what do I do next?" There should be one answer at a time.</p>
   <p>When the outcome is navigation rather than an action, pass the <code>href</code> prop. The component renders an <code>&lt;a&gt;</code> tag automatically.</p>
 
 
@@ -156,7 +156,7 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Primary + Secondary</strong> — the standard two-option pair. Primary confirms, secondary cancels or goes back. Keep them in the same row with matching sizes.
+        <strong>Primary + Secondary:</strong> the standard two-option pair. Primary confirms, secondary cancels or goes back. Keep them in the same row with matching sizes.
       </div>
       <div class="combo__example">
         <Button variant="secondary" size="xl" label="Cancel" />
@@ -166,7 +166,7 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Primary + Ghost</strong> — when the alternative action is low priority. Ghost stays quiet while primary leads.
+        <strong>Primary + Ghost:</strong> when the alternative action is low priority. Ghost stays quiet while primary leads.
       </div>
       <div class="combo__example">
         <Button variant="ghost"   size="xl" label="Maybe later" />
@@ -176,7 +176,7 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Danger + Secondary</strong> — for destructive confirmation dialogs. Danger on the right, secondary cancel on the left.
+        <strong>Danger + Secondary:</strong> for destructive confirmation dialogs. Danger on the right, secondary cancel on the left.
       </div>
       <div class="combo__example">
         <Button variant="secondary" size="xl" label="Keep going" />
@@ -186,7 +186,7 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Premium + Ghost</strong> — on upgrade screens. Premium drives the CTA; ghost handles "maybe later" without giving it real weight.
+        <strong>Premium + Ghost:</strong> on upgrade screens. Premium drives the CTA; ghost handles "maybe later" without giving it real weight.
       </div>
       <div class="combo__example">
         <Button variant="ghost"   size="xl" label="Maybe later" />
@@ -196,7 +196,7 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Button + icon slot</strong> — use <code>icon-left</code> for action reinforcement, <code>icon-right</code> for directional cues. Avoid filling both slots at once.
+        <strong>Button + icon slot:</strong> use <code>icon-left</code> for action reinforcement, <code>icon-right</code> for directional cues. Avoid filling both slots at once.
       </div>
     </div>
 
@@ -210,20 +210,20 @@ const headings = [
     <div class="dos-donts__col dos-donts__col--do">
       <p class="dos-donts__label">Do</p>
       <ul>
-        <li><strong>Use one primary button per screen</strong> — it anchors the user's next move.</li>
-        <li><strong>Write labels as verb + noun</strong> — "Start test", "Save progress", "Unlock module".</li>
-        <li><strong>Match size to density</strong> — <code>xl</code> for full-page CTAs, <code>sm</code>/<code>md</code> for inline actions inside tables or cards.</li>
-        <li><strong>Use <code>href</code> for navigation</strong> — when the result is a destination, not a triggered action.</li>
+        <li><strong>Use one primary button per screen.</strong> It anchors the user's next move.</li>
+        <li><strong>Write labels as verb + noun:</strong> "Start test", "Save progress", "Unlock module".</li>
+        <li><strong>Match size to density:</strong> <code>xl</code> for full-page CTAs, <code>sm</code>/<code>md</code> for inline actions inside cards.</li>
+        <li><strong>Use <code>href</code> for navigation</strong> when the result is a destination, not a triggered action.</li>
       </ul>
     </div>
     <div class="dos-donts__col dos-donts__col--dont">
       <p class="dos-donts__label">Don't</p>
       <ul>
-        <li><strong>Don't place two primary buttons on the same screen</strong> — one of them needs to step down.</li>
-        <li><strong>Don't use vague labels</strong> — "Click here", "Submit", or "OK" say nothing about what happens next.</li>
-        <li><strong>Don't trigger <code>danger</code> without a confirmation step</strong> — destructive actions need a checkpoint.</li>
-        <li><strong>Don't repeat <code>premium</code> across multiple elements</strong> — its impact depends on scarcity.</li>
-        <li><strong>Don't disable without explaining why</strong> — a silent dead end breaks the flow.</li>
+        <li><strong>Don't place two primary buttons on the same screen.</strong> One of them needs to step down.</li>
+        <li><strong>Don't use vague labels.</strong> "Click here", "Submit", or "OK" say nothing about what happens next.</li>
+        <li><strong>Don't trigger <code>danger</code> without a confirmation step.</strong> Destructive actions need a checkpoint.</li>
+        <li><strong>Don't repeat <code>premium</code> across multiple elements.</strong> Its impact depends on scarcity.</li>
+        <li><strong>Don't disable without explaining why.</strong> A silent dead end breaks the flow.</li>
       </ul>
     </div>
   </div>
@@ -232,11 +232,9 @@ const headings = [
 
   <p>
     <strong>Related:</strong>
-    <a href="/components/option-card">Option Card</a> —
-    the selection component that a primary button confirms.
+    <a href="/components/option-card">Option Card</a> (the selection component that a primary button confirms)
     ·
-    <a href="/components/progress-bar">Progress Bar</a> —
-    tracks lesson progress above the button in quiz screens.
+    <a href="/components/progress-bar">Progress Bar</a> (tracks lesson progress above the button in quiz screens)
   </p>
 
 </DocLayout>
