@@ -130,6 +130,8 @@ Every page follows this exact order:
 
 All example content in Variants, Combinations, and Do's & Don'ts must reflect the app's context. Labels, button text, and copy should feel like they belong in a gamified learning app: progress, streaks, lessons, badges, scores, exercises. Never use generic placeholder copy like "Click here", "Submit", "Item 1", or "Dashboard".
 
+The Playground background must provide good contrast with the component being documented. Not all components work on a dark background. Choose the background color that best represents how the component appears in the real app, always using a token from `global.css`.
+
 ---
 
 ## HTML & accessibility
