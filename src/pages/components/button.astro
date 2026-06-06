@@ -119,10 +119,10 @@ const headings = [
   <h3 id="danger">Danger</h3>
   <p>Red fill. Destructive or irreversible actions. Always paired with a confirmation step, never fired on a single tap.</p>
   <div class="example-row">
-    <Button variant="danger" size="xl" label="Exit" />
-    <Button variant="danger" size="lg" label="Exit" />
-    <Button variant="danger" size="md" label="Exit" />
-    <Button variant="danger" size="sm" label="Exit" />
+    <Button variant="danger" size="xl" label="Quit lesson" />
+    <Button variant="danger" size="lg" label="Quit lesson" />
+    <Button variant="danger" size="md" label="Quit lesson" />
+    <Button variant="danger" size="sm" label="Quit lesson" />
   </div>
 
   <h3 id="premium">Premium</h3>
@@ -137,17 +137,17 @@ const headings = [
   <h3 id="disabled">Disabled</h3>
   <p>Blocks interaction until a condition is met. Always show context nearby explaining what the user needs to do to enable it.</p>
   <div class="example-row">
-    <Button variant="primary"   size="xl" label="Confirm" disabled />
-    <Button variant="secondary" size="lg" label="Confirm" disabled />
-    <Button variant="danger"    size="md" label="Confirm" disabled />
-    <Button variant="danger"    size="sm" label="Confirm" disabled />
+    <Button variant="primary"   size="xl" label="Check answer" disabled />
+    <Button variant="secondary" size="lg" label="Save progress" disabled />
+    <Button variant="danger"    size="md" label="Quit lesson" disabled />
+    <Button variant="danger"    size="sm" label="Quit lesson" disabled />
   </div>
 
 
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
   <p>One <strong>Primary</strong> per screen, maximum. It answers "what do I do next?" and everything else must recede around it. When two actions appear together, the second is almost always <strong>Tertiary</strong> (it disappears visually so Primary wins). Use <strong>Secondary</strong> only when both actions truly carry equal weight and neither should fade.</p>
-  <p><strong>Ghost</strong> is not a two-action variant. It lives inside cards, tables, and dense layouts as an inline action — never next to Primary in a decision flow. <strong>Premium</strong> replaces Primary on upgrade screens; treat it the same way (one per screen, paired with Ghost for "maybe later"). <strong>Danger</strong> always goes with a Tertiary cancel alongside it, and always requires a confirmation step before it fires.</p>
+  <p><strong>Ghost</strong> is not a two-action variant. It lives inside cards, tables, and dense layouts as an inline action, not next to Primary in a decision flow. <strong>Premium</strong> replaces Primary on upgrade screens; treat it the same way (one per screen, paired with Ghost for "maybe later"). <strong>Danger</strong> always goes with a Tertiary cancel alongside it, and always requires a confirmation step before it fires.</p>
   <p>When the outcome is navigation rather than an action, pass the <code>href</code> prop. The component renders an <code>&lt;a&gt;</code> tag automatically.</p>
 
 
@@ -180,8 +180,8 @@ const headings = [
         <strong>Primary + Secondary:</strong> only when both actions carry equivalent weight and neither should recede. Use sparingly; most flows need one clear winner.
       </div>
       <div class="combo__example">
-        <Button variant="secondary" size="xl" label="Save draft" />
-        <Button variant="primary"   size="xl" label="Publish" />
+        <Button variant="secondary" size="xl" label="Review answers" />
+        <Button variant="primary"   size="xl" label="Submit test" />
       </div>
     </div>
 
