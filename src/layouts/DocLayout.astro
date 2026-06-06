@@ -55,50 +55,11 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
       min-height: 100vh;
     }
 
-    /* ── Topbar ── */
-    .topbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 56px;
-      background: var(--surface-elevate);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      align-items: center;
-      padding: 0 var(--spacing-24);
-      gap: var(--spacing-12);
-      z-index: 100;
-    }
-
-    .topbar__logo {
-      font-family: var(--font-family-headings);
-      font-weight: 800;
-      font-size: var(--font-size-h6);
-      color: var(--primary-default);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-
-    .topbar__divider {
-      width: 1px;
-      height: 18px;
-      background: var(--border-default);
-      opacity: 0.4;
-    }
-
-    .topbar__section {
-      font-size: var(--font-size-paragraph-cp);
-      font-weight: var(--font-weight-medium);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-placeholder);
-    }
-
     /* ── Shell ── */
     .shell {
       display: grid;
       grid-template-columns: 220px 1fr 200px;
       min-height: 100vh;
-      padding-top: 56px;
     }
 
     @media (max-width: 1024px) {
@@ -113,12 +74,51 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     /* ── Sidebar ── */
     .sidebar {
       position: sticky;
-      top: 56px;
-      height: calc(100vh - 56px);
-      overflow-y: auto;
-      padding: var(--spacing-28) 0 var(--spacing-28) var(--spacing-12);
+      top: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
       border-right: 1px solid rgba(255,255,255,0.06);
       background: var(--surface-page);
+    }
+
+    .sidebar__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-10);
+      height: 64px;
+      padding: 0 var(--spacing-16);
+      flex-shrink: 0;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .sidebar__logo-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: var(--primary-900);
+      border: 1px solid var(--primary-800);
+      border-radius: var(--radius-md);
+      font-size: 16px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .sidebar__logo-wordmark {
+      font-family: var(--font-family-headings);
+      font-weight: 800;
+      font-size: var(--font-size-h6);
+      color: var(--primary-default);
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar__nav {
+      overflow-y: auto;
+      flex: 1;
+      padding: var(--spacing-24) 0 var(--spacing-28) var(--spacing-12);
       scrollbar-width: thin;
       scrollbar-color: var(--neutral-700) transparent;
     }
@@ -315,10 +315,10 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
     /* ── TOC ── */
     .toc {
       position: sticky;
-      top: 56px;
-      height: calc(100vh - 56px);
+      top: 0;
+      height: 100vh;
       overflow-y: auto;
-      padding: var(--spacing-28) var(--spacing-16) var(--spacing-28) var(--spacing-20);
+      padding: var(--spacing-64) var(--spacing-16) var(--spacing-28) var(--spacing-20);
       background: var(--surface-page);
       scrollbar-width: thin;
       scrollbar-color: var(--neutral-700) transparent;
@@ -360,15 +360,16 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
 </head>
 <body>
 
-  <header class="topbar" role="banner">
-    <a href="/overview" class="topbar__logo">🦕 Dino</a>
-    <div class="topbar__divider" aria-hidden="true"></div>
-    <span class="topbar__section">Design System</span>
-  </header>
-
   <div class="shell">
 
     <nav class="sidebar" aria-label="Site navigation">
+
+      <a href="/overview" class="sidebar__logo">
+        <span class="sidebar__logo-icon" aria-hidden="true">🦕</span>
+        <span class="sidebar__logo-wordmark">Dino</span>
+      </a>
+
+      <div class="sidebar__nav">
 
       <div class="sidebar__group">
         <p class="sidebar__group-label">Getting Started</p>
@@ -395,6 +396,8 @@ const filteredHeadings = headings.filter(h => h.depth <= 3);
           </a>
         ))}
       </div>
+
+      </div><!-- /.sidebar__nav -->
 
     </nav>
 
