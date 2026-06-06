@@ -105,9 +105,10 @@ The entry point to the docs. A **system reference**, not a product pitch.
 - Max 2 lines per card or variant description.
 - No jargon. If nobody's going to read it, don't write it.
 - Never use em dashes ("—") to attach clarifying or follow-up thoughts. That pattern reads as AI-generated. Rewrite as two sentences, or use a comma, colon, or parentheses instead.
-  - ❌ "Assign one color per subject so learners can tell courses apart at a glance — consistency within a subject matters more than which color you pick."
-  - ✅ "Assign one color per subject so learners can tell courses apart at a glance. Consistency within a subject matters more than which color you pick."
+  - ❌ "Assign one color per subject so users can tell courses apart at a glance — consistency within a subject matters more than which color you pick."
+  - ✅ "Assign one color per subject so users can tell courses apart at a glance. Consistency within a subject matters more than which color you pick."
   - ✅ "Assign one color per subject (consistency within a subject matters more than which color you pick)."
+  - Talk about "users" or "students, never "learners".
 
 ---
 
