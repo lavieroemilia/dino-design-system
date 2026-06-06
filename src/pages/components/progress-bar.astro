@@ -6,6 +6,8 @@ const headings = [
   { depth: 2, slug: 'variants',     text: 'Variants' },
   { depth: 3, slug: 'size',         text: 'Size' },
   { depth: 3, slug: 'color',        text: 'Color' },
+  { depth: 3, slug: 'label',        text: 'Label' },
+  { depth: 3, slug: 'icon',         text: 'Icon' },
   { depth: 3, slug: 'fill-states',  text: 'Fill states' },
   { depth: 2, slug: 'usage',        text: 'Usage' },
   { depth: 2, slug: 'combinations', text: 'Combinations' },
@@ -15,7 +17,7 @@ const headings = [
 
 <DocLayout
   title="Progress Bar"
-  description="Shows learners exactly how far they've come — and how close they are to the finish line."
+  description="A progress bar provides feedback about the duration and progression of a process."
   headings={headings}
 >
 
@@ -57,6 +59,22 @@ const headings = [
       </fieldset>
 
       <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Label</legend>
+        <div class="ctrl-group__options">
+          <button class="ctrl-btn is-active" data-prop="count" data-value="">None</button>
+          <button class="ctrl-btn"           data-prop="count" data-value="50 / 300">Count</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Icon</legend>
+        <div class="ctrl-group__options">
+          <button class="ctrl-btn is-active" data-prop="icon" data-value="false">None</button>
+          <button class="ctrl-btn"           data-prop="icon" data-value="true">Fossil</button>
+        </div>
+      </fieldset>
+
+      <fieldset class="ctrl-group">
         <legend class="ctrl-group__label">Value — <span id="value-display">50</span>%</legend>
         <input type="range" id="ctrl-value" min="0" max="100" value="50" class="ctrl-range" aria-label="Progress value" />
       </fieldset>
@@ -86,7 +104,7 @@ const headings = [
   </div>
 
   <h3 id="color">Color</h3>
-  <p>Five colors with no fixed meaning — pick one per subject or context to add visual variety across the app. The choice is yours.</p>
+  <p>Five colors with no fixed meaning. Pick one per subject or context to add visual variety across the app. The choice is yours.</p>
   <div class="example-row example-row--col">
     {[
       { color: 'yellow', label: 'yellow' },
@@ -102,8 +120,53 @@ const headings = [
     ))}
   </div>
 
+  <h3 id="label">Label</h3>
+  <p>
+    Pass a <code>count</code> string to overlay fossil progress on the bar — e.g. <code>"50 / 300"</code>.
+    Only renders on <code>lg</code> and <code>md</code>; ignored on <code>sm</code> and <code>xs</code>.
+  </p>
+  <div class="example-row example-row--col">
+    <div class="size-row">
+      <span class="size-label">lg · count</span>
+      <ProgressBar value={55} size="lg" color="yellow" count="50 / 300" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">md · count</span>
+      <ProgressBar value={55} size="md" color="yellow" count="50 / 300" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">sm · count (ignored)</span>
+      <ProgressBar value={55} size="sm" color="yellow" count="50 / 300" />
+    </div>
+  </div>
+
+  <h3 id="icon">Icon</h3>
+  <p>
+    Add <code>showIcon</code> to display the fossil (Caracola) icon alongside the count.
+    Both props are independent — you can show the icon without a count, or combine them.
+    Only renders on <code>lg</code> and <code>md</code>.
+  </p>
+  <div class="example-row example-row--col">
+    <div class="size-row">
+      <span class="size-label">icon only</span>
+      <ProgressBar value={55} size="lg" color="yellow" showIcon={true} />
+    </div>
+    <div class="size-row">
+      <span class="size-label">count only</span>
+      <ProgressBar value={55} size="lg" color="yellow" count="50 / 300" />
+    </div>
+    <div class="size-row">
+      <span class="size-label">count + icon</span>
+      <ProgressBar value={55} size="lg" color="yellow" count="50 / 300" showIcon={true} />
+    </div>
+    <div class="size-row">
+      <span class="size-label">md · count + icon</span>
+      <ProgressBar value={55} size="md" color="green" count="120 / 300" showIcon={true} />
+    </div>
+  </div>
+
   <h3 id="fill-states">Fill states</h3>
-  <p>From empty to complete. At 100%, make sure the surrounding UI celebrates — the bar alone isn't enough.</p>
+  <p>From empty to complete. At 100%, make sure the surrounding UI celebrates. The bar alone isn't enough.</p>
   <div class="example-row example-row--col">
     {[0, 25, 50, 75, 100].map(v => (
       <div class="size-row">
@@ -117,6 +180,7 @@ const headings = [
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
   <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Assign one color per subject so learners can tell courses apart at a glance — consistency within a subject matters more than which color you pick.</p>
+  <p>Use <code>count</code> and <code>showIcon</code> to display how many fossils the student has collected and how many remain until the next level. Both are optional and independent.</p>
 
 
   <!-- COMBINATIONS -->
@@ -125,15 +189,19 @@ const headings = [
   <div class="example-row example-row--col">
     <div class="size-row">
       <span class="size-label">Biology</span>
-      <ProgressBar value={40} size="lg" color="yellow" />
+      <ProgressBar value={40} size="lg" color="yellow" count="120 / 300" showIcon={true} />
     </div>
     <div class="size-row">
       <span class="size-label">History</span>
-      <ProgressBar value={65} size="lg" color="purple" />
+      <ProgressBar value={65} size="lg" color="purple" count="195 / 300" showIcon={true} />
     </div>
     <div class="size-row">
       <span class="size-label">Maths</span>
-      <ProgressBar value={80} size="lg" color="green" />
+      <ProgressBar value={80} size="lg" color="green" count="240 / 300" showIcon={true} />
+    </div>
+    <div class="size-row">
+      <span class="size-label">Secondary (no label)</span>
+      <ProgressBar value={50} size="sm" color="orange" />
     </div>
   </div>
 
@@ -146,15 +214,15 @@ const headings = [
       <p class="dos-donts__label">Do</p>
       <ul>
         <li><strong>Pick one color per subject and stick to it</strong> — consistency is what makes the color useful.</li>
-        <li><strong>Always pass a meaningful <code>label</code></strong> — screen readers announce it; "Progress: 60%" is better than silence.</li>
+        <li><strong>Use <code>count</code> + <code>showIcon</code> together</strong> — the fossil icon gives context to the number at a glance.</li>
         <li><strong>Use <code>lg</code> as the default</strong> — smaller sizes only when the bar is a secondary indicator.</li>
       </ul>
     </div>
     <div class="dos-donts__col dos-donts__col--dont">
       <p class="dos-donts__label">Don't</p>
       <ul>
+        <li><strong>Don't use <code>count</code> on <code>sm</code> or <code>xs</code></strong> — the text won't fit and will be silently ignored.</li>
         <li><strong>Don't change a subject's color mid-session</strong> — it breaks the visual pattern learners rely on.</li>
-        <li><strong>Don't show a bar without context</strong> — always pair it with a label or a counter so the user knows what is being measured.</li>
         <li><strong>Don't animate to 100% silently</strong> — reaching the end deserves a celebration state in the parent screen.</li>
       </ul>
     </div>
@@ -307,36 +375,78 @@ const headings = [
 <script>
   const stage        = document.getElementById('preview-stage');
   const valueDisplay = document.getElementById('value-display');
-  const rangeEl      = document.getElementById('ctrl-value') as HTMLInputElement | null;
+  const rangeEl      = document.getElementById('ctrl-value');
 
-  const state: Record<string, string> = { color: 'yellow', size: 'lg', value: '50' };
+  const state = { color: 'yellow', size: 'lg', value: '50', count: '', icon: 'false' };
 
   function render() {
-    const { color, size, value } = state;
-    if (valueDisplay) valueDisplay.textContent = value;
+    if (valueDisplay) valueDisplay.textContent = state.value;
 
-    const bar  = stage?.querySelector('.progress') as HTMLElement | null;
-    const fill = bar?.querySelector('.progress__fill') as HTMLElement | null;
+    const bar  = stage?.querySelector('.progress');
+    const fill = bar?.querySelector('.progress__fill');
     if (!bar || !fill) return;
 
-    bar.className = `progress progress--${size} progress--${color}`;
-    bar.setAttribute('aria-valuenow', value);
-    fill.style.width = `${value}%`;
+    // Update bar classes
+    bar.className = ['progress', `progress--${state.size}`, `progress--${state.color}`].join(' ');
+    bar.setAttribute('aria-valuenow', state.value);
+    fill.style.width = `${state.value}%`;
+
+    // Update label overlay
+    let labelEl = bar.querySelector('.progress__label');
+    const hasLabel = (state.count || state.icon === 'true') && (state.size === 'lg' || state.size === 'md');
+
+    if (hasLabel) {
+      if (!labelEl) {
+        labelEl = document.createElement('div');
+        labelEl.className = 'progress__label';
+        bar.appendChild(labelEl);
+      }
+      // Count text
+      let countEl = labelEl.querySelector('.progress__count');
+      if (state.count) {
+        if (!countEl) {
+          countEl = document.createElement('span');
+          countEl.className = 'progress__count';
+          labelEl.insertBefore(countEl, labelEl.firstChild);
+        }
+        countEl.textContent = state.count;
+      } else {
+        countEl?.remove();
+      }
+      // Icon
+      let iconEl = labelEl.querySelector('.progress__icon');
+      if (state.icon === 'true') {
+        if (!iconEl) {
+          iconEl = document.createElement('img');
+          iconEl.className = 'progress__icon';
+          iconEl.src = '/fossil.png';
+          iconEl.alt = 'fossil';
+          iconEl.setAttribute('aria-hidden', 'true');
+          labelEl.appendChild(iconEl);
+        }
+      } else {
+        iconEl?.remove();
+      }
+    } else {
+      labelEl?.remove();
+    }
   }
 
-  document.querySelectorAll<HTMLButtonElement>('.ctrl-btn[data-prop]').forEach(btn => {
+  document.querySelectorAll('.ctrl-btn[data-prop]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const prop = btn.dataset.prop!;
-      document.querySelectorAll<HTMLButtonElement>(`.ctrl-btn[data-prop="${prop}"]`)
+      const prop = btn.dataset.prop;
+      document.querySelectorAll(`.ctrl-btn[data-prop="${prop}"]`)
         .forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-      state[prop] = btn.dataset.value!;
+      state[prop] = btn.dataset.value;
       render();
     });
   });
 
-  rangeEl?.addEventListener('input', () => {
-    state.value = rangeEl.value;
-    render();
-  });
+  if (rangeEl) {
+    rangeEl.addEventListener('input', () => {
+      state.value = rangeEl.value;
+      render();
+    });
+  }
 </script>

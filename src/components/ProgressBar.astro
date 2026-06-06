@@ -4,16 +4,23 @@ interface Props {
   size?: 'lg' | 'md' | 'sm' | 'xs';
   color?: 'yellow' | 'green' | 'red' | 'orange' | 'purple';
   label?: string;
+  /** Text overlay shown centered on the bar. Only visible on lg and md. E.g. "50 / 300" */
+  count?: string;
+  /** Show the fossil (Caracola) icon alongside the count. Only visible on lg and md. */
+  showIcon?: boolean;
 }
 
 const {
-  value = 0,
-  size  = 'lg',
-  color = 'yellow',
+  value    = 0,
+  size     = 'lg',
+  color    = 'yellow',
   label,
+  count,
+  showIcon = false,
 } = Astro.props;
 
-const clamped = Math.min(100, Math.max(0, value));
+const clamped   = Math.min(100, Math.max(0, value));
+const hasLabel  = (count || showIcon) && (size === 'lg' || size === 'md');
 ---
 
 <div
@@ -22,9 +29,16 @@ const clamped = Math.min(100, Math.max(0, value));
   aria-valuenow={clamped}
   aria-valuemin={0}
   aria-valuemax={100}
-  aria-label={label ?? `Progreso: ${clamped}%`}
+  aria-label={label ?? `Progress: ${clamped}%`}
 >
   <div class="progress__fill" style={`width: ${clamped}%`}></div>
+
+  {hasLabel && (
+    <div class="progress__label">
+      {count    && <span class="progress__count">{count}</span>}
+      {showIcon && <img class="progress__icon" src="/fossil.png" alt="fossil" aria-hidden="true" />}
+    </div>
+  )}
 </div>
 
 <style>
@@ -53,4 +67,38 @@ const clamped = Math.min(100, Math.max(0, value));
   .progress--red    .progress__fill { background: var(--gradient-red);    }
   .progress--orange .progress__fill { background: var(--gradient-orange); }
   .progress--purple .progress__fill { background: var(--gradient-purple); }
+
+  /* ── Label overlay ── */
+  .progress__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    pointer-events: none;
+  }
+
+  .progress__count {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-xsm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--neutral-white-100);
+    line-height: 1;
+    text-shadow: 0 1px 2px var(--black-60);
+    white-space: nowrap;
+  }
+
+  .progress__icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  /* Icon only fits comfortably in lg; in md reduce slightly */
+  .progress--md .progress__icon {
+    width: 14px;
+    height: 14px;
+  }
 </style>
