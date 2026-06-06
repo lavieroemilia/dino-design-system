@@ -81,7 +81,7 @@ const headings = [
   <h2 id="variants">Variants</h2>
 
   <h3 id="primary">Primary</h3>
-  <p>Green fill. The one dominant action per screen. Used for confirm, submit, continue.</p>
+  <p>Use it when there's one clear next step: continue a lesson, confirm an answer, unlock the next level. One Primary per screen, max.</p>
   <div class="example-row">
     <Button variant="primary" size="xl" label="Continue" />
     <Button variant="primary" size="lg" label="Continue" />
@@ -90,7 +90,7 @@ const headings = [
   </div>
 
   <h3 id="secondary">Secondary</h3>
-  <p>White with border. Alternative action with visual weight of its own. Use when both actions carry equal importance, or when no Primary is present.</p>
+  <p>Use it when both actions carry equal weight and neither should recede. Think: 'Review answers' next to 'Submit test', where either choice matters.</p>
   <div class="example-row">
     <Button variant="secondary" size="xl" label="Cancel" />
     <Button variant="secondary" size="lg" label="Cancel" />
@@ -99,7 +99,7 @@ const headings = [
   </div>
 
   <h3 id="tertiary">Tertiary</h3>
-  <p>Transparent, no border. Recedes alongside Primary or Danger in two-action flows. Also works standalone for discreet optional actions where engagement is welcome but not required: "See details", "Learn more", "View history".</p>
+  <p>Recedes alongside Primary or Danger so the dominant action wins. Works solo too, for low-stakes optional actions: 'See details', 'View badge history', 'Learn more'.</p>
   <div class="example-row">
     <Button variant="tertiary" size="xl" label="See details" />
     <Button variant="tertiary" size="lg" label="See details" />
@@ -108,7 +108,7 @@ const headings = [
   </div>
 
   <h3 id="ghost">Ghost</h3>
-  <p>No background, no border. Inline actions inside dense layouts (tables, cards). Not for two-action flows.</p>
+  <p>Sits inside cards and dense layouts as a quiet inline action. Not for decision flows: use it for quick edits and secondary navigations within a view.</p>
   <div class="example-row">
     <Button variant="ghost" size="xl" label="Edit" />
     <Button variant="ghost" size="lg" label="Edit" />
@@ -117,7 +117,7 @@ const headings = [
   </div>
 
   <h3 id="danger">Danger</h3>
-  <p>Red fill. Destructive or irreversible actions. Always paired with a confirmation step, never fired on a single tap.</p>
+  <p>Warns before something irreversible happens: exits, resets, deletions. Always pair it with a Tertiary cancel and a confirmation step. Never let it fire on first tap.</p>
   <div class="example-row">
     <Button variant="danger" size="xl" label="Quit lesson" />
     <Button variant="danger" size="lg" label="Quit lesson" />
@@ -126,7 +126,7 @@ const headings = [
   </div>
 
   <h3 id="premium">Premium</h3>
-  <p>Gradient fill. Upgrade or exclusive access CTA. Use once per screen, never as a default action.</p>
+  <p>Unlocks what's behind the paywall. Put it on upgrade screens and treat it like Primary: one per screen, never stacked alongside another Premium.</p>
   <div class="example-row">
     <Button variant="premium" size="xl" label="Get Premium" />
     <Button variant="premium" size="lg" label="Get Premium" />
@@ -135,7 +135,7 @@ const headings = [
   </div>
 
   <h3 id="disabled">Disabled</h3>
-  <p>Blocks interaction until a condition is met. Always show context nearby explaining what the user needs to do to enable it.</p>
+  <p>Blocks an action until the student meets a condition. Always tell them what they need to do to unlock it. A disabled button with no explanation is a dead end.</p>
   <div class="example-row">
     <Button variant="primary"   size="xl" label="Check answer" disabled />
     <Button variant="secondary" size="lg" label="Save progress" disabled />
@@ -187,7 +187,7 @@ const headings = [
 
     <div class="combo">
       <div class="combo__text">
-        <strong>Premium + Ghost:</strong> upgrade screens. Premium drives the CTA; Ghost handles "maybe later" without giving it real weight.
+        <strong>Premium + Ghost:</strong> upgrade screens. Premium drives the action; Ghost handles "maybe later" without giving it real weight.
       </div>
       <div class="combo__example">
         <Button variant="ghost"   size="xl" label="Maybe later" />
@@ -222,7 +222,7 @@ const headings = [
       <p class="dos-donts__label">Don't</p>
       <ul>
         <li><strong>Don't place two primary buttons on the same screen.</strong> One of them needs to step down.</li>
-        <li><strong>Don't use Tertiary as the main CTA when action is required.</strong> Its low visual weight works for optional actions, not for decisions the user must make.</li>
+        <li><strong>Don't use Tertiary as the main action when a decision is required.</strong> Its low visual weight works for optional actions, not for choices the student has to make.</li>
         <li><strong>Don't use Ghost in two-action flows.</strong> It belongs inside dense layouts, not alongside Primary.</li>
         <li><strong>Don't use vague labels.</strong> "Click here", "Submit", or "OK" say nothing about what happens next.</li>
         <li><strong>Don't trigger <code>danger</code> without a confirmation step.</strong> Destructive actions need a checkpoint.</li>

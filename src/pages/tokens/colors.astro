@@ -202,9 +202,7 @@ const componentTokenGroups = [
   <!-- ── Brand palettes ── -->
   <h2 id="brand">Brand palettes</h2>
   <p>
-    Every color in Dino comes from one of these eight palettes. Each has ten steps: lighter values
-    are used for backgrounds and tints; darker ones for text, borders, and pressed states.
-    The step marked with a ring is the palette's <em>default</em>.
+    Every color in Dino comes from one of these eight palettes. Each runs ten steps from lightest to darkest: use the light end for backgrounds and tints, the dark end for text and pressed states. The ringed step is the default.
   </p>
 
   <div class="palettes">
@@ -232,7 +230,7 @@ const componentTokenGroups = [
 
   <!-- Foundation -->
   <h3 id="foundation">Foundation</h3>
-  <p>Black and white with alpha variants. Used for overlays, disabled states, and text on colored surfaces.</p>
+  <p>Reach for these when you need a transparent black or white. They cover overlays, disabled states, and light text on dark surfaces.</p>
 
   <div class="foundation-row">
     <div class="foundation-card">
@@ -258,8 +256,7 @@ const componentTokenGroups = [
   <!-- ── Semantic roles ── -->
   <h2 id="semantic">Semantic roles</h2>
   <p>
-    The semantic layer maps intent to brand palettes. Swap the palette, and every role updates automatically.
-    Components reference semantic tokens, never brand tokens directly.
+    This layer maps what a color means to which palette it comes from. Swap a palette here and every component that uses that role updates automatically. Always reference semantic tokens in your components, never brand tokens directly.
   </p>
 
   <div class="semantic-grid">
@@ -282,8 +279,7 @@ const componentTokenGroups = [
   <!-- ── Component tokens ── -->
   <h2 id="component-tokens">Component tokens</h2>
   <p>
-    The third layer. These are what components consume, named by surface, role, and state.
-    Never reference brand or semantic tokens inside a component.
+    These are the tokens your components actually use, named by surface, role, and state so the intent is always clear. If you're building a component, this is the only color layer you should touch.
   </p>
 
   {componentTokenGroups.map(({ group, tokens }) => (

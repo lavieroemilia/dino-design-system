@@ -111,9 +111,7 @@ const weights = [
   <!-- ── Typeface ── -->
   <h2 id="typeface">Typeface</h2>
   <p>
-    Dino uses <strong>Rubik</strong> exclusively. Its rounded geometry balances the saturated
-    color palette and stays legible on small screens at all weights.
-    Both <code>--font-family-body</code> and <code>--font-family-headings</code> point to it.
+    Dino uses <strong>Rubik</strong> exclusively. Its rounded shapes balance the saturated palette and hold up on small screens at every weight. Both <code>--font-family-body</code> and <code>--font-family-headings</code> point to it. No exceptions.
   </p>
 
   <div class="typeface-card">
@@ -144,8 +142,7 @@ const weights = [
   <!-- ── Type scale ── -->
   <h2 id="scale">Type scale</h2>
   <p>
-    Twelve steps from display down to caption. Tokens are responsive: mobile and desktop sizes
-    differ for headings only; paragraphs stay the same across breakpoints.
+    Twelve steps, display to caption. Heading tokens are responsive: they shrink on mobile. Paragraph tokens stay the same across breakpoints. Always use the token, not a raw size.
   </p>
 
   <div class="scale-table-wrap">
@@ -183,7 +180,7 @@ const weights = [
 
   <!-- ── Weights ── -->
   <h2 id="weights">Weights</h2>
-  <p>Four weights, four tokens. Match weight to role: headings lead with bold, body copy stays regular.</p>
+  <p>Four weights, four tokens. Bold for headings, regular for body, semi-bold for emphasis, medium for UI labels. Always use the token, never a raw number.</p>
 
   <div class="weights-list">
     {weights.map(({ label, value, token, sample }) => (

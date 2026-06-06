@@ -17,7 +17,7 @@ const headings = [
 
 <DocLayout
   title="Progress Bar"
-  description="A progress bar provides feedback about the duration and progression of a process."
+  description="Shows students how far they've come and how far they have left to go. Works for lesson progress, fossil collection, or any goal with a measurable end."
   headings={headings}
 >
 
@@ -88,7 +88,7 @@ const headings = [
   <h2 id="variants">Variants</h2>
 
   <h3 id="size">Size</h3>
-  <p>Four heights for every context. Use <code>lg</code> for main lesson flows, <code>xs</code> for tight spaces where the bar plays a supporting role.</p>
+  <p>Use <code>lg</code> at the top of lesson screens. Drop to <code>sm</code> or <code>xs</code> when the bar is a secondary indicator in a card or tight layout.</p>
   <div class="example-row example-row--col">
     {[
       { size: 'lg', label: 'lg — 24px' },
@@ -104,7 +104,7 @@ const headings = [
   </div>
 
   <h3 id="color">Color</h3>
-  <p>Five colors with no fixed meaning. Pick one per subject or context to add visual variety across the app. The choice is yours.</p>
+  <p>Assign one color per subject and keep it consistent. Students will start associating the color with the subject before they even read the label.</p>
   <div class="example-row example-row--col">
     {[
       { color: 'yellow', label: 'yellow' },
@@ -122,8 +122,7 @@ const headings = [
 
   <h3 id="label">Label</h3>
   <p>
-    Pass a <code>count</code> string to overlay fossil progress on the bar, e.g. <code>"50 / 300"</code>.
-    Only renders on <code>lg</code> and <code>md</code>; ignored on <code>sm</code> and <code>xs</code>.
+    Overlay the student's fossil count directly on the bar. Pass a string like <code>"120 / 300"</code> to show how many they have and how many they need. Only works on <code>lg</code> and <code>md</code>.
   </p>
   <div class="example-row example-row--col">
     <div class="size-row">
@@ -142,9 +141,7 @@ const headings = [
 
   <h3 id="icon">Icon</h3>
   <p>
-    Add <code>showIcon</code> to display the fossil (Caracola) icon alongside the count.
-    Both props are independent: you can show the icon without a count, or combine them.
-    Only renders on <code>lg</code> and <code>md</code>.
+    Add the fossil icon to make the count feel more like a reward than a metric. Use the icon alone, the count alone, or both together. Only shows on <code>lg</code> and <code>md</code>.
   </p>
   <div class="example-row example-row--col">
     <div class="size-row">
@@ -179,13 +176,13 @@ const headings = [
 
   <!-- USAGE -->
   <h2 id="usage">Usage</h2>
-  <p>Lives at the top of every lesson screen, tracking progress through the exercise set. Assign one color per subject so users can tell courses apart at a glance. Consistency within a subject matters more than which color you pick.</p>
-  <p>Use <code>count</code> and <code>showIcon</code> to display how many fossils the student has collected and how many remain until the next level. Both are optional and independent.</p>
+  <p>Put it at the top of every lesson screen and assign one color per subject. Students recognize their subjects by color before they read the label, so pick once and keep it consistent.</p>
+  <p>Use <code>count</code> and <code>showIcon</code> when the screen is about fossil progress. They're optional and independent: use one, both, or neither depending on the context.</p>
 
 
   <!-- COMBINATIONS -->
   <h2 id="combinations">Combinations</h2>
-  <p>Always sits above the question, never inline with text. Pair it with a label or counter so the user knows what is being measured.</p>
+  <p>Put it above the question, not mid-paragraph. Add a count or subject label so students always know what they're tracking.</p>
   <div class="example-row example-row--col">
     <div class="size-row">
       <span class="size-label">Biology</span>

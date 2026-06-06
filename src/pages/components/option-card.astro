@@ -73,7 +73,7 @@ const headings = [
   <h2 id="variants">Variants</h2>
 
   <h3 id="status">Status</h3>
-  <p>Five states that cover every moment in the selection flow: from resting to wrong answer.</p>
+  <p>You'll cycle through these states every time a student answers: resting at default, hovering on approach, pressed on tap, error on wrong answer, disabled when the question is closed.</p>
   <div class="example-row example-row--col">
     {[
       { status: 'default',  label: 'Default' },
@@ -90,7 +90,7 @@ const headings = [
   </div>
 
   <h3 id="selected">Selected</h3>
-  <p>Marks the student's active choice. The radio indicator fills with the primary green to confirm the tap landed.</p>
+  <p>Shows the student their choice registered. The radio fills green so there's no doubt the tap landed.</p>
   <div class="example-row example-row--col">
     <div class="size-row">
       <span class="size-label">selected=false</span>
@@ -107,7 +107,7 @@ const headings = [
   </div>
 
   <h3 id="badge">Badge</h3>
-  <p>The yellow dot flags a new or recommended option. Use it once per question at most, never as decoration.</p>
+  <p>Flags one option as new or recommended. One per question, and only when it means something. Don't use it just to add visual color.</p>
   <div class="example-row example-row--col">
     <div class="size-row">
       <span class="size-label">No badge</span>
@@ -124,14 +124,14 @@ const headings = [
        USAGE
   ════════════════════════════════════════════════ -->
   <h2 id="usage">Usage</h2>
-  <p>Lives inside every multiple-choice question screen. Always rendered as a group of 2–4 cards stacked vertically, sharing the same <code>name</code> prop so only one can be selected at a time. The error state fires after the student submits a wrong answer, never before.</p>
+  <p>Stack 2–4 of these for every multiple-choice question. Pass the same <code>name</code> prop to all of them so only one can be selected. Fire the error state after the student submits, not before they've had a chance to change their mind.</p>
 
 
   <!-- ═══════════════════════════════════════════════
        COMBINATIONS
   ════════════════════════════════════════════════ -->
   <h2 id="combinations">Combinations</h2>
-  <p>Always followed by a primary <strong>Button</strong> ("Check answer") that becomes active once a card is selected. Pairs with the <strong>Progress Bar</strong> in the lesson header above the question.</p>
+  <p>Always pair it with a Primary <strong>Button</strong> below ("Check answer") and keep it disabled until a card is selected. Add a <strong>Progress Bar</strong> above the question to keep students oriented.</p>
   <div class="example-row example-row--col">
     <div class="cards-wrap">
       <OptionCard label="Paris" status="default" name="demo" value="paris" />
@@ -151,17 +151,17 @@ const headings = [
     <div class="dos-donts__col dos-donts__col--do">
       <p class="dos-donts__label">Do</p>
       <ul>
-        <li><strong>Group cards with the same <code>name</code>.</strong> This enforces single selection and correct radio semantics.</li>
-        <li><strong>Show error only after submission.</strong> Don't flag wrong answers while the student is still choosing.</li>
-        <li><strong>Keep labels short.</strong> One line max; the card doesn't wrap text gracefully.</li>
+        <li><strong>Always pass the same <code>name</code> to every card in the group.</strong> That's what makes single-selection work.</li>
+        <li><strong>Fire the error state only after submission.</strong> Don't flag an answer as wrong while the student is still picking.</li>
+        <li><strong>Keep answer labels to one line.</strong> The card truncates at one line and long text just disappears.</li>
       </ul>
     </div>
     <div class="dos-donts__col dos-donts__col--dont">
       <p class="dos-donts__label">Don't</p>
       <ul>
-        <li><strong>Don't use more than one badge per question.</strong> It loses meaning fast and looks broken.</li>
-        <li><strong>Don't mix disabled and error on the same card.</strong> Pick one signal at a time.</li>
-        <li><strong>Don't use it outside a quiz context.</strong> For navigation or settings, use a different selection pattern.</li>
+        <li><strong>Don't use more than one badge per question.</strong> More than one and it stops meaning anything.</li>
+        <li><strong>Don't put disabled and error on the same card.</strong> Pick one signal. Two at once just confuses.</li>
+        <li><strong>Don't reach for this component outside quizzes.</strong> For settings or preferences, use a different selection pattern.</li>
       </ul>
     </div>
   </div>

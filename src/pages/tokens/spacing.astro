@@ -65,16 +65,14 @@ const borderWidths = [
 
 <DocLayout
   title="Spacing"
-  description="A base-4 scale for space, a named set for semantic use, and tokens for radius and border width."
+  description="Everything you need to space a layout: a base-4 scale, semantic spacing tokens, and values for radius and border width. Use the semantic layer, not the raw scale."
   headings={headings}
 >
 
   <!-- ── Base scale ── -->
   <h2 id="scale">Base scale</h2>
   <p>
-    Everything starts from a set of raw scale tokens. These exist only to be referenced by
-    semantic tokens, never used directly in components.
-    Steps are named by their value × 25 for easy mental math.
+    The foundation layer. These feed into semantic tokens but never get used in components directly. Each step name gives you the pixel value: divide the step number by 25 to get the size.
   </p>
 
   <div class="scale-bars">
@@ -97,8 +95,7 @@ const borderWidths = [
   <!-- ── Semantic spacing ── -->
   <h2 id="semantic">Semantic spacing</h2>
   <p>
-    Named by pixel value for readability. These are what you reach for when building layouts:
-    paddings, gaps, margins. Each maps to a scale step.
+    These are the tokens you'll actually use. Named by value so <code>--spacing-16</code> is always 16px. Reach for these when you're setting paddings, gaps, and margins.
   </p>
 
   <div class="spacing-table-wrap">
@@ -124,7 +121,7 @@ const borderWidths = [
 
   <!-- ── Border radius ── -->
   <h2 id="border-radius">Border radius</h2>
-  <p>Seven steps from sharp to fully round. Use <code>--radius-xlg</code> for cards and panels, <code>--radius-round</code> for chips and pills.</p>
+  <p>Seven steps. Use <code>--radius-xlg</code> for cards and panels, <code>--radius-round</code> for chips and badges. Everything in between is for inputs and smaller surfaces.</p>
 
   <div class="radius-row">
     {radii.map(({ token, value, label }) => (
@@ -144,7 +141,7 @@ const borderWidths = [
 
   <!-- ── Border width ── -->
   <h2 id="border-width">Border width</h2>
-  <p>Four widths for every context: from invisible to thick emphasis.</p>
+  <p>Four widths. Most surfaces use 1px (<code>sm</code>). Go up to 2px or 4px only when you need strong visual emphasis.</p>
 
   <div class="bw-row">
     {borderWidths.map(({ label, value, token }) => (
