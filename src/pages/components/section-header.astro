@@ -1,0 +1,362 @@
+---
+import DocLayout from '../../layouts/DocLayout.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import ProgressBar from '../../components/ProgressBar.astro';
+
+const headings = [
+  { depth: 2, slug: 'variants',     text: 'Variants' },
+  { depth: 3, slug: 'status',       text: 'Status' },
+  { depth: 2, slug: 'usage',        text: 'Usage' },
+  { depth: 2, slug: 'combinations', text: 'Combinations' },
+  { depth: 2, slug: 'dos-donts',    text: "Do's & Don'ts" },
+];
+---
+
+<DocLayout
+  title="Section Header"
+  description="The floating card that tells students where they are in the learning path. Tap it to open the subject detail view."
+  headings={headings}
+>
+
+  <!-- ═══════════════════════════════════════════════
+       PLAYGROUND
+  ════════════════════════════════════════════════ -->
+  <section class="playground" aria-label="Interactive preview">
+
+    <div class="playground__stage">
+      <div class="preview-wrap">
+        <SectionHeader
+          id="preview-card"
+          theme="Tema 1, bloque 1"
+          sectionTitle="Introducción a las células"
+          status="default"
+        />
+      </div>
+    </div>
+
+    <div class="playground__controls" role="group" aria-label="Playground controls">
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Status</legend>
+        <div class="ctrl-group__options">
+          {['default', 'hover', 'pressed', 'disabled'].map(s => (
+            <button
+              class:list={['ctrl-btn', { 'is-active': s === 'default' }]}
+              data-prop="status"
+              data-value={s}
+            >{s}</button>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Theme</legend>
+        <input class="ctrl-input" type="text" id="ctrl-theme" value="Tema 1, bloque 1" maxlength="40" />
+      </fieldset>
+
+      <fieldset class="ctrl-group">
+        <legend class="ctrl-group__label">Title</legend>
+        <input class="ctrl-input" type="text" id="ctrl-title" value="Introducción a las células" maxlength="48" />
+      </fieldset>
+
+    </div>
+
+  </section>
+
+
+  <!-- ═══════════════════════════════════════════════
+       VARIANTS
+  ════════════════════════════════════════════════ -->
+  <h2 id="variants">Variants</h2>
+
+  <h3 id="status">Status</h3>
+  <p>Four states that cover the full interaction lifecycle. Default rests at the top of the map. Hover and pressed are managed by the app — you only need to pass <code>disabled</code> when the section is locked.</p>
+
+  <div class="example-row example-row--col">
+    {[
+      { status: 'default',  label: 'Default'  },
+      { status: 'hover',    label: 'Hover'    },
+      { status: 'pressed',  label: 'Pressed'  },
+      { status: 'disabled', label: 'Disabled' },
+    ].map(({ status, label }) => (
+      <div class="size-row">
+        <span class="size-label">{label}</span>
+        <SectionHeader
+          theme="Tema 1, bloque 1"
+          sectionTitle="Introducción a las células"
+          status={status as any}
+        />
+      </div>
+    ))}
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       USAGE
+  ════════════════════════════════════════════════ -->
+  <h2 id="usage">Usage</h2>
+  <p>Floats at the top of the Camino screen, anchored above the learning path nodes. It always reflects the student's current position: the subject they're actively studying right now. Update it every time the student moves to a new section.</p>
+  <p>The entire card navigates to the subject detail view. The book icon navigates to the theory content directly. If your screen only has one destination, pass the same handler to both <code>onPress</code> and <code>onBookPress</code>.</p>
+
+
+  <!-- ═══════════════════════════════════════════════
+       COMBINATIONS
+  ════════════════════════════════════════════════ -->
+  <h2 id="combinations">Combinations</h2>
+  <p>Always appears above the path nodes, never embedded between them. Pair it with a <strong>Progress Bar</strong> when you want to show fossil or lesson progress alongside the current section.</p>
+
+  <div class="example-row example-row--col">
+    <div class="combo-stack">
+      <ProgressBar value={55} size="lg" color="yellow" count="165 / 300" showIcon={true} />
+      <SectionHeader
+        theme="Tema 2, bloque 3"
+        sectionTitle="El sistema nervioso"
+      />
+    </div>
+  </div>
+
+  <div class="example-row example-row--col" style="margin-top: 8px;">
+    <div class="size-row">
+      <span class="size-label">Locked section</span>
+      <SectionHeader
+        theme="Tema 3, bloque 1"
+        sectionTitle="Genética y herencia"
+        status="disabled"
+      />
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════
+       DO'S & DON'TS
+  ════════════════════════════════════════════════ -->
+  <h2 id="dos-donts">Do's & Don'ts</h2>
+
+  <div class="dos-donts">
+    <div class="dos-donts__col dos-donts__col--do">
+      <p class="dos-donts__label">Do</p>
+      <ul>
+        <li><strong>Keep it in sync with the student's real progress.</strong> It should always reflect where they are, not where they started.</li>
+        <li><strong>Use <code>disabled</code> when the section is locked.</strong> The visual makes it clear the student hasn't unlocked it yet.</li>
+        <li><strong>Give the book icon its own destination.</strong> Pass <code>onBookPress</code> if there's a theory view. Don't make it do the same thing as the card tap.</li>
+      </ul>
+    </div>
+    <div class="dos-donts__col dos-donts__col--dont">
+      <p class="dos-donts__label">Don't</p>
+      <ul>
+        <li><strong>Don't embed it between path nodes.</strong> It floats above the map. Positioning it inside the path breaks the visual hierarchy.</li>
+        <li><strong>Don't use it outside the Camino screen.</strong> This component is purpose-built for the learning map. For other contexts, use a different card pattern.</li>
+        <li><strong>Don't truncate the title silently.</strong> Keep section titles short enough to fit in one line. The card clips overflow but shows nothing when text is cut.</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr />
+
+  <p>
+    <strong>Related:</strong>
+    <a href="/components/progress-bar">Progress Bar</a> (shows lesson or fossil progress above the card)
+    ·
+    <a href="/components/option-card">Option Card</a> (the answer component inside the lesson the card links to)
+  </p>
+
+</DocLayout>
+
+
+<script>
+  const card = document.querySelector('#preview-card') as HTMLElement | null;
+
+  // ── Status controls ──────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('[data-prop="status"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.ctrl-group__options')!
+        .querySelectorAll('.ctrl-btn')
+        .forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+
+      if (card) {
+        card.className = 'section-header section-header--' + btn.dataset.value;
+      }
+    });
+  });
+
+  // ── Text inputs ──────────────────────────────────────────────
+  const themeInput = document.querySelector<HTMLInputElement>('#ctrl-theme');
+  const titleInput = document.querySelector<HTMLInputElement>('#ctrl-title');
+
+  themeInput?.addEventListener('input', () => {
+    const el = card?.querySelector('.section-header__theme');
+    if (el) el.textContent = themeInput.value;
+  });
+
+  titleInput?.addEventListener('input', () => {
+    const el = card?.querySelector('.section-header__title');
+    if (el) el.textContent = titleInput.value;
+  });
+</script>
+
+
+<style>
+  .playground {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  .playground__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 140px;
+    padding: 40px 32px;
+    background: var(--surface-page);
+  }
+
+  .preview-wrap { width: 360px; }
+
+  .playground__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .ctrl-group { border: none; padding: 0; }
+
+  .ctrl-group__label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    margin-bottom: 8px;
+  }
+
+  .ctrl-group__options { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .ctrl-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: var(--text-body-default);
+    font-family: var(--font-family-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .ctrl-btn:hover     { background: var(--surface-hover-dark); }
+  .ctrl-btn.is-active {
+    background:   var(--primary-900);
+    color:        var(--primary-300);
+    border-color: var(--primary-700);
+  }
+
+  .ctrl-input {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: var(--text-body-default);
+    font-family: var(--font-family-body);
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    outline: none;
+    width: 200px;
+    transition: border-color 0.15s;
+  }
+
+  .ctrl-input:focus { border-color: var(--primary-600); }
+
+  /* ── Examples ─────────────────────────────────────────────── */
+  .example-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: var(--surface-elevate);
+    border-radius: 10px;
+    margin: 12px 0 8px;
+  }
+
+  .example-row--col { flex-direction: column; align-items: stretch; gap: 16px; }
+
+  .size-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .size-label {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+    white-space: nowrap;
+  }
+
+  /* Combinations stack */
+  .combo-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+    max-width: 400px;
+    align-self: center;
+    width: 100%;
+  }
+
+  /* ── Do's & Don'ts ────────────────────────────────────────── */
+  .dos-donts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 16px 0 24px;
+  }
+
+  .dos-donts__col {
+    padding: 16px 20px;
+    border-radius: 10px;
+  }
+
+  .dos-donts__col--do {
+    background: color-mix(in srgb, var(--success-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success-default) 30%, transparent);
+  }
+
+  .dos-donts__col--dont {
+    background: color-mix(in srgb, var(--error-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--error-default) 30%, transparent);
+  }
+
+  .dos-donts__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+    color: var(--text-placeholder);
+  }
+
+  .dos-donts__col--do   .dos-donts__label { color: var(--success-default); }
+  .dos-donts__col--dont .dos-donts__label { color: var(--error-default);   }
+
+  .dos-donts__col ul {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dos-donts__col li {
+    font-size: var(--font-size-paragraph-sm);
+    line-height: var(--line-height-paragraph-sm);
+    color: var(--text-body-default);
+  }
+</style>

@@ -1,0 +1,251 @@
+---
+interface Props {
+  /** Subtitle — e.g. "Tema 1, bloque 1" */
+  theme?: string;
+  /** Main bold title */
+  sectionTitle?: string;
+  /** Visual state. Defaults to "default". */
+  status?: 'default' | 'hover' | 'pressed' | 'disabled';
+  /** Optional id for playground scripting */
+  id?: string;
+}
+
+const {
+  theme        = 'Tema 1, bloque 1',
+  sectionTitle = 'Section Title',
+  status       = 'default',
+  id,
+} = Astro.props;
+---
+
+<div
+  class:list={['section-header', `section-header--${status}`]}
+  id={id}
+  role="button"
+  tabindex={status === 'disabled' ? '-1' : '0'}
+  aria-disabled={status === 'disabled' ? 'true' : undefined}
+>
+  <!-- Base background fill -->
+  <div class="section-header__bg" aria-hidden="true"></div>
+
+  <!-- Elevated "Box" layer — shifts top→bottom on press to fake button depth -->
+  <div class="section-header__box" aria-hidden="true"></div>
+
+  <!-- Content row -->
+  <div class="section-header__content">
+
+    <div class="section-header__text">
+      <span class="section-header__theme">{theme}</span>
+      <span class="section-header__title">{sectionTitle}</span>
+    </div>
+
+    <button
+      class="section-header__icon-btn"
+      type="button"
+      aria-label="Abrir contenido de la sección"
+      tabindex={status === 'disabled' ? '-1' : '0'}
+    >
+      <!-- Inner box layer inside icon button (depth illusion) -->
+      <div class="section-header__icon-box" aria-hidden="true"></div>
+      <img
+        class="section-header__icon"
+        src="/book-open.svg"
+        width="20"
+        height="20"
+        alt=""
+        aria-hidden="true"
+      />
+      <!-- Inner shadow overlay on icon button -->
+      <div class="section-header__icon-shadow" aria-hidden="true"></div>
+    </button>
+
+  </div>
+
+  <!-- Inner shadow overlay on card (elevation — hidden on press via CSS) -->
+  <div class="section-header__shadow" aria-hidden="true"></div>
+</div>
+
+<style>
+  /* ── Card ──────────────────────────────────────────────────── */
+  .section-header {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: var(--spacing-12) var(--spacing-16) var(--spacing-20);
+    border-radius: var(--radius-xlg);
+    /* Shadow/button/xlg — drop shadow only; inner shadow via __shadow */
+    box-shadow: 0 2px 2px var(--neutral-black-20);
+    cursor: pointer;
+    user-select: none;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Pressed: padding inverts to simulate physical button travel */
+  .section-header--pressed {
+    padding-top:    var(--spacing-20);
+    padding-bottom: var(--spacing-12);
+    box-shadow: none;
+  }
+
+  .section-header--disabled {
+    cursor: not-allowed;
+  }
+
+  /* ── Base background ────────────────────────────────────────── */
+  .section-header__bg {
+    position: absolute;
+    inset: 0;
+    background: var(--surface-default-dark);
+    border-radius: var(--radius-xlg);
+    pointer-events: none;
+  }
+
+  .section-header--hover    .section-header__bg,
+  .section-header--pressed  .section-header__bg {
+    background: var(--surface-hover-dark);
+  }
+
+  /* ── Box (depth illusion) ───────────────────────────────────── */
+  .section-header__box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 92px;
+    border-radius: var(--radius-lg);
+    background: var(--surface-default-dark);
+    pointer-events: none;
+  }
+
+  .section-header--hover    .section-header__box,
+  .section-header--pressed  .section-header__box {
+    background: var(--surface-hover-dark);
+  }
+
+  /* On press the box moves to the bottom — creates pressed-in look */
+  .section-header--pressed .section-header__box {
+    top:    auto;
+    bottom: 0;
+  }
+
+  /* ── Content row ────────────────────────────────────────────── */
+  .section-header__content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-8);
+    width: 100%;
+  }
+
+  /* ── Text block ─────────────────────────────────────────────── */
+  .section-header__text {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--scale-150); /* 6px — no spacing-6 token exists */
+  }
+
+  .section-header__theme {
+    display: block;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-sm);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-paragraph-sm);
+    color: var(--neutral-white-70);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .section-header__title {
+    display: block;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    line-height: var(--line-height-paragraph-md);
+    color: var(--text-headings);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .section-header--disabled .section-header__theme,
+  .section-header--disabled .section-header__title {
+    color: var(--text-action-light-disabled);
+  }
+
+  /* ── Icon button ────────────────────────────────────────────── */
+  .section-header__icon-btn {
+    position: relative;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--spacing-40);
+    height: var(--spacing-40);
+    border-radius: var(--radius-md);
+    border: none;
+    background: var(--surface-button-transparent-default);
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .section-header--disabled .section-header__icon-btn {
+    cursor: not-allowed;
+  }
+
+  /* Inner box layer inside icon button (same depth pattern as card) */
+  .section-header__icon-box {
+    position: absolute;
+    bottom: var(--scale-150); /* 6px from bottom */
+    left: 0;
+    right: 0;
+    height: 34px;             /* 40px - 6px = 34px visible lighter area */
+    border-radius: var(--radius-md);
+    background: var(--surface-button-transparent-default);
+    pointer-events: none;
+  }
+
+  .section-header__icon {
+    position: relative;
+    z-index: 1;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .section-header--disabled .section-header__icon {
+    opacity: 0.4;
+  }
+
+  /* Inner shadow on icon button (Shadow/button/md) */
+  .section-header__icon-shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: inset 0 -6px 0 var(--neutral-black-30);
+    pointer-events: none;
+  }
+
+  /* Drop shadow on icon button (Shadow/button/md) */
+  .section-header__icon-btn {
+    filter: drop-shadow(0 2px 1px var(--neutral-black-20));
+  }
+
+  /* ── Card inner shadow ──────────────────────────────────────── */
+  .section-header__shadow {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    /* Shadow/button/xlg inner shadow */
+    box-shadow: inset 0 -8px 0 var(--neutral-black-30);
+    pointer-events: none;
+  }
+
+  /* Hidden when pressed — card is visually "pushed in" */
+  .section-header--pressed .section-header__shadow {
+    display: none;
+  }
+</style>
