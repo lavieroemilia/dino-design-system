@@ -13,14 +13,6 @@ const headings = [
   headings={headings}
 >
 
-  <!-- ── Hero ── -->
-  <div class="hero-chips">
-    <span class="chip chip--green">v0.1.0</span>
-    <span class="chip">Dark mode</span>
-    <span class="chip">Astro + CSS</span>
-    <span class="chip">Rubik</span>
-  </div>
-
   <!-- ── Principles ── -->
   <h2 id="principles">Principles</h2>
   <p>Four beliefs that drive every decision in the system: from token naming to shadow depth.</p>
@@ -125,34 +117,6 @@ const headings = [
 </DocLayout>
 
 <style>
-  /* ── Hero chips ── */
-  .hero-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-8);
-    margin-bottom: var(--spacing-48);
-  }
-
-  .chip {
-    display: inline-flex;
-    align-items: center;
-    padding: var(--spacing-4) var(--spacing-10);
-    border-radius: var(--radius-round);
-    font-size: var(--font-size-paragraph-cp);
-    font-weight: var(--font-weight-medium);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    background: var(--surface-elevate);
-    color: var(--text-placeholder);
-    border: 1px solid rgba(255,255,255,0.07);
-  }
-
-  .chip--green {
-    background: var(--primary-900);
-    color: var(--primary-300);
-    border-color: var(--primary-800);
-  }
-
   /* ── Principles ── */
   .principles-grid {
     display: grid;
