@@ -1,0 +1,196 @@
+---
+interface Props {
+  /** Controls height and padding */
+  size?: 'large' | 'medium';
+  /** Visual state. 'hover' and 'focus' are mainly for the playground;
+      real fields pick these up automatically via :hover and :focus-within */
+  status?: 'default' | 'hover' | 'focus' | 'disabled';
+  /** Validation feedback shown on the field border, text, and icons */
+  result?: 'none' | 'error' | 'success';
+  /** Placeholder text shown when the field is empty */
+  placeholder?: string;
+  /** Pre-filled value */
+  value?: string;
+  /** Shows the info icon on the left */
+  iconLeft?: boolean;
+  /** Shows the result icon on the right (changes with `result`) */
+  iconRight?: boolean;
+  /** id of the input, wire this up with a Label's `for` */
+  id?: string;
+  name?: string;
+}
+
+const {
+  size = 'large',
+  status = 'default',
+  result = 'none',
+  placeholder = 'Placeholder',
+  value = '',
+  iconLeft = false,
+  iconRight = true,
+  id,
+  name,
+} = Astro.props;
+---
+
+<div
+  class:list={[
+    'field',
+    `field--${size}`,
+    status !== 'default' && `field--${status}`,
+    result !== 'none' && `field--${result}`,
+  ]}
+>
+  {iconLeft && (
+    <span class="field__icon" aria-hidden="true">
+      <svg viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M18 10A8 8 0 1 1 2 10a8 8 0 0 1 16 0Zm-7-4a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 9a1 1 0 0 0 0 2v3a1 1 0 0 0 1 1h1a1 1 0 1 0 0-2v-3a1 1 0 0 0-1-1H9Z" />
+      </svg>
+    </span>
+  )}
+  <input
+    class="field__input"
+    type="text"
+    id={id}
+    name={name}
+    placeholder={placeholder}
+    value={value || undefined}
+    disabled={status === 'disabled'}
+    aria-invalid={result === 'error' ? 'true' : undefined}
+  />
+  {iconRight && (
+    <span class="field__icon" aria-hidden="true">
+      {result === 'error' ? (
+        <svg viewBox="0 0 16.0626 14.375" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M6.51575 0.875C7.18933 -0.291669 8.87326 -0.291665 9.54684 0.875L15.8255 11.75C16.4991 12.9167 15.6571 14.375 14.31 14.375H1.75261C0.405458 14.375 -0.436508 12.9167 0.237066 11.75L6.51575 0.875ZM8.03125 3.38C8.44546 3.38 8.78125 3.71579 8.78125 4.13V7.63C8.78125 8.04422 8.44546 8.38 8.03125 8.38C7.61704 8.38 7.28125 8.04422 7.28125 7.63L7.28125 4.13C7.28125 3.71579 7.61704 3.38 8.03125 3.38ZM8.03125 12.38C8.58353 12.38 9.03125 11.9323 9.03125 11.38C9.03125 10.8277 8.58353 10.38 8.03125 10.38C7.47897 10.38 7.03125 10.8277 7.03125 11.38C7.03125 11.9323 7.47897 12.38 8.03125 12.38Z" />
+        </svg>
+      ) : result === 'success' ? (
+        <svg viewBox="0 0 16.25 16.25" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 8.125C0 3.63769 3.63769 0 8.125 0C12.6123 0 16.25 3.63769 16.25 8.125C16.25 12.6123 12.6123 16.25 8.125 16.25C3.63769 16.25 0 12.6123 0 8.125ZM11.1336 6.61327C11.3342 6.33239 11.2692 5.94205 10.9883 5.74142C10.7074 5.54079 10.317 5.60584 10.1164 5.88673L7.42025 9.66136L6.06694 8.30806C5.82286 8.06398 5.42714 8.06398 5.18306 8.30806C4.93898 8.55214 4.93898 8.94786 5.18306 9.19194L7.05806 11.0669C7.18797 11.1969 7.36846 11.263 7.55155 11.2479C7.73464 11.2327 7.9018 11.1378 8.00858 10.9883L11.1336 6.61327Z" />
+        </svg>
+      ) : (
+        <svg viewBox="0 0 16 16" fill="currentColor">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM6.28033 5.21967C5.98744 4.92678 5.51256 4.92678 5.21967 5.21967C4.92678 5.51256 4.92678 5.98744 5.21967 6.28033L6.93934 8L5.21967 9.71967C4.92678 10.0126 4.92678 10.4874 5.21967 10.7803C5.51256 11.0732 5.98744 11.0732 6.28033 10.7803L8 9.06066L9.71967 10.7803C10.0126 11.0732 10.4874 11.0732 10.7803 10.7803C11.0732 10.4874 11.0732 10.0126 10.7803 9.71967L9.06066 8L10.7803 6.28033C11.0732 5.98744 11.0732 5.51256 10.7803 5.21967C10.4874 4.92678 10.0126 4.92678 9.71967 5.21967L8 6.93934L6.28033 5.21967Z" />
+        </svg>
+      )}
+    </span>
+  )}
+</div>
+
+<style>
+  .field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    gap: var(--spacing-8);
+    border: 2px solid var(--border-default);
+    border-radius: var(--radius-xlg);
+    background: var(--surface-default-dark);
+    box-shadow: inset 0px 4px 4px var(--black-60);
+    transition: border-color 0.15s, background-color 0.15s;
+  }
+
+  .field--large {
+    height: 56px;
+    padding: var(--spacing-16) var(--spacing-12);
+  }
+
+  .field--medium {
+    height: 48px;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .field__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: var(--icon-default);
+  }
+
+  .field__icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .field__input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-medium);
+    line-height: var(--line-height-paragraph-md);
+    color: var(--text-action-light);
+  }
+
+  .field__input::placeholder {
+    color: var(--text-placeholder);
+  }
+
+  /* Hover & focus share the same look */
+  .field:hover:not(.field--disabled),
+  .field--hover,
+  .field:focus-within:not(.field--disabled),
+  .field--focus {
+    border-color: var(--border-hover);
+    background: var(--surface-hover-dark);
+  }
+
+  .field:hover:not(.field--disabled) .field__input::placeholder,
+  .field--hover .field__input::placeholder,
+  .field:focus-within:not(.field--disabled) .field__input::placeholder,
+  .field--focus .field__input::placeholder {
+    color: var(--text-placeholder-focus);
+  }
+
+  /* Disabled */
+  .field--disabled {
+    border-color: var(--border-disabled);
+    background: var(--surface-disabled-dark);
+  }
+
+  .field--disabled .field__input {
+    color: var(--text-action-light-disabled);
+    cursor: not-allowed;
+  }
+
+  .field--disabled .field__input::placeholder {
+    color: var(--text-action-light-disabled);
+  }
+
+  .field--disabled .field__icon {
+    color: var(--icon-action-light-disabled);
+  }
+
+  /* Result: error */
+  .field--error {
+    border-color: var(--border-error);
+    background: var(--surface-error);
+  }
+
+  .field--error .field__input,
+  .field--error .field__input::placeholder {
+    color: var(--text-error-light);
+  }
+
+  .field--error .field__icon {
+    color: var(--icon-error);
+  }
+
+  /* Result: success */
+  .field--success {
+    border-color: var(--border-success);
+  }
+
+  .field--success .field__icon {
+    color: var(--icon-success);
+  }
+</style>
