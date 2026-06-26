@@ -15,12 +15,34 @@ src/
       colors.astro                    ← reads from tokens_tokens.json
       typography.astro                ← reads from tokens_tokens.json
       spacing.astro                   ← reads from tokens_tokens.json
-    components/[name].astro           ← one file per component
+    components/[name].astro           ← one doc page per component
+  components/
+    Button/
+      Button.astro                    ← component implementation
+      button.meta.js                  ← AI agent metadata
+    Field/
+      Field.astro
+      field.meta.js
+    Label/
+      Label.astro
+      label.meta.js
+    OptionCard/
+      OptionCard.astro
+      option-card.meta.js
+    ProgressBar/
+      ProgressBar.astro
+      progress-bar.meta.js
+    SectionHeader/
+      SectionHeader.astro
+      section-header.meta.js
+  data/
+    components.index.meta.js          ← index of all components for AI agents
 public/
   styles/
     global.css                        ← source of truth for all tokens
 tokens_tokens.json                    ← raw Figma token export (read-only reference)
 WRITING_GUIDE.md                      ← voice, tone, page structure rules
+COMPONENT-METADATA-SCHEMA.md         ← schema reference for .meta.js files
 ```
 
 ---
@@ -150,3 +172,21 @@ The Playground background must provide good contrast with the component being do
 - Interactivity goes in `<script>` tags inside the `.astro` file — clean, no frameworks.
 - The layout shell is a CSS grid with 3 columns (sidebar / content / TOC). Don't break this structure.
 - Responsive breakpoints are already defined in `DocLayout.astro` — don't add new ones without a reason.
+
+---
+
+## Component metadata (.meta.js)
+
+Every component must have a `.meta.js` file inside its folder (`src/components/[Name]/[name].meta.js`).
+
+These files are for AI agent consumption, not human documentation. They describe the component's variants, states, tokens, composition rules, accessibility, and usage hints in a structured JS object.
+
+Schema reference: `COMPONENT-METADATA-SCHEMA.md` at the project root.
+
+Rules:
+- When adding a new component, create its `.meta.js` alongside `[Name].astro` in the same folder.
+- Never duplicate token values in `.meta.js` — reference the CSS var name, not the resolved value.
+- The `tokens` array must only list tokens the component consumes directly, not the full token chain.
+- Keep `aiHints.antiPatterns` up to date. This is the most valuable field for agents.
+
+The index of all components lives at `src/data/components.index.meta.js`. Update it when adding or removing a component.

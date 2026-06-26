@@ -217,69 +217,69 @@
          ========================================================== */
     
       /* Text */
-      --text-headings:              var(--neutral-white-100);
-      --text-body-default:          var(--neutral-200);
-      --text-body-dark:             var(--neutral-900);
-      --text-placeholder:           var(--neutral-500);
-      --text-placeholder-focus:     var(--neutral-600);
-      --text-action-light:          var(--neutral-white-100);
-      --text-action-light-hover:    var(--neutral-white-80);
-      --text-action-light-disabled: var(--neutral-white-40);
-      --text-action-dark:           var(--neutral-900);
-      --text-action-dark-hover:     var(--neutral-black-80);
-      --text-action-dark-disabled:  var(--neutral-black-40);
-      --text-warning:               var(--warning-default);
-      --text-success:               var(--success-default);
-      --text-info:                  var(--info-300);
-      --text-error-dark:            var(--error-default);
-      --text-error-light:           var(--error-700);
-      --text-on-action:             var(--neutral-white-100);
-    
+      --text-headings:              var(--neutral-white-100); /* Títulos de página y sección. Máximo contraste sobre fondo oscuro. */
+      --text-body-default:          var(--neutral-200); /* Cuerpo de texto general. Párrafos, descripciones y contenido de apoyo. */
+      --text-body-dark:             var(--neutral-900); /* Cuerpo de texto sobre fondos claros. */
+      --text-placeholder:           var(--neutral-500); /* Texto de guía dentro de campos vacíos. Desaparece al escribir. */
+      --text-placeholder-focus:     var(--neutral-600); /* Texto de guía cuando el campo tiene foco pero aún está vacío. */
+      --text-action-light:          var(--neutral-white-100); /* Texto de etiqueta en botones con fondo oscuro (primary, danger, premium). */
+      --text-action-light-hover:    var(--neutral-white-80); /* Texto de etiqueta en botones con fondo oscuro en hover. */
+      --text-action-light-disabled: var(--neutral-white-40); /* Texto de etiqueta en botones deshabilitados con fondo oscuro. */
+      --text-action-dark:           var(--neutral-900); /* Texto de etiqueta en botones con fondo claro (white). */
+      --text-action-dark-hover:     var(--neutral-black-80); /* Texto de etiqueta en botones con fondo claro en hover. */
+      --text-action-dark-disabled:  var(--neutral-black-40); /* Texto de etiqueta en botones con fondo claro deshabilitados. */
+      --text-warning:               var(--warning-default); /* Texto de advertencia. Para mensajes de alerta no críticos. */
+      --text-success:               var(--success-default); /* Texto de confirmación. Para mensajes de éxito y respuestas correctas. */
+      --text-info:                  var(--info-300); /* Texto informativo. Para contenido secundario o de contexto. */
+      --text-error-dark:            var(--error-default); /* Texto de error sobre fondo oscuro. Para validación en modo dark. */
+      --text-error-light:           var(--error-700); /* Texto de error sobre fondo claro. Para validación en modo light. */
+      --text-on-action:             var(--neutral-white-100); /* Texto sobre cualquier superficie de acción (botones, CTA). */
+
       /* Icons */
-      --icon-default:               var(--neutral-300);
-      --icon-action-light:          var(--neutral-white-100);
-      --icon-action-light-hover:    var(--neutral-white-80);
-      --icon-action-light-disabled: var(--neutral-white-40);
-      --icon-action-dark:           var(--neutral-800);
-      --icon-warning:               var(--warning-default);
-      --icon-success:               var(--success-default);
-      --icon-error:                 var(--error-default);
-      --icon-info:                  var(--info-300);
-    
+      --icon-default:               var(--neutral-300); /* Color de icono estándar sobre fondo oscuro. */
+      --icon-action-light:          var(--neutral-white-100); /* Icono sobre elemento interactivo con fondo oscuro en reposo. */
+      --icon-action-light-hover:    var(--neutral-white-80); /* Icono sobre elemento interactivo con fondo oscuro en hover. */
+      --icon-action-light-disabled: var(--neutral-white-40); /* Icono sobre elemento interactivo con fondo oscuro deshabilitado. */
+      --icon-action-dark:           var(--neutral-800); /* Icono sobre elemento interactivo con fondo claro en reposo. */
+      --icon-warning:               var(--warning-default); /* Icono de advertencia. */
+      --icon-success:               var(--success-default); /* Icono de éxito o respuesta correcta. */
+      --icon-error:                 var(--error-default); /* Icono de error o respuesta incorrecta. */
+      --icon-info:                  var(--info-300); /* Icono informativo. */
+
       /* Surface */
-      --surface-page:                       var(--neutral-900);
-      --surface-elevate:                    var(--neutral-800);
-      --surface-default-dark:               var(--neutral-900);
-      --surface-hover-dark:                 var(--neutral-700);
-      --surface-disabled-dark:              var(--neutral-900);
-      --surface-default-light:              var(--neutral-white-100);
-      --surface-hover-light:                var(--neutral-100);
-      --surface-disabled-light:             var(--neutral-200);
-      --surface-success:                    var(--success-900);
-      --surface-error:                      var(--error-900);
-      --surface-info:                       var(--info-900);
-      --surface-button-primary-default:     var(--primary-600);
-      --surface-button-primary-hover:       var(--primary-700);
-      --surface-button-disabled:            var(--neutral-700);
-      --surface-button-white-default:       var(--neutral-white-100);
-      --surface-button-white-hover:         var(--neutral-100);
-      --surface-button-secondary-default:   var(--info-default);
-      --surface-button-secondary-hover:     var(--info-600);
-      --surface-button-transparent-default: var(--neutral-white-20);
-      --surface-button-transparent-hover:   var(--neutral-white-10);
-      --surface-button-error-default:       var(--error-600);
-      --surface-button-error-hover:         var(--error-700);
-      --surface-button-premium-default:     linear-gradient(158deg, var(--info-default) 15%, var(--error-default) 103%);
-      --surface-button-premium-hover:       linear-gradient(158deg, var(--info-600) 15%, var(--error-600) 103%);
-    
+      --surface-page:                       var(--neutral-900); /* Fondo de pantalla base. El nivel más profundo del sistema. */
+      --surface-elevate:                    var(--neutral-800); /* Fondo de tarjetas y paneles elevados sobre la página. */
+      --surface-default-dark:               var(--neutral-900); /* Superficie estándar de contenedores sobre fondo oscuro. */
+      --surface-hover-dark:                 var(--neutral-700); /* Superficie en hover sobre fondo oscuro. Filas y tarjetas seleccionables. */
+      --surface-disabled-dark:              var(--neutral-900); /* Superficie de componentes deshabilitados sobre fondo oscuro. */
+      --surface-default-light:              var(--neutral-white-100); /* Superficie estándar de contenedores sobre fondo claro. */
+      --surface-hover-light:                var(--neutral-100); /* Superficie en hover sobre fondo claro. */
+      --surface-disabled-light:             var(--neutral-200); /* Superficie de componentes deshabilitados sobre fondo claro. */
+      --surface-success:                    var(--success-900); /* Fondo de áreas de éxito o respuesta correcta (Option Card correct). */
+      --surface-error:                      var(--error-900); /* Fondo de áreas de error o respuesta incorrecta (Option Card incorrect). */
+      --surface-info:                       var(--info-900); /* Fondo de áreas informativas. */
+      --surface-button-primary-default:     var(--primary-600); /* Fondo del botón primary en reposo. Máximo un botón primary por pantalla. */
+      --surface-button-primary-hover:       var(--primary-700); /* Fondo del botón primary en hover. */
+      --surface-button-disabled:            var(--neutral-700); /* Fondo de cualquier botón en estado disabled. */
+      --surface-button-white-default:       var(--neutral-white-100); /* Fondo del botón white en reposo. */
+      --surface-button-white-hover:         var(--neutral-100); /* Fondo del botón white en hover. */
+      --surface-button-secondary-default:   var(--info-default); /* Fondo del botón secondary en reposo. */
+      --surface-button-secondary-hover:     var(--info-600); /* Fondo del botón secondary en hover. */
+      --surface-button-transparent-default: var(--neutral-white-20); /* Fondo del botón ghost en reposo. Solo para acciones inline en layouts densos. */
+      --surface-button-transparent-hover:   var(--neutral-white-10); /* Fondo del botón ghost en hover. */
+      --surface-button-error-default:       var(--error-600); /* Fondo del botón danger en reposo. Siempre acompañar de confirmación. */
+      --surface-button-error-hover:         var(--error-700); /* Fondo del botón danger en hover. */
+      --surface-button-premium-default:     linear-gradient(158deg, var(--info-default) 15%, var(--error-default) 103%); /* Gradiente del botón premium en reposo. Solo en pantallas de upgrade. */
+      --surface-button-premium-hover:       linear-gradient(158deg, var(--info-600) 15%, var(--error-600) 103%); /* Gradiente del botón premium en hover. */
+
       /* Border */
-      --border-default:        var(--neutral-500);
-      --border-hover:          var(--neutral-200);
-      --border-action-default: var(--primary-600);
-      --border-action-hover:   var(--primary-700);
-      --border-disabled:       var(--neutral-600);
-      --border-error:          var(--error-default);
-      --border-success:        var(--success-default);
+      --border-default:        var(--neutral-500); /* Borde estándar de campos y tarjetas en reposo. */
+      --border-hover:          var(--neutral-200); /* Borde al pasar el cursor sobre un campo o tarjeta. */
+      --border-action-default: var(--primary-600); /* Borde de campos con foco activo. */
+      --border-action-hover:   var(--primary-700); /* Borde de campos con foco en hover. */
+      --border-disabled:       var(--neutral-600); /* Borde de campos y tarjetas deshabilitados. */
+      --border-error:          var(--error-default); /* Borde de campos con error de validación. */
+      --border-success:        var(--success-default); /* Borde de campos o Option Cards con estado correcto. */
     
       /* Shadows */
       --shadow-button:        0px 2px 2px var(--black-20), inset 0px -4px 0px var(--black-30);
