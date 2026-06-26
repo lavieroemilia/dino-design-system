@@ -4,6 +4,7 @@ import DocLayout from '../layouts/DocLayout.astro';
 const headings = [
   { depth: 2, slug: 'principles', text: 'Principles' },
   { depth: 2, slug: 'architecture', text: 'Architecture' },
+  { depth: 2, slug: 'built-for-agents', text: 'Built for agents' },
 ];
 ---
 
@@ -80,7 +81,7 @@ const headings = [
       </div>
     </div>
 
-    <div class="arch__arrow" aria-hidden="true">→</div>
+    <div class="arch__arrow" aria-hidden="true">↓</div>
 
     <div class="arch__layer arch__layer--semantic">
       <div class="arch__badge">Semantic</div>
@@ -96,7 +97,7 @@ const headings = [
       </div>
     </div>
 
-    <div class="arch__arrow" aria-hidden="true">→</div>
+    <div class="arch__arrow" aria-hidden="true">↓</div>
 
     <div class="arch__layer arch__layer--component">
       <div class="arch__badge">Component</div>
@@ -113,6 +114,61 @@ const headings = [
     </div>
 
   </div>
+
+  <!-- ── Built for agents ── -->
+  <h2 id="built-for-agents">Built for agents</h2>
+  <p>
+    This design system is built to be read by humans and understood by agents. Every component ships with a doc page for the team and a <code>.meta.js</code> for AI tools (same decisions, structured two ways so anyone or anything working in this repo starts with the full picture).
+  </p>
+
+  <h3 class="agents__subheading">How it works</h3>
+  <p>
+    Each component ships with a <code>.meta.js</code> file that encodes what the doc page communicates in prose: variants, consumed tokens, composition rules, accessibility requirements, and anti-patterns. An agent that reads that file knows as much about the component as a designer who built it.
+  </p>
+
+  <h3 class="agents__subheading">Repo structure</h3>
+  <p>Every component lives in three layers: the implementation, the documentation, and the metadata. Each file has one job.</p>
+
+  <div class="file-list">
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>[Name].astro</code> <span class="file-list__path">src/components/[name]/</span></div>
+      <p class="file-list__desc">The real component. Props, markup, and styles. No documentation content.</p>
+    </div>
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>[name].meta.js</code> <span class="file-list__path">src/components/[name]/</span></div>
+      <p class="file-list__desc">Structured metadata for agents. Variants, consumed tokens, relationships, accessibility, and anti-patterns. The machine-readable version of the doc page.</p>
+    </div>
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>[name].astro</code> <span class="file-list__path">src/pages/components/</span></div>
+      <p class="file-list__desc">The public documentation page. Playground, variants, usage, combinations, and do's & don'ts.</p>
+    </div>
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>components.index.meta.js</code> <span class="file-list__path">src/data/</span></div>
+      <p class="file-list__desc">Master index of all components. The entry point for any agent exploring the system.</p>
+    </div>
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>global.css</code> <span class="file-list__path">public/styles/</span></div>
+      <p class="file-list__desc">Source of truth for all CSS tokens. Three layers: Brand, Semantic, Components/Dark. Every Component-layer token has a comment explaining when to use it.</p>
+    </div>
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>COMPONENT-METADATA-SCHEMA.md</code> <span class="file-list__path">root</span></div>
+      <p class="file-list__desc">Reference schema for creating new components. Defines what fields each <code>.meta.js</code> must have and why.</p>
+    </div>
+
+    <div class="file-list__item">
+      <div class="file-list__name"><code>CLAUDE.md</code> <span class="file-list__path">root</span></div>
+      <p class="file-list__desc">Instructions for Claude Code. Project rules, naming conventions, and the process for adding new components.</p>
+    </div>
+
+  </div>
+
+  <p class="agents__note">This structure means a new component is ready for human use and AI use at the same time. Design it, build it, document it, encode it.</p>
 
 </DocLayout>
 
@@ -165,15 +221,13 @@ const headings = [
   /* ── Architecture ── */
   .arch {
     display: flex;
-    align-items: stretch;
+    flex-direction: column;
     gap: 0;
     margin-top: var(--spacing-24);
-    flex-wrap: wrap;
+    margin-bottom: var(--spacing-64);
   }
 
   .arch__layer {
-    flex: 1;
-    min-width: 180px;
     padding: var(--spacing-20) var(--spacing-20) var(--spacing-24);
     border-radius: var(--radius-xlg);
     border: 1px solid rgba(255,255,255,0.07);
@@ -185,16 +239,10 @@ const headings = [
 
   .arch__arrow {
     display: flex;
-    align-items: center;
-    padding: 0 var(--spacing-12);
+    justify-content: center;
+    padding: var(--spacing-4) 0;
     color: var(--text-placeholder);
     font-size: var(--font-size-paragraph-lg);
-    flex-shrink: 0;
-  }
-
-  @media (max-width: 680px) {
-    .arch { flex-direction: column; }
-    .arch__arrow { transform: rotate(90deg); align-self: center; padding: var(--spacing-4) 0; }
   }
 
   .arch__badge {
@@ -233,5 +281,70 @@ const headings = [
   .arch__examples code {
     font-size: 10px;
     display: block;
+  }
+
+  /* ── Built for agents ── */
+  .agents__subheading {
+    font-family: var(--font-family-headings);
+    font-size: var(--font-size-paragraph-md);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-headings);
+    margin: var(--spacing-32) 0 var(--spacing-8);
+  }
+
+  .file-list {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: var(--radius-xlg);
+    overflow: hidden;
+    margin-top: var(--spacing-16);
+    margin-bottom: var(--spacing-24);
+  }
+
+  .file-list__item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    padding: var(--spacing-16) var(--spacing-20);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    background: var(--surface-elevate);
+  }
+
+  .file-list__item:last-child {
+    border-bottom: none;
+  }
+
+  .file-list__name {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-8);
+    flex-wrap: wrap;
+  }
+
+  .file-list__name code {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-headings);
+  }
+
+  .file-list__path {
+    font-size: var(--font-size-paragraph-xsm);
+    color: var(--text-placeholder);
+  }
+
+  .file-list__desc {
+    font-size: var(--font-size-paragraph-sm);
+    line-height: 1.65;
+    color: var(--text-body-default);
+    margin: 0;
+  }
+
+  .agents__note {
+    font-size: var(--font-size-paragraph-sm);
+    line-height: 1.65;
+    color: var(--text-placeholder);
+    border-left: 2px solid var(--primary-600);
+    padding-left: var(--spacing-16);
+    margin-top: var(--spacing-24);
   }
 </style>
