@@ -1,6 +1,7 @@
 # Dino Design System — Writing Guide
 
-This guide is the source of truth for writing component documentation pages. Follow it every time you create or update a page in `src/pages/components/`.
+Source of truth for writing component documentation pages (`src/pages/components/`).
+Read this before creating or updating any component page.
 
 ---
 
@@ -8,19 +9,43 @@ This guide is the source of truth for writing component documentation pages. Fol
 
 Every component page follows this exact order. Do not add or reorder sections.
 
-1. **Playground** — interactive preview, no heading
+1. **Playground** — interactive preview, no heading, goes straight in
 2. `<h2>` **Variants** — one `<h3>` per named variant, plus optional Size `<h3>`
 3. `<h2>` **Usage** — when and how to use this component
 4. `<h2>` **Combinations** — only when the component meaningfully composes with others
 5. `<h2>` **Do's & Don'ts**
+6. `<hr />` + **Related** paragraph — links to companion components
 
-The Combinations section is optional. Skip it for standalone components (like SectionHeader) where there's nothing meaningful to show.
+The `headings` array in the frontmatter must mirror every `<h2>` and `<h3>` slug exactly so the TOC works.
+
+Combinations is optional. Skip it for standalone components where there is nothing meaningful to show.
+
+---
+
+## .astro is not .mdx — never mix syntaxes
+
+`.astro` files do not process Markdown. These will render as literal text or break the parser:
+
+```
+❌  ```html ... ```       (fenced code blocks)
+❌  ### Heading           (markdown headings)
+❌  - **bold list item**  (markdown lists)
+❌  | col | col |         (markdown tables)
+```
+
+Use HTML for everything:
+
+```
+✅  <h3 id="size">Size</h3>
+✅  <ul><li><strong>…</strong></li></ul>
+✅  <pre><code>…</code></pre>
+```
 
 ---
 
 ## 1. Playground
 
-The playground is an interactive preview where the reader can change props and see the component update live. It always sits at the top of the page, before the first `<h2>`.
+The playground is an interactive preview. It sits at the top of every page before the first `<h2>`, and lets the reader change props and see the component update live.
 
 ### Structure
 
@@ -29,7 +54,7 @@ The playground is an interactive preview where the reader can change props and s
 
   <!-- Stage: the component preview -->
   <div class="playground__stage" id="preview-stage">
-    <!-- render the component or a raw HTML clone of it here -->
+    <!-- Render the component or a raw HTML clone here -->
   </div>
 
   <!-- Controls: buttons and inputs to change props -->
@@ -37,7 +62,13 @@ The playground is an interactive preview where the reader can change props and s
     <fieldset class="ctrl-group">
       <legend class="ctrl-group__label">Prop name</legend>
       <div class="ctrl-group__options">
-        <!-- ctrl-btn per option -->
+        {['value1', 'value2'].map(v => (
+          <button
+            class:list={['ctrl-btn', { 'is-active': v === 'value1' }]}
+            data-prop="propName"
+            data-value={v}
+          >{v}</button>
+        ))}
       </div>
     </fieldset>
   </div>
@@ -46,8 +77,13 @@ The playground is an interactive preview where the reader can change props and s
   <div class="playground__code">
     <pre id="preview-code" class="code-snippet"></pre>
     <button class="copy-btn" id="copy-btn" aria-label="Copy code">
-      <svg id="icon-copy" ...><!-- clipboard icon --></svg>
-      <svg id="icon-check" ... style="display:none"><!-- check icon --></svg>
+      <svg id="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+      </svg>
+      <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
     </button>
   </div>
 
@@ -58,12 +94,12 @@ The playground is an interactive preview where the reader can change props and s
 
 - The `<pre id="preview-code">` must always be empty in the HTML. Populate it via JavaScript in `render()` or `updateCode()`.
 - The snippet must reflect the actual props the user has selected, using the same attribute names as the Astro component.
-- Only include non-default prop values in the snippet. Don't output `status="default"` if default is already the default.
-- The copy button swaps the clipboard icon for a checkmark on click. No text feedback. Revert after 1500ms.
+- Only include non-default prop values. Don't output `status="default"` if default is already the default.
+- The copy button swaps the clipboard icon for a checkmark on click. No text feedback. Reverts after 1500 ms.
 
 ### Stage background
 
-Choose the background that best represents how the component appears in the real app. Most components use `var(--surface-page)`. Components that live on elevated surfaces (like SectionHeader) use `var(--surface-elevate)`. Always use a token from `global.css`.
+Choose the background that best represents how the component appears in the real app. Most components use `var(--surface-page)`. Components that live on elevated surfaces (like SectionHeader) use `var(--surface-elevate)`. Always a token from `global.css`.
 
 ### JavaScript pattern
 
@@ -93,9 +129,9 @@ Choose the background that best represents how the component appears in the real
     });
   });
 
-  render(); // always call on load
+  render(); // always call on load to populate the snippet
 
-  // Copy handler — always the same
+  // Copy handler — always the same, copy verbatim
   const copyBtn   = document.getElementById('copy-btn');
   const iconCopy  = document.getElementById('icon-copy');
   const iconCheck = document.getElementById('icon-check');
@@ -113,7 +149,7 @@ Choose the background that best represents how the component appears in the real
 </script>
 ```
 
-Do not use TypeScript generics inside `.map()` or `.sort()` callbacks — esbuild will throw a parse error.
+Do not use TypeScript generics inside `.map()` or `.sort()` callbacks — esbuild throws a parse error. Keep all callbacks as plain JavaScript.
 
 ---
 
@@ -121,7 +157,7 @@ Do not use TypeScript generics inside `.map()` or `.sort()` callbacks — esbuil
 
 ### One example per named variant
 
-Each `<h3>` represents one named variant of the component. It shows a single example of that variant, centered in a box.
+Each `<h3>` that documents a named variant (primary, secondary, error...) shows a single example of that variant, centered in a box.
 
 ```html
 <h3 id="primary">Primary</h3>
@@ -131,24 +167,9 @@ Each `<h3>` represents one named variant of the component. It shows a single exa
 </div>
 ```
 
-The `.example-center` box always has a background, a subtle border, and center-aligned content:
-
-```css
-.example-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 32px 24px;
-  background: var(--surface-elevate);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  margin: 12px 0 32px;
-}
-```
-
 ### Multi-state sections
 
-When a `<h3>` documents all the states of a single property (status, result, fill states...), show them stacked in a column with a label next to each one. This makes comparison easy.
+When a `<h3>` shows all the values of one property together (all statuses, all colors, all fill levels...), stack them in a labeled column.
 
 ```html
 <h3 id="status">Status</h3>
@@ -165,27 +186,9 @@ When a `<h3>` documents all the states of a single property (status, result, fil
 </div>
 ```
 
-The `.example-row` box shares the same background and border as `.example-center`:
-
-```css
-.example-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 24px;
-  background: var(--surface-elevate);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  margin: 12px 0 32px;
-}
-
-.example-row--col { flex-direction: column; align-items: stretch; gap: 12px; }
-```
-
 ### Size section
 
-If the component has multiple sizes, document them as a `<h3>` inside Variants — not as a top-level `<h2>`. The size section shows all sizes together, aligned and labeled.
+If the component has multiple sizes, document them as a `<h3>` inside Variants (not a top-level `<h2>`). Show all sizes together, aligned and labeled below each one.
 
 ```html
 <h3 id="sizes">Size</h3>
@@ -202,19 +205,13 @@ If the component has multiple sizes, document them as a `<h3>` inside Variants �
 </div>
 ```
 
-```css
-.example-row--sizes { align-items: flex-end; gap: 20px; }
-.size-item { display: flex; flex-direction: column; align-items: center; gap: var(--spacing-8); }
-.size-label { font-size: var(--font-size-paragraph-sm); color: var(--text-placeholder); }
-```
+### When to use each pattern
 
-**When to use `example-center` vs `example-row`:**
-
-| Situation | Use |
+| Situation | Class |
 |---|---|
 | One named variant (primary, secondary...) | `example-center` |
-| All values of one property shown together (all statuses, all colors...) | `example-row example-row--col` |
-| All sizes shown side by side | `example-row example-row--sizes` |
+| All values of one property shown together (statuses, colors...) | `example-row example-row--col` |
+| All sizes shown side by side with label below | `example-row example-row--sizes` |
 | Combinations section | `example-row example-row--col` |
 
 ---
@@ -223,27 +220,25 @@ If the component has multiple sizes, document them as a `<h3>` inside Variants �
 
 Two or three short paragraphs. Explain:
 
-- **When** to reach for this component vs alternatives
-- **What to avoid** in terms of misuse
-- Any prop or behavior that's not obvious from the variants
+- When to reach for this component vs alternatives
+- What to avoid in terms of misuse
+- Any prop or behavior that is not obvious from the variants
 
-No bullet lists. No headers inside Usage. Just clear prose.
+No bullet lists. No subheadings inside Usage. Just clear prose.
 
 ---
 
 ## 4. Combinations (optional)
 
-Only include this section when the component is meaningfully paired with another (e.g. Field + Label + Button, OptionCard + Button + ProgressBar).
+Only include this section when the component is meaningfully paired with another — for example Field + Label + Button, or OptionCard + Button + ProgressBar.
 
-Show a real, working example using tokens from the app context. The example must feel like it belongs in the learning app (a lesson form, a quiz screen, etc.).
-
-Skip this section for standalone components where the pairing is obvious from context or trivially simple.
+Show a real, working example. The example must feel like it belongs in the learning app: a lesson form, a quiz screen, a progress indicator.
 
 ---
 
 ## 5. Do's & Don'ts
 
-Always three items per column. Use the same structure:
+Always three items per column. Strong tag on the rule, then a short explanation.
 
 ```html
 <div class="dos-donts">
@@ -260,15 +255,13 @@ Always three items per column. Use the same structure:
     </ul>
   </div>
 </div>
-```
 
-After Do's & Don'ts, add a Related section:
-
-```html
 <hr />
 <p>
   <strong>Related:</strong>
-  <a href="/components/other-component">Other Component</a> (one sentence on why it's related)
+  <a href="/components/other">Other Component</a> (one sentence on why it's related)
+  ·
+  <a href="/components/another">Another Component</a> (one sentence)
 </p>
 ```
 
@@ -276,55 +269,33 @@ After Do's & Don'ts, add a Related section:
 
 ## Copy rules
 
-**Voice:** Direct, warm, slightly informal. Write for teammates — designers, engineers, and marketers who build with this system every day. Address the reader as "you". Write like you're explaining something to a colleague, not documenting for a committee.
+**Voice:** Direct, warm, slightly informal. Write for teammates: designers, engineers, and marketers who build with this system every day. Address the reader as "you". Explain like a colleague, not a committee.
 
-**Lead with verbs:** "moves", "blocks", "warns", "celebrates", "unlocks". Avoid nouns as the first word.
+**Lead with verbs:** "moves", "blocks", "warns", "celebrates", "unlocks". Avoid nouns as the first word of a description.
 
 **App context:** All examples must feel like they belong in a gamified learning app. Use: "Keep going", "Lesson complete", "You earned a badge", "3 exercises left", "Streak: 7 days". Never use: "Submit", "Dashboard", "Table view", "Click here", "Item 1".
 
 **Users, not learners:** Refer to the people using the app as "users" or "students", never "learners".
 
-**Sentence length:** Max 2 lines per card or variant description. If you need a third sentence, split into two paragraphs.
+**Sentence length:** Max 2 lines per card or variant description.
 
 **No em dashes:** Don't use `—` to attach a follow-up thought. Rewrite as two sentences, or use a comma, colon, or parentheses.
 
 ```
 # Wrong
-"Use this when you need one dominant action — think: continue a lesson."
+"Use it when there's one dominant action — think: continue a lesson."
 
 # Right
-"Use this when you need one dominant action. Think: continue a lesson."
+"Use it when there's one dominant action. Think: continue a lesson."
 ```
 
-**No jargon:** If the word wouldn't appear in a conversation with a non-technical colleague, replace it.
+**Write in English. Always.**
 
 ---
 
-## CSS checklist for new component pages
+## Page boilerplate
 
-Every component page needs these CSS blocks in its `<style>` tag. Copy them from an existing page and adapt as needed.
-
-- [ ] `.playground` — card wrapper with border and background
-- [ ] `.playground__stage` — the preview area, centered, with page background
-- [ ] `.playground__controls` — flex row of control groups
-- [ ] `.playground__code` — the code snippet row (position: relative)
-- [ ] `.code-snippet` — the `<pre>` element, monospace, primary color
-- [ ] `.copy-btn` — the clipboard icon button, top-right of `.playground__code`
-- [ ] `.ctrl-group`, `.ctrl-group__label`, `.ctrl-group__options` — control structure
-- [ ] `.ctrl-btn` and `.ctrl-btn.is-active` — toggle buttons
-- [ ] `.ctrl-input` — text inputs in controls
-- [ ] `.example-center` — single-component example box
-- [ ] `.example-row` and `.example-row--col` — multi-item example box
-- [ ] `.size-row` and `.size-label` — the label + component grid inside `--col` rows
-- [ ] `.dos-donts`, `.dos-donts__col`, `.dos-donts__label` — the Do/Don't columns
-
-The exact values for all these classes are defined in `button.astro`, which is the canonical reference implementation. Copy from there.
-
----
-
-## Page heading block
-
-Every component page starts with this frontmatter and DocLayout call:
+### Frontmatter and layout
 
 ```astro
 ---
@@ -333,8 +304,8 @@ import ComponentName from '../../components/ComponentName/ComponentName.astro';
 
 const headings = [
   { depth: 2, slug: 'variants',     text: 'Variants' },
-  { depth: 3, slug: 'variant-name', text: 'Variant Name' }, // one per h3
-  { depth: 3, slug: 'sizes',        text: 'Size' },         // only if the component has sizes
+  { depth: 3, slug: 'variant-name', text: 'Variant Name' },
+  { depth: 3, slug: 'sizes',        text: 'Size' },         // only if has sizes
   { depth: 2, slug: 'usage',        text: 'Usage' },
   { depth: 2, slug: 'combinations', text: 'Combinations' }, // only if included
   { depth: 2, slug: 'dos-donts',    text: "Do's & Don'ts" },
@@ -343,19 +314,256 @@ const headings = [
 
 <DocLayout
   title="Component Name"
-  description="One sentence. What it does, in the simplest terms possible."
+  description="One sentence. What it does in the app, not how it is built."
   headings={headings}
 >
 ```
 
-The `description` is the subtitle shown below the title. One sentence. What the component does in the app, not how it's built.
+### CSS boilerplate
+
+Copy this into every new component page's `<style>` block and adapt as needed. `button.astro` is the canonical reference implementation.
+
+```css
+<style>
+  /* ── Playground ─────────────────────────────────────────────── */
+  .playground {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 48px;
+  }
+
+  .playground__stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+    padding: 40px 32px;
+    background: var(--surface-page); /* change if component lives on elevated surface */
+  }
+
+  .preview-wrap { width: 360px; }
+
+  .playground__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .playground__code {
+    position: relative;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .code-snippet {
+    margin: 0;
+    font-family: var(--font-family-code);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--primary-300);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: calc(5 * 1.6 * 0.8rem);
+    overflow-y: auto;
+    padding-right: var(--spacing-40);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-8);
+    right: var(--spacing-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-placeholder);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover  { background: var(--surface-button-transparent-hover); color: var(--text-body-default); }
+  .copy-btn:active { transform: translateY(4px); background: transparent; }
+
+  /* ── Controls ────────────────────────────────────────────────── */
+  .ctrl-group { border: none; padding: 0; }
+
+  .ctrl-group__label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-placeholder);
+    margin-bottom: 8px;
+  }
+
+  .ctrl-group__options { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  .ctrl-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: transparent;
+    color: var(--text-body-default);
+    font-family: var(--font-family-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+
+  .ctrl-btn:hover     { background: var(--surface-hover-dark); }
+  .ctrl-btn.is-active {
+    background:   var(--primary-900);
+    color:        var(--primary-300);
+    border-color: var(--primary-700);
+  }
+
+  .ctrl-input {
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: var(--text-body-default);
+    font-family: var(--font-family-body);
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    outline: none;
+    width: 220px;
+    transition: border-color 0.15s;
+  }
+
+  .ctrl-input:focus { border-color: var(--primary-600); }
+
+  .ctrl-range {
+    width: 100%;
+    accent-color: var(--primary-default);
+    margin-top: 4px;
+  }
+
+  /* ── Example boxes ───────────────────────────────────────────── */
+  .example-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin: 12px 0 32px;
+  }
+
+  .example-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 24px;
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin: 12px 0 32px;
+  }
+
+  .example-row--col    { flex-direction: column; align-items: stretch; gap: 12px; }
+  .example-row--sizes  { align-items: flex-end; gap: 20px; }
+
+  .size-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-8);
+  }
+
+  .size-label {
+    font-size: var(--font-size-paragraph-sm);
+    color: var(--text-placeholder);
+    white-space: nowrap;
+  }
+
+  /* ── Do's & Don'ts ───────────────────────────────────────────── */
+  .dos-donts {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 16px 0 24px;
+  }
+
+  .dos-donts__col {
+    padding: 16px 20px;
+    border-radius: 10px;
+  }
+
+  .dos-donts__col--do {
+    background: color-mix(in srgb, var(--success-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--success-default) 30%, transparent);
+  }
+
+  .dos-donts__col--dont {
+    background: color-mix(in srgb, var(--error-default) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--error-default) 30%, transparent);
+  }
+
+  .dos-donts__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+
+  .dos-donts__col--do   .dos-donts__label { color: var(--success-default); }
+  .dos-donts__col--dont .dos-donts__label { color: var(--error-default); }
+
+  .dos-donts__col ul {
+    margin: 0;
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .dos-donts__col li {
+    font-size: var(--font-size-paragraph-sm);
+    line-height: var(--line-height-paragraph-sm);
+    color: var(--text-body-default);
+  }
+</style>
+```
 
 ---
 
 ## What not to include
 
-- Don't document implementation details (how the CSS works, what the Astro props compile to).
+- Don't document implementation details (how the CSS works, what the props compile to).
 - Don't add a Props table. Variants and Usage cover this in a more readable format.
-- Don't add a Changelog section.
+- Don't add a Changelog or History section.
 - Don't add color palettes, type scales, or spacing tables — those live in the token pages.
 - Don't use full-width screenshots or decorative illustrations.
+
+---
+
+## Reference files
+
+| File | Purpose |
+|---|---|
+| `public/styles/global.css` | CSS variables — source of truth for all tokens |
+| `tokens_tokens.json` | Raw design tokens from Figma (read-only) |
+| `src/layouts/DocLayout.astro` | The only layout — 3-column shell with sidebar and TOC |
+| `src/pages/components/button.astro` | Canonical reference implementation for component pages |
+| `COMPONENT-METADATA-SCHEMA.md` | Schema for `.meta.js` files (AI agent consumption) |
+| `CLAUDE.md` | Project rules for Claude Code |
