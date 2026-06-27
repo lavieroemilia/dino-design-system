@@ -501,9 +501,9 @@ const headings = [
 <script>
   const stage  = document.getElementById('preview-stage');
   const codeEl = document.getElementById('preview-code');
-  const labelEl = document.getElementById('ctrl-label') as HTMLInputElement | null;
+  const labelEl = document.getElementById('ctrl-label');
 
-  const state: Record<string, string> = {
+  const state = {
     variant:  'primary',
     size:     'xl',
     disabled: 'false',
@@ -513,16 +513,16 @@ const headings = [
     const { variant, size, disabled } = state;
     const label = labelEl?.value || 'Continue';
 
-    const disabledAttr = disabled === 'true' ? ` disabled` : '';
-    if (codeEl) codeEl.textContent = `<Button variant="${variant}" size="${size}" label="${label}"${disabledAttr} />`;
+    const disabledAttr = disabled === 'true' ? ' disabled' : '';
+    if (codeEl) codeEl.textContent = '<Button variant="' + variant + '" size="' + size + '" label="' + label + '"' + disabledAttr + ' />';
 
-    const btn = stage?.querySelector('.btn') as HTMLElement | null;
+    const btn = stage?.querySelector('.btn');
     if (!btn) return;
 
     btn.className = [
       'btn',
-      `btn--${variant}`,
-      `btn--${size}`,
+      'btn--' + variant,
+      'btn--' + size,
       disabled === 'true' ? 'btn--disabled' : '',
     ].filter(Boolean).join(' ');
 
@@ -531,13 +531,13 @@ const headings = [
     btn.setAttribute('aria-disabled', disabled);
   }
 
-  document.querySelectorAll<HTMLButtonElement>('.ctrl-btn[data-prop]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const prop = btn.dataset.prop!;
-      document.querySelectorAll<HTMLButtonElement>(`.ctrl-btn[data-prop="${prop}"]`)
-        .forEach(b => b.classList.remove('is-active'));
+  document.querySelectorAll('.ctrl-btn[data-prop]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const prop = btn.dataset.prop;
+      document.querySelectorAll('.ctrl-btn[data-prop="' + prop + '"]')
+        .forEach(function(b) { b.classList.remove('is-active'); });
       btn.classList.add('is-active');
-      state[prop] = btn.dataset.value!;
+      state[prop] = btn.dataset.value;
       render();
     });
   });
@@ -545,16 +545,16 @@ const headings = [
   labelEl?.addEventListener('input', render);
   render();
 
-  const copyBtn = document.getElementById('copy-btn');
-  const iconCopy  = document.getElementById('icon-copy') as SVGElement | null;
-  const iconCheck = document.getElementById('icon-check') as SVGElement | null;
+  const copyBtn   = document.getElementById('copy-btn');
+  const iconCopy  = document.getElementById('icon-copy');
+  const iconCheck = document.getElementById('icon-check');
 
-  copyBtn?.addEventListener('click', () => {
+  copyBtn?.addEventListener('click', function() {
     const code = document.getElementById('preview-code')?.textContent || '';
-    navigator.clipboard.writeText(code).then(() => {
+    navigator.clipboard.writeText(code).then(function() {
       if (iconCopy)  iconCopy.style.display  = 'none';
       if (iconCheck) iconCheck.style.display = 'block';
-      setTimeout(() => {
+      setTimeout(function() {
         if (iconCopy)  iconCopy.style.display  = 'block';
         if (iconCheck) iconCheck.style.display = 'none';
       }, 1500);
