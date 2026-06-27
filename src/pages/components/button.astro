@@ -11,6 +11,7 @@ const headings = [
   { depth: 3, slug: 'danger',       text: 'Danger' },
   { depth: 3, slug: 'premium',      text: 'Premium' },
   { depth: 3, slug: 'disabled',     text: 'Disabled' },
+  { depth: 3, slug: 'sizes',        text: 'Size' },
   { depth: 2, slug: 'usage',        text: 'Usage' },
   { depth: 2, slug: 'combinations', text: 'Combinations' },
   { depth: 2, slug: 'dos-donts',    text: "Do's & Don'ts" },
@@ -73,6 +74,18 @@ const headings = [
 
     </div>
 
+    <div class="playground__code">
+      <pre id="preview-code" class="code-snippet"></pre>
+      <button class="copy-btn" id="copy-btn" aria-label="Copy code">
+        <svg id="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
 
   </section>
 
@@ -82,65 +95,65 @@ const headings = [
 
   <h3 id="primary">Primary</h3>
   <p>Use it when there's one clear next step: continue a lesson, confirm an answer, unlock the next level. One Primary per screen, max.</p>
-  <div class="example-row">
+  <div class="example-center">
     <Button variant="primary" size="xl" label="Continue" />
-    <Button variant="primary" size="lg" label="Continue" />
-    <Button variant="primary" size="md" label="Continue" />
-    <Button variant="primary" size="sm" label="Continue" />
   </div>
 
   <h3 id="secondary">Secondary</h3>
   <p>Use it when both actions carry equal weight and neither should recede. Think: 'Review answers' next to 'Submit test', where either choice matters.</p>
-  <div class="example-row">
-    <Button variant="secondary" size="xl" label="Cancel" />
-    <Button variant="secondary" size="lg" label="Cancel" />
-    <Button variant="secondary" size="md" label="Cancel" />
-    <Button variant="secondary" size="sm" label="Cancel" />
+  <div class="example-center">
+    <Button variant="secondary" size="xl" label="Review answers" />
   </div>
 
   <h3 id="tertiary">Tertiary</h3>
   <p>Recedes alongside Primary or Danger so the dominant action wins. Works solo too, for low-stakes optional actions: 'See details', 'View badge history', 'Learn more'.</p>
-  <div class="example-row">
+  <div class="example-center">
     <Button variant="tertiary" size="xl" label="See details" />
-    <Button variant="tertiary" size="lg" label="See details" />
-    <Button variant="tertiary" size="md" label="See details" />
-    <Button variant="tertiary" size="sm" label="See details" />
   </div>
 
   <h3 id="ghost">Ghost</h3>
   <p>Sits inside cards and dense layouts as a quiet inline action. Not for decision flows: use it for quick edits and secondary navigations within a view.</p>
-  <div class="example-row">
+  <div class="example-center">
     <Button variant="ghost" size="xl" label="Edit" />
-    <Button variant="ghost" size="lg" label="Edit" />
-    <Button variant="ghost" size="md" label="Edit" />
-    <Button variant="ghost" size="sm" label="Edit" />
   </div>
 
   <h3 id="danger">Danger</h3>
   <p>Warns before something irreversible happens: exits, resets, deletions. Always pair it with a Tertiary cancel and a confirmation step. Never let it fire on first tap.</p>
-  <div class="example-row">
+  <div class="example-center">
     <Button variant="danger" size="xl" label="Quit lesson" />
-    <Button variant="danger" size="lg" label="Quit lesson" />
-    <Button variant="danger" size="md" label="Quit lesson" />
-    <Button variant="danger" size="sm" label="Quit lesson" />
   </div>
 
   <h3 id="premium">Premium</h3>
   <p>Unlocks what's behind the paywall. Put it on upgrade screens and treat it like Primary: one per screen, never stacked alongside another Premium.</p>
-  <div class="example-row">
+  <div class="example-center">
     <Button variant="premium" size="xl" label="Get Premium" />
-    <Button variant="premium" size="lg" label="Get Premium" />
-    <Button variant="premium" size="md" label="Get Premium" />
-    <Button variant="premium" size="sm" label="Get Premium" />
   </div>
 
   <h3 id="disabled">Disabled</h3>
   <p>Blocks an action until the student meets a condition. Always tell them what they need to do to unlock it. A disabled button with no explanation is a dead end.</p>
-  <div class="example-row">
-    <Button variant="primary"   size="xl" label="Check answer" disabled />
-    <Button variant="secondary" size="lg" label="Save progress" disabled />
-    <Button variant="danger"    size="md" label="Quit lesson" disabled />
-    <Button variant="danger"    size="sm" label="Quit lesson" disabled />
+  <div class="example-center">
+    <Button variant="primary" size="xl" label="Check answer" disabled />
+  </div>
+
+  <h3 id="sizes">Size</h3>
+  <p>Four sizes to match layout density. Use <code>xl</code> for full-screen CTAs, <code>lg</code> for section-level actions, <code>md</code> and <code>sm</code> for inline actions inside cards or dense UI.</p>
+  <div class="example-row example-row--sizes" style="justify-content: center;">
+    <div class="size-item">
+      <Button variant="primary" size="xl" label="Continue" />
+      <span class="size-label">xl</span>
+    </div>
+    <div class="size-item">
+      <Button variant="primary" size="lg" label="Continue" />
+      <span class="size-label">lg</span>
+    </div>
+    <div class="size-item">
+      <Button variant="primary" size="md" label="Continue" />
+      <span class="size-label">md</span>
+    </div>
+    <div class="size-item">
+      <Button variant="primary" size="sm" label="Continue" />
+      <span class="size-label">sm</span>
+    </div>
   </div>
 
 
@@ -322,6 +335,44 @@ const headings = [
     border-color: var(--primary-600);
   }
 
+  .playground__code {
+    position: relative;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .code-snippet {
+    margin: 0;
+    font-family: var(--font-family-code);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--primary-300);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: calc(5 * 1.6 * 0.8rem);
+    overflow-y: auto;
+    padding-right: var(--spacing-40);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-8);
+    right: var(--spacing-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-placeholder);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover    { background: var(--surface-button-transparent-hover); color: var(--text-body-default); }
+  .copy-btn:active   { transform: translateY(4px); background: transparent; }
+
 
   .combos {
     display: flex;
@@ -360,6 +411,17 @@ const headings = [
     justify-content: flex-end;
   }
 
+  .example-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    margin: 12px 0 32px;
+  }
+
   .example-row {
     display: flex;
     align-items: center;
@@ -367,11 +429,21 @@ const headings = [
     flex-wrap: wrap;
     padding: 24px;
     background: var(--surface-elevate);
+    border: 1px solid rgba(255,255,255,0.08);
     border-radius: 10px;
     margin: 12px 0 32px;
   }
 
   .example-row--col { flex-direction: column; align-items: stretch; gap: 16px; }
+
+  .example-row--sizes { align-items: flex-end; justify-content: center !important; gap: 20px; }
+
+  .size-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-8);
+  }
 
   .combo-row {
     display: grid;
@@ -471,4 +543,21 @@ const headings = [
   });
 
   labelEl?.addEventListener('input', render);
+  render();
+
+  const copyBtn = document.getElementById('copy-btn');
+  const iconCopy  = document.getElementById('icon-copy') as SVGElement | null;
+  const iconCheck = document.getElementById('icon-check') as SVGElement | null;
+
+  copyBtn?.addEventListener('click', () => {
+    const code = document.getElementById('preview-code')?.textContent || '';
+    navigator.clipboard.writeText(code).then(() => {
+      if (iconCopy)  iconCopy.style.display  = 'none';
+      if (iconCheck) iconCheck.style.display = 'block';
+      setTimeout(() => {
+        if (iconCopy)  iconCopy.style.display  = 'block';
+        if (iconCheck) iconCheck.style.display = 'none';
+      }, 1500);
+    });
+  });
 </script>

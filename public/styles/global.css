@@ -289,6 +289,7 @@
       /* Font families */
       --font-family-body:     'Rubik', sans-serif;
       --font-family-headings: 'Rubik', sans-serif;
+      --font-family-code:     ui-monospace, 'Cascadia Code', 'Segoe UI Mono', Menlo, Consolas, monospace;
     
       /* ==========================================================
          4. TYPOGRAPHY — Brand/Mobile (base) del JSON
