@@ -64,6 +64,19 @@ const headings = [
     </div>
 
 
+
+    <div class="playground__code">
+      <pre id="preview-code" class="code-snippet"></pre>
+      <button class="copy-btn" id="copy-btn" aria-label="Copy code">
+        <svg id="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
   </section>
 
 
@@ -309,6 +322,44 @@ const headings = [
 
   .dos-donts__col--do   .dos-donts__label { color: var(--success-default); }
   .dos-donts__col--dont .dos-donts__label { color: var(--error-default); }
+
+  .playground__code {
+    position: relative;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .code-snippet {
+    margin: 0;
+    font-family: var(--font-family-code);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--primary-300);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: calc(5 * 1.6 * 0.8rem);
+    overflow-y: auto;
+    padding-right: var(--spacing-40);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-8);
+    right: var(--spacing-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-placeholder);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover  { background: var(--surface-button-transparent-hover); color: var(--text-body-default); }
+  .copy-btn:active { transform: translateY(4px); background: transparent; }
 </style>
 
 
@@ -316,7 +367,7 @@ const headings = [
   const stage  = document.getElementById('preview-stage');
   const codeEl = document.getElementById('preview-code');
 
-  const state: Record<string, string> = {
+  const state = {
     status:   'default',
     selected: 'false',
     badge:    'false',
@@ -324,7 +375,7 @@ const headings = [
 
   function render() {
     const { status, selected, badge } = state;
-    const card = stage?.querySelector('.option-card') as HTMLElement | null;
+    const card = stage?.querySelector('.option-card');
     if (!card) return;
 
     card.className = [
@@ -333,7 +384,7 @@ const headings = [
       selected === 'true' ? 'option-card--selected' : '',
     ].filter(Boolean).join(' ');
 
-    const input = card.querySelector('.option-card__input') as HTMLInputElement | null;
+    const input = card.querySelector('.option-card__input');
     if (input) {
       input.checked  = selected === 'true';
       input.disabled = status === 'disabled';
@@ -359,14 +410,31 @@ const headings = [
     if (codeEl) codeEl.textContent = `<OptionCard ${attrs} />`;
   }
 
-  document.querySelectorAll<HTMLButtonElement>('.ctrl-btn[data-prop]').forEach(btn => {
+  document.querySelectorAll('.ctrl-btn[data-prop]').forEach(btn => {
     btn.addEventListener('click', () => {
-      const prop = btn.dataset.prop!;
-      document.querySelectorAll<HTMLButtonElement>(`.ctrl-btn[data-prop="${prop}"]`)
+      const prop = btn.dataset.prop;
+      document.querySelectorAll(`.ctrl-btn[data-prop="${prop}"]`)
         .forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-      state[prop] = btn.dataset.value!;
+      state[prop] = btn.dataset.value;
       render();
+    });
+  });
+
+  render();
+
+  const copyBtn   = document.getElementById('copy-btn');
+  const iconCopy  = document.getElementById('icon-copy');
+  const iconCheck = document.getElementById('icon-check');
+  copyBtn?.addEventListener('click', () => {
+    const code = document.getElementById('preview-code')?.textContent || '';
+    navigator.clipboard.writeText(code).then(() => {
+      if (iconCopy)  iconCopy.style.display  = 'none';
+      if (iconCheck) iconCheck.style.display = 'block';
+      setTimeout(() => {
+        if (iconCopy)  iconCopy.style.display  = 'block';
+        if (iconCheck) iconCheck.style.display = 'none';
+      }, 1500);
     });
   });
 </script>

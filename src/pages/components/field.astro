@@ -108,6 +108,19 @@ const headings = [
 
     </div>
 
+
+    <div class="playground__code">
+      <pre id="preview-code" class="code-snippet"></pre>
+      <button class="copy-btn" id="copy-btn" aria-label="Copy code">
+        <svg id="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
   </section>
 
 
@@ -252,77 +265,116 @@ const headings = [
 
 
 <script>
-  const preview = document.querySelector<HTMLElement>('#preview-field');
+  const preview = document.querySelector('#preview-field');
   if (!preview) throw new Error('#preview-field not found');
 
-  const input = document.querySelector<HTMLInputElement>('#preview-input');
-  const iconLeft = document.querySelector<HTMLElement>('#preview-icon-left');
-  const iconRight = document.querySelector<HTMLElement>('#preview-icon-right');
+  const input      = document.querySelector('#preview-input');
+  const iconLeft   = document.querySelector('#preview-icon-left');
+  const iconRight  = document.querySelector('#preview-icon-right');
+  const codeEl     = document.getElementById('preview-code');
 
-  function activate(btn: HTMLButtonElement) {
-    btn.closest('.ctrl-group__options')!
+  const fieldState = { size: 'large', status: 'default', result: 'none', iconLeft: 'false', iconRight: 'true' };
+
+  const ICON_RIGHT = {
+    none:    `<svg viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM6.28033 5.21967C5.98744 4.92678 5.51256 4.92678 5.21967 5.21967C4.92678 5.51256 4.92678 5.98744 5.21967 6.28033L6.93934 8L5.21967 9.71967C4.92678 10.0126 4.92678 10.4874 5.21967 10.7803C5.51256 11.0732 5.98744 11.0732 6.28033 10.7803L8 9.06066L9.71967 10.7803C10.0126 11.0732 10.4874 11.0732 10.7803 10.7803C11.0732 10.4874 11.0732 10.0126 10.7803 9.71967L9.06066 8L10.7803 6.28033C11.0732 5.98744 11.0732 5.51256 10.7803 5.21967C10.4874 4.92678 10.0126 4.92678 9.71967 5.21967L8 6.93934L6.28033 5.21967Z" /></svg>`,
+    error:   `<svg viewBox="0 0 16.0626 14.375" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.51575 0.875C7.18933 -0.291669 8.87326 -0.291665 9.54684 0.875L15.8255 11.75C16.4991 12.9167 15.6571 14.375 14.31 14.375H1.75261C0.405458 14.375 -0.436508 12.9167 0.237066 11.75L6.51575 0.875ZM8.03125 3.38C8.44546 3.38 8.78125 3.71579 8.78125 4.13V7.63C8.78125 8.04422 8.44546 8.38 8.03125 8.38C7.61704 8.38 7.28125 8.04422 7.28125 7.63L7.28125 4.13C7.28125 3.71579 7.61704 3.38 8.03125 3.38ZM8.03125 12.38C8.58353 12.38 9.03125 11.9323 9.03125 11.38C9.03125 10.8277 8.58353 10.38 8.03125 10.38C7.47897 10.38 7.03125 10.8277 7.03125 11.38C7.03125 11.9323 7.47897 12.38 8.03125 12.38Z" /></svg>`,
+    success: `<svg viewBox="0 0 16.25 16.25" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8.125C0 3.63769 3.63769 0 8.125 0C12.6123 0 16.25 3.63769 16.25 8.125C16.25 12.6123 12.6123 16.25 8.125 16.25C3.63769 16.25 0 12.6123 0 8.125ZM11.1336 6.61327C11.3342 6.33239 11.2692 5.94205 10.9883 5.74142C10.7074 5.54079 10.317 5.60584 10.1164 5.88673L7.42025 9.66136L6.06694 8.30806C5.82286 8.06398 5.42714 8.06398 5.18306 8.30806C4.93898 8.55214 4.93898 8.94786 5.18306 9.19194L7.05806 11.0669C7.18797 11.1969 7.36846 11.263 7.55155 11.2479C7.73464 11.2327 7.9018 11.1378 8.00858 10.9883L11.1336 6.61327Z" /></svg>`,
+  };
+
+  const placeholderInput = document.querySelector('#ctrl-placeholder');
+
+  function activate(btn) {
+    btn.closest('.ctrl-group__options')
       .querySelectorAll('.ctrl-btn')
       .forEach(b => b.classList.remove('is-active'));
     btn.classList.add('is-active');
   }
 
-  // The right icon reflects the field's result.
-  const ICON_RIGHT: Record<string, string> = {
-    none: `<svg viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8C0 12.4183 3.58172 16 8 16ZM6.28033 5.21967C5.98744 4.92678 5.51256 4.92678 5.21967 5.21967C4.92678 5.51256 4.92678 5.98744 5.21967 6.28033L6.93934 8L5.21967 9.71967C4.92678 10.0126 4.92678 10.4874 5.21967 10.7803C5.51256 11.0732 5.98744 11.0732 6.28033 10.7803L8 9.06066L9.71967 10.7803C10.0126 11.0732 10.4874 11.0732 10.7803 10.7803C11.0732 10.4874 11.0732 10.0126 10.7803 9.71967L9.06066 8L10.7803 6.28033C11.0732 5.98744 11.0732 5.51256 10.7803 5.21967C10.4874 4.92678 10.0126 4.92678 9.71967 5.21967L8 6.93934L6.28033 5.21967Z" /></svg>`,
-    error: `<svg viewBox="0 0 16.0626 14.375" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M6.51575 0.875C7.18933 -0.291669 8.87326 -0.291665 9.54684 0.875L15.8255 11.75C16.4991 12.9167 15.6571 14.375 14.31 14.375H1.75261C0.405458 14.375 -0.436508 12.9167 0.237066 11.75L6.51575 0.875ZM8.03125 3.38C8.44546 3.38 8.78125 3.71579 8.78125 4.13V7.63C8.78125 8.04422 8.44546 8.38 8.03125 8.38C7.61704 8.38 7.28125 8.04422 7.28125 7.63L7.28125 4.13C7.28125 3.71579 7.61704 3.38 8.03125 3.38ZM8.03125 12.38C8.58353 12.38 9.03125 11.9323 9.03125 11.38C9.03125 10.8277 8.58353 10.38 8.03125 10.38C7.47897 10.38 7.03125 10.8277 7.03125 11.38C7.03125 11.9323 7.47897 12.38 8.03125 12.38Z" /></svg>`,
-    success: `<svg viewBox="0 0 16.25 16.25" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 8.125C0 3.63769 3.63769 0 8.125 0C12.6123 0 16.25 3.63769 16.25 8.125C16.25 12.6123 12.6123 16.25 8.125 16.25C3.63769 16.25 0 12.6123 0 8.125ZM11.1336 6.61327C11.3342 6.33239 11.2692 5.94205 10.9883 5.74142C10.7074 5.54079 10.317 5.60584 10.1164 5.88673L7.42025 9.66136L6.06694 8.30806C5.82286 8.06398 5.42714 8.06398 5.18306 8.30806C4.93898 8.55214 4.93898 8.94786 5.18306 9.19194L7.05806 11.0669C7.18797 11.1969 7.36846 11.263 7.55155 11.2479C7.73464 11.2327 7.9018 11.1378 8.00858 10.9883L11.1336 6.61327Z" /></svg>`,
-  };
+  function updateCode() {
+    const ph = placeholderInput?.value || 'Your nickname';
+    const attrs = [
+      fieldState.size !== 'large'    ? `size="${fieldState.size}"` : '',
+      fieldState.status !== 'default' ? `status="${fieldState.status}"` : '',
+      fieldState.result !== 'none'    ? `result="${fieldState.result}"` : '',
+      fieldState.iconLeft  === 'true'  ? 'iconLeft={true}'   : '',
+      fieldState.iconRight === 'false' ? 'iconRight={false}'  : '',
+      `placeholder="${ph}"`,
+    ].filter(Boolean).join(' ');
+    if (codeEl) codeEl.textContent = `<Field ${attrs} />`;
+  }
 
-  // ── Size ─────────────────────────────────────────────────────
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="size"]').forEach(btn => {
+  document.querySelectorAll('[data-prop="size"]').forEach(btn => {
     btn.addEventListener('click', () => {
       activate(btn);
       preview.classList.remove('field--large', 'field--medium');
       preview.classList.add(`field--${btn.dataset.value}`);
+      fieldState.size = btn.dataset.value;
+      updateCode();
     });
   });
 
-  // ── Status ───────────────────────────────────────────────────
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="status"]').forEach(btn => {
+  document.querySelectorAll('[data-prop="status"]').forEach(btn => {
     btn.addEventListener('click', () => {
       activate(btn);
       preview.classList.remove('field--hover', 'field--focus', 'field--disabled');
-      const value = btn.dataset.value!;
+      const value = btn.dataset.value;
       if (input) input.disabled = value === 'disabled';
       if (value !== 'default') preview.classList.add(`field--${value}`);
+      fieldState.status = value;
+      updateCode();
     });
   });
 
-  // ── Result ───────────────────────────────────────────────────
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="result"]').forEach(btn => {
+  document.querySelectorAll('[data-prop="result"]').forEach(btn => {
     btn.addEventListener('click', () => {
       activate(btn);
       preview.classList.remove('field--error', 'field--success');
-      const value = btn.dataset.value!;
+      const value = btn.dataset.value;
       if (value !== 'none') preview.classList.add(`field--${value}`);
       if (iconRight) iconRight.innerHTML = ICON_RIGHT[value];
+      fieldState.result = value;
+      updateCode();
     });
   });
 
-  // ── Icon left / right ────────────────────────────────────────
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="iconLeft"]').forEach(btn => {
+  document.querySelectorAll('[data-prop="iconLeft"]').forEach(btn => {
     btn.addEventListener('click', () => {
       activate(btn);
       if (iconLeft) iconLeft.style.display = btn.dataset.value === 'true' ? 'flex' : 'none';
+      fieldState.iconLeft = btn.dataset.value;
+      updateCode();
     });
   });
 
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="iconRight"]').forEach(btn => {
+  document.querySelectorAll('[data-prop="iconRight"]').forEach(btn => {
     btn.addEventListener('click', () => {
       activate(btn);
       if (iconRight) iconRight.style.display = btn.dataset.value === 'true' ? 'flex' : 'none';
+      fieldState.iconRight = btn.dataset.value;
+      updateCode();
     });
   });
 
-  // ── Placeholder text ─────────────────────────────────────────
-  const placeholderInput = document.querySelector<HTMLInputElement>('#ctrl-placeholder');
   placeholderInput?.addEventListener('input', () => {
     if (input) input.placeholder = placeholderInput.value;
+    updateCode();
+  });
+
+  updateCode();
+
+  const copyBtn   = document.getElementById('copy-btn');
+  const iconCopy  = document.getElementById('icon-copy');
+  const iconCheck = document.getElementById('icon-check');
+  copyBtn?.addEventListener('click', () => {
+    const code = document.getElementById('preview-code')?.textContent || '';
+    navigator.clipboard.writeText(code).then(() => {
+      if (iconCopy)  iconCopy.style.display  = 'none';
+      if (iconCheck) iconCheck.style.display = 'block';
+      setTimeout(() => {
+        if (iconCopy)  iconCopy.style.display  = 'block';
+        if (iconCheck) iconCheck.style.display = 'none';
+      }, 1500);
+    });
   });
 </script>
 
@@ -597,4 +649,42 @@ const headings = [
   @media (max-width: 600px) {
     .dos-donts { grid-template-columns: 1fr; }
   }
+
+  .playground__code {
+    position: relative;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .code-snippet {
+    margin: 0;
+    font-family: var(--font-family-code);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--primary-300);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: calc(5 * 1.6 * 0.8rem);
+    overflow-y: auto;
+    padding-right: var(--spacing-40);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-8);
+    right: var(--spacing-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-placeholder);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover  { background: var(--surface-button-transparent-hover); color: var(--text-body-default); }
+  .copy-btn:active { transform: translateY(4px); background: transparent; }
 </style>

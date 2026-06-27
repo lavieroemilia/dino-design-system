@@ -59,6 +59,19 @@ const headings = [
 
     </div>
 
+
+    <div class="playground__code">
+      <pre id="preview-code" class="code-snippet"></pre>
+      <button class="copy-btn" id="copy-btn" aria-label="Copy code">
+        <svg id="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
   </section>
 
 
@@ -134,26 +147,42 @@ const headings = [
 
 
 <script>
-  const card = document.querySelector('#preview-card') as HTMLElement | null;
-  let lockedStatus = 'default';
+  const card = document.querySelector('#preview-card');
+  const codeEl = document.getElementById('preview-code');
 
-  function setClass(status: string) {
+  let lockedStatus = 'default';
+  const shState = {
+    status:       'default',
+    theme:        'Tema 1, bloque 1',
+    sectionTitle: 'Introducción a las células',
+  };
+
+  function setClass(status) {
     if (card) card.className = 'section-header section-header--' + status;
   }
 
-  // ── Status controls ──────────────────────────────────────────
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="status"]').forEach(btn => {
+  function updateCode() {
+    const attrs = [
+      `theme="${shState.theme}"`,
+      `sectionTitle="${shState.sectionTitle}"`,
+      shState.status !== 'default' ? `status="${shState.status}"` : '',
+    ].filter(Boolean).join(' ');
+    if (codeEl) codeEl.textContent = `<SectionHeader ${attrs} />`;
+  }
+
+  document.querySelectorAll('[data-prop="status"]').forEach(btn => {
     btn.addEventListener('click', () => {
-      btn.closest('.ctrl-group__options')!
+      btn.closest('.ctrl-group__options')
         .querySelectorAll('.ctrl-btn')
         .forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
       lockedStatus = btn.dataset.value ?? 'default';
+      shState.status = lockedStatus;
       setClass(lockedStatus);
+      updateCode();
     });
   });
 
-  // ── Interactive hover / press on the preview card ────────────
   if (card) {
     card.addEventListener('mouseenter', () => {
       if (lockedStatus === 'default') setClass('hover');
@@ -175,18 +204,38 @@ const headings = [
     });
   }
 
-  // ── Text inputs ──────────────────────────────────────────────
-  const themeInput = document.querySelector<HTMLInputElement>('#ctrl-theme');
-  const titleInput = document.querySelector<HTMLInputElement>('#ctrl-title');
+  const themeInput = document.querySelector('#ctrl-theme');
+  const titleInput = document.querySelector('#ctrl-title');
 
   themeInput?.addEventListener('input', () => {
     const el = card?.querySelector('.section-header__theme');
     if (el) el.textContent = themeInput.value;
+    shState.theme = themeInput.value;
+    updateCode();
   });
 
   titleInput?.addEventListener('input', () => {
     const el = card?.querySelector('.section-header__title');
     if (el) el.textContent = titleInput.value;
+    shState.sectionTitle = titleInput.value;
+    updateCode();
+  });
+
+  updateCode();
+
+  const copyBtn   = document.getElementById('copy-btn');
+  const iconCopy  = document.getElementById('icon-copy');
+  const iconCheck = document.getElementById('icon-check');
+  copyBtn?.addEventListener('click', () => {
+    const code = document.getElementById('preview-code')?.textContent || '';
+    navigator.clipboard.writeText(code).then(() => {
+      if (iconCopy)  iconCopy.style.display  = 'none';
+      if (iconCheck) iconCheck.style.display = 'block';
+      setTimeout(() => {
+        if (iconCopy)  iconCopy.style.display  = 'block';
+        if (iconCheck) iconCheck.style.display = 'none';
+      }, 1500);
+    });
   });
 </script>
 
@@ -345,4 +394,42 @@ const headings = [
     line-height: var(--line-height-paragraph-sm);
     color: var(--text-body-default);
   }
+
+  .playground__code {
+    position: relative;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .code-snippet {
+    margin: 0;
+    font-family: var(--font-family-code);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--primary-300);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: calc(5 * 1.6 * 0.8rem);
+    overflow-y: auto;
+    padding-right: var(--spacing-40);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-8);
+    right: var(--spacing-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-placeholder);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover  { background: var(--surface-button-transparent-hover); color: var(--text-body-default); }
+  .copy-btn:active { transform: translateY(4px); background: transparent; }
 </style>

@@ -67,6 +67,19 @@ const headings = [
 
     </div>
 
+
+    <div class="playground__code">
+      <pre id="preview-code" class="code-snippet"></pre>
+      <button class="copy-btn" id="copy-btn" aria-label="Copy code">
+        <svg id="icon-copy" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+        <svg id="icon-check" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </button>
+    </div>
   </section>
 
 
@@ -147,33 +160,45 @@ const headings = [
 
 
 <script>
-  const preview = document.querySelector<HTMLElement>('#preview-label');
+  const preview = document.querySelector('#preview-label');
   if (!preview) throw new Error('#preview-label not found');
 
-  // ── Type control ─────────────────────────────────────────────
-  // Toggles .is-required on the label element.
-  // CSS handles asterisk visibility — no DOM manipulation needed.
-  document.querySelectorAll<HTMLButtonElement>('[data-prop="type"]').forEach(btn => {
+  const codeEl    = document.getElementById('preview-code');
+  const labelInput = document.querySelector('#ctrl-label-text');
+  const hintInput  = document.querySelector('#ctrl-hint');
+  const hintBtn    = preview.querySelector('.label__hint-btn');
+
+  let currentType = 'default';
+
+  function updateCode() {
+    const labelText = labelInput?.value || 'Nombre completo';
+    const hintText  = hintInput?.value?.trim() || '';
+    const required  = currentType === 'required';
+    const attrs = [
+      `label="${labelText}"`,
+      required ? 'required' : '',
+      hintText ? `hint="${hintText}"` : '',
+    ].filter(Boolean).join(' ');
+    if (codeEl) codeEl.textContent = `<Label ${attrs} />`;
+  }
+
+  document.querySelectorAll('[data-prop="type"]').forEach(btn => {
     btn.addEventListener('click', () => {
-      btn.closest('.ctrl-group__options')!
+      btn.closest('.ctrl-group__options')
         .querySelectorAll('.ctrl-btn')
         .forEach(b => b.classList.remove('is-active'));
       btn.classList.add('is-active');
-      preview.classList.toggle('is-required', btn.dataset.value === 'required');
+      currentType = btn.dataset.value;
+      preview.classList.toggle('is-required', currentType === 'required');
+      updateCode();
     });
   });
 
-  // ── Label text ───────────────────────────────────────────────
-  const labelInput = document.querySelector<HTMLInputElement>('#ctrl-label-text');
   labelInput?.addEventListener('input', () => {
     const el = preview.querySelector('.label__text');
     if (el) el.textContent = labelInput.value;
+    updateCode();
   });
-
-  // ── Hint ─────────────────────────────────────────────────────
-  // Toggles .has-hint; also updates the tooltip text on the button.
-  const hintInput = document.querySelector<HTMLInputElement>('#ctrl-hint');
-  const hintBtn   = preview.querySelector<HTMLButtonElement>('.label__hint-btn');
 
   hintInput?.addEventListener('input', () => {
     const text = hintInput.value.trim();
@@ -182,6 +207,24 @@ const headings = [
       hintBtn.title = text;
       hintBtn.setAttribute('aria-label', text ? `Más info: ${text}` : '');
     }
+    updateCode();
+  });
+
+  updateCode();
+
+  const copyBtn   = document.getElementById('copy-btn');
+  const iconCopy  = document.getElementById('icon-copy');
+  const iconCheck = document.getElementById('icon-check');
+  copyBtn?.addEventListener('click', () => {
+    const code = document.getElementById('preview-code')?.textContent || '';
+    navigator.clipboard.writeText(code).then(() => {
+      if (iconCopy)  iconCopy.style.display  = 'none';
+      if (iconCheck) iconCheck.style.display = 'block';
+      setTimeout(() => {
+        if (iconCopy)  iconCopy.style.display  = 'block';
+        if (iconCheck) iconCheck.style.display = 'none';
+      }, 1500);
+    });
   });
 </script>
 
@@ -417,4 +460,42 @@ const headings = [
     line-height: var(--line-height-paragraph-sm);
     color: var(--text-body-default);
   }
+
+  .playground__code {
+    position: relative;
+    padding: var(--spacing-8) var(--spacing-12);
+  }
+
+  .code-snippet {
+    margin: 0;
+    font-family: var(--font-family-code);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--primary-300);
+    white-space: pre;
+    overflow-x: auto;
+    max-height: calc(5 * 1.6 * 0.8rem);
+    overflow-y: auto;
+    padding-right: var(--spacing-40);
+  }
+
+  .copy-btn {
+    position: absolute;
+    top: var(--spacing-8);
+    right: var(--spacing-8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: var(--radius-md);
+    border: none;
+    background: transparent;
+    color: var(--text-placeholder);
+    cursor: pointer;
+    transition: background 0.1s, color 0.1s;
+  }
+
+  .copy-btn:hover  { background: var(--surface-button-transparent-hover); color: var(--text-body-default); }
+  .copy-btn:active { transform: translateY(4px); background: transparent; }
 </style>
