@@ -513,6 +513,9 @@ const headings = [
     const { variant, size, disabled } = state;
     const label = labelEl?.value || 'Continue';
 
+    const disabledAttr = disabled === 'true' ? ` disabled` : '';
+    if (codeEl) codeEl.textContent = `<Button variant="${variant}" size="${size}" label="${label}"${disabledAttr} />`;
+
     const btn = stage?.querySelector('.btn') as HTMLElement | null;
     if (!btn) return;
 
@@ -526,9 +529,6 @@ const headings = [
     const labelSpan = btn.querySelector('.btn__label');
     if (labelSpan) labelSpan.textContent = label;
     btn.setAttribute('aria-disabled', disabled);
-
-    const disabledAttr = disabled === 'true' ? ` disabled` : '';
-    if (codeEl) codeEl.textContent = `<Button variant="${variant}" size="${size}" label="${label}"${disabledAttr} />`;
   }
 
   document.querySelectorAll<HTMLButtonElement>('.ctrl-btn[data-prop]').forEach(btn => {

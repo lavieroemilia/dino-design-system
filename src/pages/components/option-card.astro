@@ -375,6 +375,15 @@ const headings = [
 
   function render() {
     const { status, selected, badge } = state;
+
+    const attrs = [
+      `label="Paris"`,
+      `status="${status}"`,
+      selected === 'true' ? `selected={true}` : '',
+      badge === 'true'    ? `badge={true}`    : '',
+    ].filter(Boolean).join(' ');
+    if (codeEl) codeEl.textContent = `<OptionCard ${attrs} />`;
+
     const card = stage?.querySelector('.option-card');
     if (!card) return;
 
@@ -399,15 +408,6 @@ const headings = [
     } else if (badge === 'false' && badgeEl) {
       badgeEl.remove();
     }
-
-    const attrs = [
-      `label="Paris"`,
-      `status="${status}"`,
-      selected === 'true' ? `selected={true}` : '',
-      badge === 'true'    ? `badge={true}`    : '',
-    ].filter(Boolean).join(' ');
-
-    if (codeEl) codeEl.textContent = `<OptionCard ${attrs} />`;
   }
 
   document.querySelectorAll('.ctrl-btn[data-prop]').forEach(btn => {
